@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JC Consulting & Advisory — Brand Identity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,600;1,300&family=Mulish:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–navy:     #0D1B2A;
+–slate:    #1E2D3D;
+–gold:     #B8954A;
+–gold-pale:#E5D4A8;
+–steel:    #7A8FA6;
+–offwhite: #F9F7F4;
+–border:   rgba(255,255,255,0.08);
+–safe-top: env(safe-area-inset-top, 0px);
+–safe-bot: env(safe-area-inset-bottom, 0px);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘Mulish’, sans-serif;
+background: var(–navy);
+color: #F0EDE6;
+-webkit-font-smoothing: antialiased;
+overflow-x: hidden;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(24px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to   { opacity: 1; }
+}
+@keyframes scaleIn {
+from { opacity: 0; transform: scale(0.92); }
+to   { opacity: 1; transform: scale(1); }
+}
+@keyframes drawLine {
+from { transform: scaleX(0); }
+to   { transform: scaleX(1); }
+}
+
+.anim-1 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.1s both; }
+.anim-2 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.25s both; }
+.anim-3 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.4s both; }
+.anim-4 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.55s both; }
+.anim-5 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.7s both; }
+.anim-fade { animation: fadeIn 1s ease 0.2s both; }
+
+/* ── HERO ── */
+.hero {
+min-height: 100svh;
+background: var(–navy);
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+padding: calc(var(–safe-top) + 52px) 28px calc(var(–safe-bot) + 48px);
+position: relative;
+overflow: hidden;
+}
+
+.hero-geo {
+position: absolute;
+top: 28px; right: 28px;
+width: 72px; height: 72px;
+animation: fadeIn 1.2s ease 0.8s both;
+}
+
+.hero-geo-outer {
+position: absolute; inset: 0;
+border: 0.75px solid var(–gold);
+}
+
+.hero-geo-inner {
+position: absolute;
+top: 14px; left: 14px; right: 14px; bottom: 14px;
+border: 0.5px solid rgba(184,149,74,0.5);
+}
+
+.hero-geo-dot {
+position: absolute;
+top: 50%; left: 50%;
+width: 6px; height: 6px;
+background: var(–gold);
+border-radius: 50%;
+transform: translate(-50%, -50%);
+}
+
+.gold-bar {
+position: absolute;
+left: 0; top: 0; bottom: 0;
+width: 3px;
+background: var(–gold);
+animation: fadeIn 0.5s ease both;
+}
+
+.hero-top { }
+
+.hero-eyebrow {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+font-weight: 500;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 32px;
+}
+
+.hero-name {
+font-family: ‘Raleway’, sans-serif;
+font-size: clamp(32px, 9vw, 44px);
+font-weight: 300;
+letter-spacing: 0.06em;
+line-height: 1.1;
+color: #F0EDE6;
+}
+
+.hero-name .amp { color: var(–gold); }
+
+.hero-divider {
+width: 48px; height: 1px;
+background: var(–gold);
+margin: 28px 0;
+transform-origin: left;
+animation: drawLine 0.6s ease 0.6s both;
+}
+
+.hero-tagline {
+font-family: ‘Raleway’, sans-serif;
+font-size: clamp(22px, 6vw, 28px);
+font-weight: 200;
+letter-spacing: 0.08em;
+color: #F0EDE6;
+line-height: 1.25;
+}
+
+.hero-tagline em {
+font-style: italic;
+color: var(–gold-pale);
+}
+
+.hero-bottom {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+}
+
+.hero-founder {
+font-family: ‘Mulish’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: var(–steel);
+line-height: 1.7;
+}
+
+.hero-founder strong {
+font-weight: 500;
+color: #F0EDE6;
+display: block;
+margin-bottom: 2px;
+font-size: 12px;
+}
+
+.hero-mark {
+width: 40px; height: 40px;
+flex-shrink: 0;
+}
+
+/* ── SECTION WRAPPER ── */
+.section {
+background: var(–offwhite);
+color: var(–navy);
+padding: 52px 28px;
+position: relative;
+}
+
+.section + .section {
+border-top: 0.5px solid rgba(0,0,0,0.08);
+}
+
+.section.dark {
+background: var(–slate);
+color: #F0EDE6;
+}
+
+.section-label {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+font-weight: 500;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–steel);
+margin-bottom: 32px;
+}
+
+/* ── PALETTE ── */
+.palette-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+}
+
+.swatch {
+display: flex;
+flex-direction: column;
+gap: 7px;
+}
+
+.swatch-color {
+height: 56px;
+border-radius: 6px;
+}
+
+.swatch-name {
+font-family: ‘Mulish’, sans-serif;
+font-size: 11px;
+font-weight: 500;
+color: var(–navy);
+}
+
+.swatch-hex {
+font-family: ‘Courier New’, monospace;
+font-size: 10px;
+color: var(–steel);
+}
+
+/* ── TYPOGRAPHY ── */
+.type-stack { display: flex; flex-direction: column; gap: 0; }
+
+.type-row {
+padding: 20px 0;
+border-bottom: 0.5px solid rgba(0,0,0,0.08);
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.type-row:last-child { border-bottom: none; }
+
+.type-meta {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+font-weight: 500;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–steel);
+}
+
+.t-display {
+font-family: ‘Raleway’, sans-serif;
+font-size: 36px;
+font-weight: 200;
+letter-spacing: 0.06em;
+color: var(–navy);
+line-height: 1.1;
+}
+
+.t-heading {
+font-family: ‘Raleway’, sans-serif;
+font-size: 22px;
+font-weight: 600;
+letter-spacing: 0.07em;
+color: var(–navy);
+}
+
+.t-subheading {
+font-family: ‘Raleway’, sans-serif;
+font-size: 12px;
+font-weight: 400;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–steel);
+}
+
+.t-body {
+font-family: ‘Mulish’, sans-serif;
+font-size: 14px;
+font-weight: 300;
+color: var(–navy);
+line-height: 1.75;
+}
+
+.t-label {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+font-weight: 500;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–steel);
+}
+
+/* ── ICON MARKS ── */
+.marks-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 16px;
+align-items: center;
+}
+
+.mark-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+}
+
+.mark-label {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+color: var(–steel);
+letter-spacing: 0.08em;
+text-align: center;
+}
+
+/* ── TAGLINE SECTION ── */
+.tagline-hero {
+padding: 52px 28px;
+background: var(–navy);
+position: relative;
+overflow: hidden;
+}
+
+.tagline-hero-co {
+font-family: ‘Raleway’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+letter-spacing: 0.2em;
+color: var(–steel);
+text-transform: uppercase;
+margin-bottom: 16px;
+}
+
+.tagline-hero-text {
+font-family: ‘Raleway’, sans-serif;
+font-size: clamp(28px, 8vw, 36px);
+font-weight: 200;
+letter-spacing: 0.06em;
+color: #F0EDE6;
+line-height: 1.2;
+}
+
+.tagline-hero-text em {
+font-style: italic;
+color: var(–gold);
+}
+
+.tagline-geo {
+position: absolute;
+bottom: 24px; right: 24px;
+width: 56px; height: 56px;
+opacity: 0.4;
+}
+
+.tagline-geo-outer {
+position: absolute; inset: 0;
+border: 0.75px solid var(–gold);
+}
+
+.tagline-geo-inner {
+position: absolute;
+top: 12px; left: 12px; right: 12px; bottom: 12px;
+border: 0.5px solid var(–gold);
+}
+
+.tagline-geo-dot {
+position: absolute;
+top: 50%; left: 50%;
+width: 5px; height: 5px;
+background: var(–gold);
+border-radius: 50%;
+transform: translate(-50%,-50%);
+}
+
+/* ── BUSINESS CARD ── */
+.card-stack {
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.biz-card {
+border-radius: 8px;
+padding: 22px 22px 20px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+min-height: 148px;
+position: relative;
+overflow: hidden;
+}
+
+.biz-card-front {
+background: var(–navy);
+}
+
+.biz-card-back {
+background: var(–offwhite);
+border: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.card-front-top {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+}
+
+.card-name {
+font-family: ‘Raleway’, sans-serif;
+font-size: 15px;
+font-weight: 300;
+letter-spacing: 0.1em;
+color: #F0EDE6;
+line-height: 1.2;
+}
+
+.card-role {
+font-family: ‘Mulish’, sans-serif;
+font-size: 8px;
+font-weight: 400;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–steel);
+margin-top: 3px;
+}
+
+.card-contact {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+font-weight: 300;
+color: var(–steel);
+line-height: 1.9;
+}
+
+.card-back-co {
+font-family: ‘Raleway’, sans-serif;
+font-size: 15px;
+font-weight: 300;
+letter-spacing: 0.08em;
+color: var(–navy);
+line-height: 1.2;
+}
+
+.card-back-co .amp { color: var(–gold); }
+
+.card-back-tag {
+font-family: ‘Raleway’, sans-serif;
+font-size: 10px;
+font-weight: 300;
+letter-spacing: 0.12em;
+color: var(–slate);
+font-style: italic;
+}
+
+/* ── EMAIL SIG ── */
+.sig-box {
+background: #F0EDE6;
+border-radius: 8px;
+padding: 24px 22px;
+}
+
+.sig-inner {
+border-left: 2px solid var(–gold);
+padding-left: 16px;
+}
+
+.sig-name {
+font-family: ‘Raleway’, sans-serif;
+font-size: 15px;
+font-weight: 600;
+letter-spacing: 0.08em;
+color: var(–navy);
+}
+
+.sig-title {
+font-family: ‘Mulish’, sans-serif;
+font-size: 9px;
+font-weight: 400;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–steel);
+margin-top: 2px;
+}
+
+.sig-divider {
+width: 24px; height: 1px;
+background: var(–gold-pale);
+margin: 10px 0;
+}
+
+.sig-info {
+font-family: ‘Mulish’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: var(–slate);
+line-height: 1.9;
+}
+
+.sig-brand {
+display: flex;
+align-items: center;
+gap: 7px;
+margin-top: 10px;
+font-family: ‘Raleway’, sans-serif;
+font-size: 10px;
+font-weight: 400;
+letter-spacing: 0.1em;
+color: var(–gold);
+}
+
+/* ── FOOTER ── */
+.footer {
+background: var(–navy);
+padding: calc(40px) 28px calc(var(–safe-bot) + 40px);
+border-top: 0.5px solid rgba(255,255,255,0.06);
+text-align: center;
+}
+
+.footer-name {
+font-family: ‘Raleway’, sans-serif;
+font-size: 18px;
+font-weight: 300;
+letter-spacing: 0.1em;
+color: #F0EDE6;
+margin-bottom: 6px;
+}
+
+.footer-name .amp { color: var(–gold); }
+
+.footer-tag {
+font-family: ‘Raleway’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+letter-spacing: 0.1em;
+font-style: italic;
+color: var(–gold-pale);
+margin-bottom: 24px;
+}
+
+.footer-contact {
+font-family: ‘Mulish’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: var(–steel);
+line-height: 2;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+opacity: 0;
+transform: translateY(20px);
+transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+
+</head>
+<body>
+
+<!-- ── HERO ── -->
+
+<section class="hero">
+  <div class="gold-bar"></div>
+
+  <div class="hero-geo" aria-hidden="true">
+    <div class="hero-geo-outer"></div>
+    <div class="hero-geo-inner"></div>
+    <div class="hero-geo-dot"></div>
+  </div>
+
+  <div class="hero-top">
+    <p class="hero-eyebrow anim-1">Brand Identity</p>
+    <h1 class="hero-name anim-2">
+      JC Consulting<br><span class="amp">&amp;</span> Advisory
+    </h1>
+    <div class="hero-divider anim-3"></div>
+    <p class="hero-tagline anim-4">
+      Innovation,<br><em>taken further.</em>
+    </p>
+  </div>
+
+  <div class="hero-bottom anim-5">
+    <div class="hero-founder">
+      <strong>Joao Victor Creste</strong>
+      Founder &amp; Principal Advisor
+    </div>
+    <svg class="hero-mark" viewBox="0 0 48 48" fill="none">
+      <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+      <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="1"/>
+      <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="1"/>
+      <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="1" fill="none"/>
+      <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── TAGLINE ── -->
+
+<div class="tagline-hero reveal">
+  <div class="gold-bar"></div>
+  <p class="tagline-hero-co">Tagline</p>
+  <p class="tagline-hero-text">Innovation,<br><em>taken further.</em></p>
+  <div class="tagline-geo" aria-hidden="true">
+    <div class="tagline-geo-outer"></div>
+    <div class="tagline-geo-inner"></div>
+    <div class="tagline-geo-dot"></div>
+  </div>
+</div>
+
+<!-- ── COLOUR PALETTE ── -->
+
+<section class="section reveal">
+  <p class="section-label">Colour palette</p>
+  <div class="palette-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0D1B2A;"></div>
+      <div class="swatch-name">Navy</div>
+      <div class="swatch-hex">#0D1B2A</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1E2D3D;"></div>
+      <div class="swatch-name">Slate</div>
+      <div class="swatch-hex">#1E2D3D</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#B8954A;"></div>
+      <div class="swatch-name">Gold</div>
+      <div class="swatch-hex">#B8954A</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E5D4A8; border:0.5px solid rgba(0,0,0,0.08);"></div>
+      <div class="swatch-name">Gold pale</div>
+      <div class="swatch-hex">#E5D4A8</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#7A8FA6; border:0.5px solid rgba(0,0,0,0.06);"></div>
+      <div class="swatch-name">Steel</div>
+      <div class="swatch-hex">#7A8FA6</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F9F7F4; border:0.5px solid rgba(0,0,0,0.08);"></div>
+      <div class="swatch-name">Off-white</div>
+      <div class="swatch-hex">#F9F7F4</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ICON MARKS ── -->
+
+<section class="section dark reveal">
+  <p class="section-label" style="color:var(--steel);">Icon mark · Variants</p>
+  <div class="marks-grid">
+    <div class="mark-item">
+      <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+        <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+        <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+        <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+        <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+      </svg>
+      <span class="mark-label">Square</span>
+    </div>
+    <div class="mark-item">
+      <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="21" fill="#0D1B2A"/>
+        <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+        <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+        <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+        <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+      </svg>
+      <span class="mark-label">Circle</span>
+    </div>
+    <div class="mark-item">
+      <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+        <rect x="2" y="2" width="44" height="44" rx="3" stroke="#0D1B2A" stroke-width="1.2" fill="none"/>
+        <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+        <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+        <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+        <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+      </svg>
+      <span class="mark-label">Outline</span>
+    </div>
+    <div class="mark-item">
+      <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+        <line x1="13" y1="24" x2="35" y2="24" stroke="rgba(184,149,74,0.6)" stroke-width="0.9"/>
+        <line x1="24" y1="13" x2="24" y2="35" stroke="rgba(184,149,74,0.6)" stroke-width="0.9"/>
+        <rect x="18" y="18" width="12" height="12" rx="1" stroke="rgba(184,149,74,0.6)" stroke-width="0.9" fill="none"/>
+        <rect x="22" y="22" width="4" height="4" rx="0.5" fill="rgba(184,149,74,0.6)"/>
+      </svg>
+      <span class="mark-label">Minimal</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TYPOGRAPHY ── -->
+
+<section class="section reveal">
+  <p class="section-label">Typography</p>
+  <div class="type-stack">
+    <div class="type-row">
+      <div class="type-meta">Display · Raleway 200</div>
+      <div class="t-display">Innovation,<br>taken further.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Heading · Raleway 600</div>
+      <div class="t-heading">Business Model Strategy</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Subheading · Raleway 400</div>
+      <div class="t-subheading">Financial Modelling · Advisory</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Body · Mulish 300</div>
+      <div class="t-body">We work with innovators who have a patent, an idea, or a technology — and need to build a credible, fundable path forward.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Label · Mulish 500</div>
+      <div class="t-label">Strategy · Modelling · Execution</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORDMARK ── -->
+
+<section class="section dark reveal">
+  <p class="section-label" style="color:var(--steel);">Wordmark · Light &amp; dark</p>
+
+  <div style="background:#fff; border-radius:10px; padding:22px 20px; margin-bottom:14px; display:flex; align-items:center; gap:14px;">
+    <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+      <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A"/>
+      <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+      <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+      <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+      <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+    </svg>
+    <div style="width:1px;height:36px;background:rgba(0,0,0,0.1);flex-shrink:0;"></div>
+    <div>
+      <div style="font-family:'Raleway',sans-serif;font-size:18px;font-weight:300;letter-spacing:0.1em;color:#0D1B2A;line-height:1.2;">JC Consulting <span style="color:#B8954A;">&amp;</span> Advisory</div>
+      <div style="font-family:'Mulish',sans-serif;font-size:8px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:#7A8FA6;margin-top:4px;">Innovation, taken further.</div>
+    </div>
+  </div>
+
+  <div style="background:#0D1B2A; border-radius:10px; padding:22px 20px; display:flex; align-items:center; gap:14px; border:0.5px solid rgba(255,255,255,0.06);">
+    <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+      <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+      <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+      <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+      <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+    </svg>
+    <div style="width:1px;height:36px;background:rgba(255,255,255,0.12);flex-shrink:0;"></div>
+    <div>
+      <div style="font-family:'Raleway',sans-serif;font-size:18px;font-weight:300;letter-spacing:0.1em;color:#F0EDE6;line-height:1.2;">JC Consulting <span style="color:#B8954A;">&amp;</span> Advisory</div>
+      <div style="font-family:'Mulish',sans-serif;font-size:8px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:#7A8FA6;margin-top:4px;">Innovation, taken further.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BUSINESS CARD ── -->
+
+<section class="section reveal">
+  <p class="section-label">Business card</p>
+  <div class="card-stack">
+
+```
+<div class="biz-card biz-card-front">
+  <div class="card-front-top">
+    <svg width="22" height="22" viewBox="0 0 48 48" fill="none">
+      <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="1"/>
+      <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="1"/>
+      <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="1" fill="none"/>
+      <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+    </svg>
+  </div>
+  <div>
+    <div class="card-name">Joao Victor Creste</div>
+    <div class="card-role">Founder &amp; Principal Advisor</div>
+    <div class="card-contact" style="margin-top:8px;">
+      joao.creste@edu.escp.eu<br>
+      linkedin.com/in/joaocreste
+    </div>
+  </div>
+</div>
+
+<div class="biz-card biz-card-back">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
+      <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A"/>
+      <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+      <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+      <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+      <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+    </svg>
+    <div class="card-back-co">JC Consulting <span class="amp">&amp;</span> Advisory</div>
+  </div>
+  <div class="card-back-tag">Innovation, taken further.</div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ── EMAIL SIGNATURE ── -->
+
+<section class="section reveal">
+  <p class="section-label">Email signature</p>
+  <div class="sig-box">
+    <div class="sig-inner">
+      <div class="sig-name">Joao Victor Creste</div>
+      <div class="sig-title">Founder &amp; Principal Advisor · JC Consulting &amp; Advisory</div>
+      <div class="sig-divider"></div>
+      <div class="sig-info">
+        joao.creste@edu.escp.eu<br>
+        +44 741 740 0683<br>
+        linkedin.com/in/joaocreste
+      </div>
+      <div class="sig-brand">
+        <svg width="13" height="13" viewBox="0 0 48 48" fill="none">
+          <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A"/>
+          <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="1"/>
+          <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="1"/>
+          <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="1" fill="none"/>
+          <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+        </svg>
+        JC Consulting &amp; Advisory · Innovation, taken further.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+
+<footer class="footer">
+  <div class="footer-name">JC Consulting <span class="amp">&amp;</span> Advisory</div>
+  <div class="footer-tag">Innovation, taken further.</div>
+  <div class="footer-contact">
+    joao.creste@edu.escp.eu<br>
+    linkedin.com/in/joaocreste<br>
+    +44 741 740 0683
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
