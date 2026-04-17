@@ -279,6 +279,16 @@
   .service-name { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; letter-spacing:0.06em; color:#0D1B2A; margin-bottom:14px; }
   .service-desc { font-family:'Mulish',sans-serif; font-size:13px; font-weight:300; color:#1E2D3D; line-height:1.85; }
 
+  /* ── AI PILLAR ── */
+  .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 48px; margin-top: 56px; }
+  .ai-item { position: relative; padding-top: 24px; border-top: 0.5px solid rgba(184,149,74,0.25); }
+  .ai-icon { display: block; margin-bottom: 20px; }
+  .ai-icon svg { display: block; }
+  .ai-name { font-family: 'Raleway', sans-serif; font-size: 17px; font-weight: 400; letter-spacing: 0.05em; color: #F0EDE6; line-height: 1.4; margin-bottom: 14px; }
+  .ai-name em { font-style: italic; color: #E5D4A8; }
+  .ai-desc { font-family: 'Mulish', sans-serif; font-size: 13px; font-weight: 300; color: #7A8FA6; line-height: 1.85; }
+  .ai-intro { margin-top: 24px; }
+
   /* ── CASES ── */
   .cases-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; margin-top:48px; }
   .case-card { background:#1E2D3D; border:0.5px solid rgba(255,255,255,0.06); border-radius:4px; padding:36px 30px 32px; display:flex; flex-direction:column; gap:16px; transition:border-color 0.3s ease; }
@@ -321,11 +331,11 @@
   <div class="nav-left">
     <a href="#hero" class="nav-logo">
       <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
-        <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-        <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="1"/>
-        <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="1"/>
-        <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="1" fill="none"/>
-        <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+        <rect x="2" y="2" width="44" height="44" rx="4" fill="#0D1B2A" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="12" y1="24" x2="36" y2="24" stroke="#B8954A" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="24" y1="12" x2="24" y2="36" stroke="#B8954A" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="16.5" y="16.5" width="15" height="15" rx="2.5" stroke="#B8954A" stroke-width="1.6" fill="none"/>
+        <rect x="21.5" y="21.5" width="5" height="5" rx="1" fill="#B8954A"/>
       </svg>
       <span class="nav-logo-text">JC Consulting <span class="amp">&amp;</span> Advisory</span>
     </a>
@@ -386,7 +396,6 @@
     <h1 class="hero-name">JC Consulting<br><span class="amp">&amp;</span> Advisory</h1>
     <div class="hero-divider"></div>
     <p class="hero-tagline" data-i18n="hero_tagline">Innovation,<br><em>taken further.</em></p>
-    <p class="hero-sub" data-i18n="hero_sub">We partner with organisations to define business models, build robust financial frameworks, and craft go-to-market strategies that turn ideas into revenue.</p>
     <a href="#contact" class="hero-cta" data-i18n="hero_cta">
       Get in touch
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1"/></svg>
@@ -417,27 +426,55 @@
   </div>
 </section>
 
-<!-- VALUES -->
-<section class="section section-dark" id="values">
+<!-- AI PILLAR -->
+<section class="section section-dark" id="ai">
   <div class="reveal">
-    <p class="section-label" data-i18n="values_label">Values</p>
-    <h2 class="section-heading" data-i18n="values_heading">What we <em>stand for.</em></h2>
+    <p class="section-label" data-i18n="ai_label">Our Approach</p>
+    <h2 class="section-heading" data-i18n="ai_heading">Beyond the prompt:<br>AI, <em>put to work.</em></h2>
+    <p class="section-body section-body-steel max-w-medium ai-intro" data-i18n="ai_intro">Most firms use AI the way everyone does: generic prompts, generic outputs. We don't. We treat AI as a strategic discipline — trained on your context, embedded in your operations, and engineered to deliver results that a general-purpose tool cannot. From insight to infrastructure, we help organisations turn AI from a buzzword into a competitive advantage.</p>
   </div>
-  <div class="values-grid">
-    <div class="value-card reveal reveal-d1">
-      <div class="value-number">01</div>
-      <div class="value-name" data-i18n="val1_name">Rigour</div>
-      <div class="value-desc" data-i18n="val1_desc">Every model, every recommendation, every deliverable is built on disciplined analysis. We don't cut corners.</div>
+  <div class="ai-grid">
+    <div class="ai-item reveal reveal-d1">
+      <div class="ai-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <rect x="7" y="7" width="34" height="34" rx="2" stroke="#B8954A" stroke-width="1" fill="none" opacity="0.4"/>
+          <rect x="13" y="13" width="22" height="22" rx="1.5" stroke="#B8954A" stroke-width="1.2" fill="none" opacity="0.75"/>
+          <rect x="19" y="19" width="10" height="10" rx="1" stroke="#B8954A" stroke-width="1.3" fill="none"/>
+          <rect x="22.5" y="22.5" width="3" height="3" rx="0.5" fill="#B8954A"/>
+        </svg>
+      </div>
+      <div class="ai-name" data-i18n="ai1_name">Context-Trained AI for Strategic Insight</div>
+      <div class="ai-desc" data-i18n="ai1_desc">We build AI systems tailored to each engagement — trained on your data, your sector, and your strategic questions. The result is analysis no off-the-shelf model can replicate: sharper, more defensible, and genuinely proprietary to your decision-making.</div>
     </div>
-    <div class="value-card reveal reveal-d2">
-      <div class="value-number">02</div>
-      <div class="value-name" data-i18n="val2_name">Clarity</div>
-      <div class="value-desc" data-i18n="val2_desc">Complex problems deserve clear answers. We distil complexity into frameworks that drive action.</div>
+    <div class="ai-item reveal reveal-d2">
+      <div class="ai-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="15" cy="24" r="7" stroke="#B8954A" stroke-width="1.3" fill="none"/>
+          <circle cx="15" cy="24" r="2" fill="#B8954A"/>
+          <line x1="22" y1="24" x2="40" y2="24" stroke="#B8954A" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="33" y1="24" x2="33" y2="30" stroke="#B8954A" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="38" y1="24" x2="38" y2="28" stroke="#B8954A" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ai-name" data-i18n="ai2_name">Unlocking Generative AI for Your Business</div>
+      <div class="ai-desc" data-i18n="ai2_desc">We help organisations move beyond experimentation. Through targeted assessments, use-case design, and implementation roadmaps, we identify where generative AI creates measurable value — and where it doesn't — so investment follows opportunity, not hype.</div>
     </div>
-    <div class="value-card reveal reveal-d3">
-      <div class="value-number">03</div>
-      <div class="value-name" data-i18n="val3_name">Partnership</div>
-      <div class="value-desc" data-i18n="val3_desc">We work alongside our clients, not above them. Their challenges become ours.</div>
+    <div class="ai-item reveal reveal-d3">
+      <div class="ai-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="10" cy="12" r="2.5" stroke="#B8954A" stroke-width="1.2" fill="none"/>
+          <circle cx="10" cy="36" r="2.5" stroke="#B8954A" stroke-width="1.2" fill="none"/>
+          <circle cx="38" cy="12" r="2.5" stroke="#B8954A" stroke-width="1.2" fill="none"/>
+          <circle cx="38" cy="36" r="2.5" stroke="#B8954A" stroke-width="1.2" fill="none"/>
+          <line x1="12" y1="13.8" x2="21.5" y2="21.5" stroke="#B8954A" stroke-width="1" opacity="0.7"/>
+          <line x1="12" y1="34.2" x2="21.5" y2="26.5" stroke="#B8954A" stroke-width="1" opacity="0.7"/>
+          <line x1="36" y1="13.8" x2="26.5" y2="21.5" stroke="#B8954A" stroke-width="1" opacity="0.7"/>
+          <line x1="36" y1="34.2" x2="26.5" y2="26.5" stroke="#B8954A" stroke-width="1" opacity="0.7"/>
+          <rect x="21" y="21" width="6" height="6" rx="1" fill="#B8954A"/>
+        </svg>
+      </div>
+      <div class="ai-name" data-i18n="ai3_name">AI Agents, Built and Deployed End-to-End</div>
+      <div class="ai-desc" data-i18n="ai3_desc">We design, develop, and deploy bespoke AI agents that operate inside your business — automating workflows, augmenting teams, and executing tasks at scale. From architecture to integration to ongoing optimisation, we deliver the full stack, not just the strategy.</div>
     </div>
   </div>
 </section>
@@ -523,7 +560,7 @@
       <div class="contact-card-role" data-i18n="contact_role">Founder &amp; Principal Advisor</div>
       <div class="contact-divider"></div>
       <div class="contact-info">
-        <a href="mailto:jc@jcconsultingadvisory.com">jc@jcconsultingadvisory.com</a><br>
+        <a href="mailto:jc@jcconsultingadv.com">jc@jcconsultingadv.com</a><br>
         <a href="https://linkedin.com/in/joaocreste" target="_blank" rel="noopener">linkedin.com/in/joaocreste</a>
       </div>
     </div>
@@ -551,7 +588,6 @@ const translations = {
     nav_mission:'Mission', nav_services:'Services', nav_portfolio:'Portfolio', nav_contact:'Contact',
     hero_eyebrow:'Corporate Strategy &amp; Financial Modelling',
     hero_tagline:'Innovation,<br><em>taken further.</em>',
-    hero_sub:'We partner with organisations to define business models, build robust financial frameworks, and craft go-to-market strategies that turn ideas into revenue.',
     hero_cta:'Get in touch',
     scroll:'Scroll',
     mission_label:'Mission &amp; Vision',
@@ -560,15 +596,20 @@ const translations = {
     mission_text:'To bridge the gap between an idea and a revenue stream. We help organisations translate ambition into structured, fundable, and executable plans — from concept through commercialisation.',
     our_vision:'Our Vision',
     vision_text:'To be the advisor of choice for organisations navigating pivotal moments — where the quality of strategic thinking and financial rigour defines the outcome.',
-    values_label:'Values', values_heading:'What we <em>stand for.</em>',
-    val1_name:'Rigour', val1_desc:"Every model, every recommendation, every deliverable is built on disciplined analysis. We don't cut corners.",
-    val2_name:'Clarity', val2_desc:'Complex problems deserve clear answers. We distil complexity into frameworks that drive action.',
-    val3_name:'Partnership', val3_desc:'We work alongside our clients, not above them. Their challenges become ours.',
     services_label:'Services', services_heading:'Three disciplines,<br>one <em>clear outcome.</em>',
     services_sub:'We work at the intersection of strategy and execution — helping organisations move from concept to commercialisation with rigour and speed.',
     svc1_name:'Business Model Definition', svc1_desc:'We help organisations design and validate their business model — defining value propositions, revenue architectures, cost structures, and unit economics that hold up under scrutiny.',
     svc2_name:'Financial Modelling', svc2_desc:'Bespoke three-statement models, scenario analysis, and forecasting frameworks built for transparency — whether for fundraising, board presentations, or strategic planning.',
     svc3_name:'Go-to-Market Strategy', svc3_desc:'Market entry frameworks, competitive positioning, pricing strategy, and phased rollout plans that translate strategic intent into market traction.',
+    ai_label:'Our Approach',
+    ai_heading:'Beyond the prompt:<br>AI, <em>put to work.</em>',
+    ai_intro:"Most firms use AI the way everyone does: generic prompts, generic outputs. We don't. We treat AI as a strategic discipline — trained on your context, embedded in your operations, and engineered to deliver results that a general-purpose tool cannot. From insight to infrastructure, we help organisations turn AI from a buzzword into a competitive advantage.",
+    ai1_name:'Context-Trained AI for Strategic Insight',
+    ai1_desc:'We build AI systems tailored to each engagement — trained on your data, your sector, and your strategic questions. The result is analysis no off-the-shelf model can replicate: sharper, more defensible, and genuinely proprietary to your decision-making.',
+    ai2_name:'Unlocking Generative AI for Your Business',
+    ai2_desc:"We help organisations move beyond experimentation. Through targeted assessments, use-case design, and implementation roadmaps, we identify where generative AI creates measurable value — and where it doesn't — so investment follows opportunity, not hype.",
+    ai3_name:'AI Agents, Built and Deployed End-to-End',
+    ai3_desc:'We design, develop, and deploy bespoke AI agents that operate inside your business — automating workflows, augmenting teams, and executing tasks at scale. From architecture to integration to ongoing optimisation, we deliver the full stack, not just the strategy.',
     portfolio_label:'Portfolio', portfolio_heading:'Selected <em>engagements.</em>',
     portfolio_sub:'A selection of representative projects. Client identities are protected under confidentiality agreements.',
     case1_label:'Case 01', case1_title:'Market Entry Strategy for a European Industrial Group',
@@ -592,7 +633,6 @@ const translations = {
     nav_mission:'Mission', nav_services:'Services', nav_portfolio:'Portfolio', nav_contact:'Contact',
     hero_eyebrow:"Stratégie d'Entreprise &amp; Modélisation Financière",
     hero_tagline:"L'innovation,<br><em>poussée plus loin.</em>",
-    hero_sub:"Nous accompagnons les organisations dans la définition de leurs modèles économiques, la construction de cadres financiers solides et l'élaboration de stratégies de mise sur le marché qui transforment les idées en revenus.",
     hero_cta:'Nous contacter',
     scroll:'Défiler',
     mission_label:'Mission &amp; Vision',
@@ -601,15 +641,20 @@ const translations = {
     mission_text:"Combler le fossé entre une idée et une source de revenus. Nous aidons les organisations à transformer leurs ambitions en plans structurés, finançables et exécutables — du concept à la commercialisation.",
     our_vision:'Notre Vision',
     vision_text:"Être le conseil de référence pour les organisations qui traversent des moments décisifs — là où la qualité de la réflexion stratégique et la rigueur financière déterminent le résultat.",
-    values_label:'Valeurs', values_heading:'Ce en quoi<br>nous <em>croyons.</em>',
-    val1_name:'Rigueur', val1_desc:"Chaque modèle, chaque recommandation, chaque livrable repose sur une analyse disciplinée. Nous ne faisons pas de compromis.",
-    val2_name:'Clarté', val2_desc:"Les problèmes complexes méritent des réponses claires. Nous distillons la complexité en cadres opérationnels qui guident l'action.",
-    val3_name:'Partenariat', val3_desc:"Nous travaillons aux côtés de nos clients, et non au-dessus d'eux. Leurs défis deviennent les nôtres.",
     services_label:'Services', services_heading:'Trois disciplines,<br>un <em>résultat clair.</em>',
     services_sub:"Nous opérons à l'intersection de la stratégie et de l'exécution — en aidant les organisations à passer du concept à la commercialisation avec rigueur et rapidité.",
     svc1_name:'Définition du Modèle Économique', svc1_desc:"Nous aidons les organisations à concevoir et valider leur modèle économique — en définissant des propositions de valeur, des architectures de revenus, des structures de coûts et des économies unitaires robustes.",
     svc2_name:'Modélisation Financière', svc2_desc:"Modèles à trois états sur mesure, analyses de scénarios et cadres de prévision conçus pour la transparence — pour les levées de fonds, les présentations au conseil ou la planification stratégique.",
     svc3_name:'Stratégie de Mise sur le Marché', svc3_desc:"Cadres d'entrée sur le marché, positionnement concurrentiel, stratégie tarifaire et plans de déploiement progressifs qui traduisent l'intention stratégique en traction commerciale.",
+    ai_label:'Notre Approche',
+    ai_heading:"Au-delà du prompt :<br>l'IA, <em>mise au travail.</em>",
+    ai_intro:"La plupart des cabinets utilisent l'IA comme tout le monde : prompts génériques, résultats génériques. Pas nous. Nous considérons l'IA comme une discipline stratégique — entraînée sur votre contexte, intégrée à vos opérations et conçue pour produire des résultats qu'aucun outil généraliste ne peut égaler. De l'analyse à l'infrastructure, nous aidons les organisations à transformer l'IA d'un mot à la mode en véritable avantage concurrentiel.",
+    ai1_name:'IA Contextualisée pour des Insights Stratégiques',
+    ai1_desc:"Nous construisons des systèmes d'IA sur mesure pour chaque mission — entraînés sur vos données, votre secteur et vos enjeux stratégiques. Le résultat : une analyse qu'aucun modèle prêt à l'emploi ne peut reproduire — plus précise, plus défendable et véritablement propre à votre prise de décision.",
+    ai2_name:"Libérer le Potentiel de l'IA Générative",
+    ai2_desc:"Nous aidons les organisations à dépasser l'expérimentation. À travers des évaluations ciblées, la conception de cas d'usage et des feuilles de route d'implémentation, nous identifions où l'IA générative crée une valeur mesurable — et où elle n'en crée pas — afin que l'investissement suive l'opportunité, non l'effet de mode.",
+    ai3_name:'Agents IA, Conçus et Déployés de Bout en Bout',
+    ai3_desc:"Nous concevons, développons et déployons des agents IA sur mesure qui opèrent au sein de votre entreprise — automatisant les flux de travail, augmentant les équipes et exécutant des tâches à grande échelle. De l'architecture à l'intégration jusqu'à l'optimisation continue, nous livrons la solution complète, pas seulement la stratégie.",
     portfolio_label:'Portfolio', portfolio_heading:'Missions <em>sélectionnées.</em>',
     portfolio_sub:"Une sélection de projets représentatifs. Les identités des clients sont protégées par des accords de confidentialité.",
     case1_label:'Cas 01', case1_title:"Stratégie d'Entrée sur le Marché pour un Groupe Industriel Européen",
@@ -633,7 +678,6 @@ const translations = {
     nav_mission:'Missão', nav_services:'Serviços', nav_portfolio:'Portfólio', nav_contact:'Contato',
     hero_eyebrow:'Estratégia Corporativa &amp; Modelagem Financeira',
     hero_tagline:'Inovação,<br><em>levada mais longe.</em>',
-    hero_sub:'Trabalhamos com organizações para definir modelos de negócio, construir frameworks financeiros sólidos e desenvolver estratégias de entrada no mercado que convertem ideias em receita.',
     hero_cta:'Entrar em contato',
     scroll:'Rolar',
     mission_label:'Missão &amp; Visão',
@@ -642,15 +686,20 @@ const translations = {
     mission_text:'Conectar a distância entre uma ideia e uma fonte de receita. Ajudamos organizações a transformar ambição em planos estruturados, financiáveis e executáveis — do conceito à comercialização.',
     our_vision:'Nossa Visão',
     vision_text:'Ser o consultor de referência para organizações que enfrentam momentos decisivos — onde a qualidade do pensamento estratégico e o rigor financeiro determinam o resultado.',
-    values_label:'Valores', values_heading:'O que nos<br><em>define.</em>',
-    val1_name:'Rigor', val1_desc:'Cada modelo, cada recomendação, cada entrega é construída sobre análise disciplinada. Não abrimos mão da qualidade.',
-    val2_name:'Clareza', val2_desc:'Problemas complexos merecem respostas claras. Destilamos a complexidade em frameworks que orientam a ação.',
-    val3_name:'Parceria', val3_desc:'Trabalhamos ao lado dos nossos clientes, não acima deles. Os desafios deles se tornam os nossos.',
     services_label:'Serviços', services_heading:'Três disciplinas,<br>um <em>resultado claro.</em>',
     services_sub:'Atuamos na interseção entre estratégia e execução — ajudando organizações a avançar do conceito à comercialização com rigor e agilidade.',
     svc1_name:'Definição de Modelo de Negócio', svc1_desc:'Ajudamos organizações a projetar e validar seu modelo de negócio — definindo propostas de valor, arquiteturas de receita, estruturas de custo e economias unitárias que resistem ao escrutínio.',
     svc2_name:'Modelagem Financeira', svc2_desc:'Modelos de negócios, análise de cenários e frameworks de previsão construídos para transparência — seja para captação de recursos, apresentações ao shareholders ou planejamento estratégico.',
     svc3_name:'Estratégia de Entrada no Mercado', svc3_desc:'Frameworks de entrada em novos mercados, posicionamento competitivo, estratégia de precificação e planos de lançamento faseados que traduzem intenção estratégica em tração comercial.',
+    ai_label:'Nossa Abordagem',
+    ai_heading:'Além do prompt:<br>IA, <em>colocada para trabalhar.</em>',
+    ai_intro:'A maioria das firmas usa IA como todo mundo: prompts genéricos, resultados genéricos. Nós não. Tratamos a IA como uma disciplina estratégica — treinada no seu contexto, incorporada às suas operações e projetada para entregar resultados que nenhuma ferramenta de uso geral consegue alcançar. Do insight à infraestrutura, ajudamos organizações a transformar a IA de um modismo em vantagem competitiva.',
+    ai1_name:'IA Treinada por Contexto para Insights Estratégicos',
+    ai1_desc:'Construímos sistemas de IA sob medida para cada projeto — treinados nos seus dados, no seu setor e nas suas questões estratégicas. O resultado é uma análise que nenhum modelo pronto consegue replicar: mais aguda, mais defensável e genuinamente proprietária à sua tomada de decisão.',
+    ai2_name:'Destravando a IA Generativa para o Seu Negócio',
+    ai2_desc:'Ajudamos organizações a ir além da experimentação. Por meio de avaliações direcionadas, desenho de casos de uso e roadmaps de implementação, identificamos onde a IA generativa cria valor mensurável — e onde não cria — para que o investimento siga a oportunidade, não o hype.',
+    ai3_name:'Agentes de IA, Construídos e Implantados de Ponta a Ponta',
+    ai3_desc:'Projetamos, desenvolvemos e implantamos agentes de IA sob medida que operam dentro do seu negócio — automatizando fluxos de trabalho, potencializando equipes e executando tarefas em escala. Da arquitetura à integração e à otimização contínua, entregamos a solução completa, não apenas a estratégia.',
     portfolio_label:'Portfólio', portfolio_heading:'Projetos <em>selecionados.</em>',
     portfolio_sub:'Uma seleção de projetos representativos. As identidades dos clientes são protegidas por acordos de confidencialidade.',
     case1_label:'Caso 01', case1_title:'Estratégia de Entrada no Mercado para um Grupo Industrial Europeu',
