@@ -211,7 +211,24 @@
   }
   table.holdings tbody tr:hover .ticker::after { opacity: 1; transform: translateX(2px) translateY(-2px); }
   table.holdings .name { font-size: 12px; color: var(--text); font-weight: 400; line-height: 1.4; }
-  table.holdings .name small { display: block; color: var(--steel); font-size: 10px; margin-top: 2px; letter-spacing: 0.03em; }
+  table.holdings .name small { display: block; color: var(--steel); font-size: 10px; margin-top: 4px; letter-spacing: 0.03em; }
+
+  .cat-pill {
+    display: inline-block;
+    padding: 2px 9px;
+    margin-top: 6px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    line-height: 1.4;
+  }
+  .cat-equity { background: linear-gradient(90deg, var(--gold) 0%, #D4AF6A 100%); color: var(--navy); }
+  .cat-ig     { background: var(--gold-pale); color: var(--navy); }
+  .cat-hy     { background: var(--caution); color: var(--navy); }
+  .cat-alt    { background: var(--steel); color: var(--text); }
   table.holdings .num { font-variant-numeric: tabular-nums; }
   table.holdings .gain { color: var(--gain); font-weight: 600; }
   table.holdings .loss { color: var(--loss); font-weight: 600; }
@@ -477,6 +494,74 @@
     section { page-break-inside: avoid; }
     .reveal { opacity: 1; transform: none; }
   }
+
+  /* ═════════ CORRELATION MATRIX ═════════ */
+  .corr-wrap { overflow-x: auto; margin-top: 10px; padding-bottom: 4px; }
+  .corr-matrix {
+    border-collapse: collapse;
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    margin: 0 auto;
+  }
+  .corr-matrix thead th {
+    font-weight: 600; font-size: 9px;
+    letter-spacing: 0.14em; color: var(--steel);
+    padding: 10px 6px;
+    text-align: center;
+    min-width: 54px;
+    text-transform: uppercase;
+  }
+  .corr-matrix tbody th {
+    font-weight: 600; font-size: 10px;
+    letter-spacing: 0.08em; color: var(--gold-pale);
+    padding: 10px 16px 10px 4px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .corr-matrix td {
+    padding: 0;
+    width: 56px; height: 40px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+    color: var(--text);
+    font-weight: 500;
+  }
+  .corr-matrix td.empty { background: transparent; border-color: transparent; }
+  .corr-matrix td.diag { background: rgba(184,149,74,0.18); color: var(--gold); font-weight: 700; border-color: rgba(184,149,74,0.3); }
+  .corr-matrix td.c-95 { background: rgba(184,149,74,0.95); color: var(--navy); font-weight: 700; }
+  .corr-matrix td.c-80 { background: rgba(184,149,74,0.72); color: var(--navy); font-weight: 700; }
+  .corr-matrix td.c-60 { background: rgba(196,163,42,0.55); color: var(--navy); font-weight: 600; }
+  .corr-matrix td.c-40 { background: rgba(229,212,168,0.32); color: var(--gold-pale); font-weight: 500; }
+  .corr-matrix td.c-20 { background: rgba(229,212,168,0.12); color: var(--text); }
+  .corr-matrix td.c-neg { background: rgba(122,143,166,0.38); color: var(--text); font-weight: 600; }
+
+  .corr-legend {
+    display: flex; flex-wrap: wrap; gap: 14px 20px;
+    margin-top: 20px; justify-content: flex-start; align-items: center;
+  }
+  .corr-legend .item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: var(--steel);
+    letter-spacing: 0.04em;
+  }
+  .corr-legend .swatch {
+    display: inline-block; width: 22px; height: 14px;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+  }
+
+  .corr-takeaways {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px; margin-top: 24px;
+  }
+  .corr-take {
+    padding: 14px 16px; border-left: 2px solid var(--gold);
+    background: rgba(255,255,255,0.02); border-radius: 0 6px 6px 0;
+  }
+  .corr-take .k { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 600; }
+  .corr-take .v { font-size: 12px; color: var(--text); font-weight: 300; line-height: 1.65; }
+  .corr-take .v strong { color: var(--gold-pale); font-weight: 600; }
 
   /* ═════════ DISCLAIMER GATE ═════════ */
   body.gate-active { overflow: hidden; }
@@ -808,6 +893,141 @@
       <div class="rubric-cell"><div class="m">AUM &amp; liquidity</div><div class="w">10%</div><div class="d">All picks &gt; €900M ex. XIFE (flagged).</div></div>
       <div class="rubric-cell"><div class="m">Team &amp; tenure</div><div class="w">10%</div><div class="d">Passive trackers — low style-drift risk.</div></div>
     </div>
+
+    <p class="sec-label" style="margin-top: 56px;">Diversification · 3Y Correlation Matrix</p>
+    <p class="body-text" style="margin-bottom: 18px;">
+      Pairwise correlations across the nine holdings. Values are <strong>asset-class-proxy estimates</strong> drawn from typical 36-month rolling correlations in the 2023–26 regime — not computed tick-by-tick from each ETF's price series. Lower triangle only; the matrix is symmetric and the diagonal is trivially 1.00. Strong gold = high positive co-movement; steel = low or negative.
+    </p>
+
+    <div class="corr-wrap">
+      <table class="corr-matrix" aria-label="Correlation matrix, lower triangle">
+        <thead>
+          <tr>
+            <th></th>
+            <th>WRDUSA</th>
+            <th>CSPX</th>
+            <th>CEU</th>
+            <th>XBLC</th>
+            <th>CSBGE7</th>
+            <th>XHYA</th>
+            <th>SGLD</th>
+            <th>XIFE</th>
+            <th>WTAI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>WRDUSA</th>
+            <td class="diag">1.00</td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <th>CSPX</th>
+            <td class="c-95">0.96</td>
+            <td class="diag">1.00</td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <th>CEU</th>
+            <td class="c-95">0.80</td>
+            <td class="c-80">0.72</td>
+            <td class="diag">1.00</td>
+            <td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <th>XBLC</th>
+            <td class="c-40">0.30</td>
+            <td class="c-40">0.28</td>
+            <td class="c-40">0.32</td>
+            <td class="diag">1.00</td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <th>CSBGE7</th>
+            <td class="c-20">0.15</td>
+            <td class="c-20">0.12</td>
+            <td class="c-40">0.22</td>
+            <td class="c-95">0.82</td>
+            <td class="diag">1.00</td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <th>XHYA</th>
+            <td class="c-80">0.72</td>
+            <td class="c-80">0.68</td>
+            <td class="c-80">0.75</td>
+            <td class="c-60">0.55</td>
+            <td class="c-40">0.25</td>
+            <td class="diag">1.00</td>
+            <td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <th>SGLD</th>
+            <td class="c-20">0.05</td>
+            <td class="c-20">0.03</td>
+            <td class="c-20">0.08</td>
+            <td class="c-40">0.22</td>
+            <td class="c-40">0.28</td>
+            <td class="c-20">0.02</td>
+            <td class="diag">1.00</td>
+            <td class="empty"></td>
+          </tr>
+          <tr>
+            <th>XIFE</th>
+            <td class="c-95">0.82</td>
+            <td class="c-80">0.78</td>
+            <td class="c-95">0.80</td>
+            <td class="c-60">0.45</td>
+            <td class="c-40">0.30</td>
+            <td class="c-80">0.65</td>
+            <td class="c-20">0.18</td>
+            <td class="diag">1.00</td>
+          </tr>
+          <tr>
+            <th>WTAI</th>
+            <td class="c-95">0.92</td>
+            <td class="c-95">0.94</td>
+            <td class="c-60">0.58</td>
+            <td class="c-20">0.18</td>
+            <td class="c-20">0.08</td>
+            <td class="c-60">0.58</td>
+            <td class="c-neg">−0.02</td>
+            <td class="c-80">0.68</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="corr-legend">
+      <div class="item"><span class="swatch" style="background: rgba(184,149,74,0.95);"></span>≥ 0.80 · strong co-move</div>
+      <div class="item"><span class="swatch" style="background: rgba(184,149,74,0.72);"></span>0.60 – 0.79</div>
+      <div class="item"><span class="swatch" style="background: rgba(196,163,42,0.55);"></span>0.40 – 0.59</div>
+      <div class="item"><span class="swatch" style="background: rgba(229,212,168,0.32);"></span>0.20 – 0.39</div>
+      <div class="item"><span class="swatch" style="background: rgba(229,212,168,0.12);"></span>0.00 – 0.19</div>
+      <div class="item"><span class="swatch" style="background: rgba(122,143,166,0.38);"></span>negative</div>
+    </div>
+
+    <div class="corr-takeaways">
+      <div class="corr-take">
+        <div class="k">Equity cluster</div>
+        <div class="v">WRDUSA, CSPX, WTAI and XIFE sit in a <strong>tight 0.78–0.96 band</strong>. Expected — this is the portfolio's growth engine. EMU (CEU) at 0.72–0.80 is the loosest equity link, justifying its role as a regional diversifier.</div>
+      </div>
+      <div class="corr-take">
+        <div class="k">Bond cluster</div>
+        <div class="v">XBLC and CSBGE7 correlate at <strong>0.82</strong> — both driven by EUR duration. XHYA straddles both worlds (0.55 to IG, 0.72 to equity), which is why it's sized down and tightly monitored.</div>
+      </div>
+      <div class="corr-take">
+        <div class="k">Gold anchor</div>
+        <div class="v">SGLD is the portfolio's <strong>genuine diversifier</strong>: near-zero to all equity (0.03–0.08) and mildly positive to bonds. Its <em>-0.02 correlation with WTAI</em> is the cleanest hedge pair in the book.</div>
+      </div>
+      <div class="corr-take">
+        <div class="k">Watchpoint</div>
+        <div class="v">WTAI–CSPX at <strong>0.94</strong> is redundancy risk — the AI thematic adds concentration, not diversification, relative to the US broad index. Justified only by the <em>capex-cycle thesis</em> and kept at 3% for that reason.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1018,6 +1238,7 @@
       ticker: "WRDUSA", isin: "IE00BD4TXV59",
       name: "UBS Core MSCI World UCITS ETF",
       issuer: "UBS", domicile: "Ireland",
+      cat: "equity",
       weight: 32, amount: 320000,
       ter: 0.06, aum: 7539,
       inception: "2019-06-07",
@@ -1032,6 +1253,7 @@
       ticker: "CSPX", isin: "IE00B5BMR087",
       name: "iShares Core S&P 500 UCITS ETF",
       issuer: "BlackRock", domicile: "Ireland",
+      cat: "equity",
       weight: 15, amount: 150000,
       ter: 0.07, aum: 116458,
       inception: "2010-05-19",
@@ -1046,6 +1268,7 @@
       ticker: "CEU", isin: "IE00B53QG562",
       name: "iShares Core MSCI EMU UCITS ETF",
       issuer: "BlackRock", domicile: "Ireland",
+      cat: "equity",
       weight: 8, amount: 80000,
       ter: 0.12, aum: 6428,
       inception: "2010-01-12",
@@ -1060,6 +1283,7 @@
       ticker: "XBLC", isin: "LU0478205379",
       name: "Xtrackers II EUR Corporate Bond UCITS ETF 1C",
       issuer: "Xtrackers (DWS)", domicile: "Luxembourg",
+      cat: "ig",
       weight: 15, amount: 150000,
       ter: 0.09, aum: 4135,
       inception: "2010-02-23",
@@ -1074,6 +1298,7 @@
       ticker: "CSBGE7", isin: "IE00B3VTML14",
       name: "iShares € Govt Bond 3–7Y UCITS ETF (Acc)",
       issuer: "BlackRock", domicile: "Ireland",
+      cat: "ig",
       weight: 10, amount: 100000,
       ter: 0.15, aum: 1284,
       inception: "2009-06-02",
@@ -1088,6 +1313,7 @@
       ticker: "XHYA", isin: "LU1109943388",
       name: "Xtrackers II EUR HY Corporate Bond UCITS ETF 1C",
       issuer: "Xtrackers (DWS)", domicile: "Luxembourg",
+      cat: "hy",
       weight: 10, amount: 100000,
       ter: 0.20, aum: 1516,
       inception: "2017-03-15",
@@ -1102,6 +1328,7 @@
       ticker: "SGLD", isin: "IE00B579F325",
       name: "Invesco Physical Gold ETC",
       issuer: "Invesco", domicile: "Ireland",
+      cat: "alt",
       weight: 4, amount: 40000,
       ter: 0.12, aum: 26089,
       inception: "2009-06-25",
@@ -1116,6 +1343,7 @@
       ticker: "XIFE", isin: "IE00BYZNF849",
       name: "Xtrackers Global Infrastructure  UCITS ETF 1C",
       issuer: "Xtrackers (DWS)", domicile: "Ireland",
+      cat: "alt",
       weight: 3, amount: 30000,
       ter: 0.35, aum: 12,
       inception: "2024-09-26",
@@ -1130,6 +1358,7 @@
       ticker: "WTAI", isin: "IE00BDVPNG13",
       name: "WisdomTree Artificial Intelligence UCITS ETF",
       issuer: "WisdomTree", domicile: "Ireland",
+      cat: "alt",
       weight: 3, amount: 30000,
       ter: 0.40, aum: 936,
       inception: "2018-11-30",
@@ -1143,6 +1372,12 @@
   ];
 
   // ═════════ TABLE POPULATION ═════════
+  const CAT_LABELS = {
+    equity: "Equity",
+    ig:     "Investment Grade",
+    hy:     "High Yield",
+    alt:    "Alternative"
+  };
   const tbody = document.querySelector("#holdingsTable tbody");
   ETFS.forEach((e, i) => {
     const ann3y = e.ret3yCum !== null ? (Math.pow(1 + e.ret3yCum / 100, 1/3) - 1) * 100 : null;
@@ -1150,7 +1385,7 @@
     row.dataset.idx = i;
     row.innerHTML = `
       <td><span class="ticker">${e.ticker}</span></td>
-      <td class="name">${e.name}<br><small>${e.isin} · ${e.replication} · ${e.distribution}</small></td>
+      <td class="name">${e.name}<br><span class="cat-pill cat-${e.cat}">${CAT_LABELS[e.cat]}</span><br><small>${e.isin} · ${e.replication} · ${e.distribution}</small></td>
       <td class="num">${e.weight}%</td>
       <td class="num">€${e.amount.toLocaleString("en-US")}</td>
       <td class="num">${e.ter.toFixed(2)}%</td>
