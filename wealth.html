@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JC Asset Management — Portfolio Construction Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,600;1,300&family=Mulish:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0A1628;
+    --slate: #1A2B3F;
+    --slate-2: #111E32;
+    --gold: #B8954A;
+    --gold-pale: #E5D4A8;
+    --steel: #7A8FA6;
+    --off-white: #F9F7F4;
+    --paper: #FBF9F4;
+    --paper-2: #F2EEE4;
+    --text: #F0EDE6;
+    --ink: #0A1628;
+    --ink-soft: #2A3B52;
+    --gain: #2E7D5B;
+    --caution: #C4A32A;
+    --loss: #B94A48;
+    --hairline-dark: rgba(255,255,255,0.08);
+    --hairline-gold: rgba(184,149,74,0.35);
+    --hairline-ink: rgba(10,22,40,0.12);
+  }
+
+  html, body {
+    font-family: 'Mulish', sans-serif;
+    background-color: var(--navy);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  body.lock { overflow: hidden; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes drawLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .anim-1 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.10s both; }
+  .anim-2 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.25s both; }
+  .anim-3 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.40s both; }
+  .anim-4 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.55s both; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 92vh;
+    background-color: var(--navy);
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 72px 0 56px; position: relative; overflow: hidden;
+  }
+  .gold-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background-color: var(--gold); }
+  .hero-mark { position: absolute; top: 36px; right: 36px; width: 68px; height: 68px; }
+  .hero-eyebrow {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 28px;
+  }
+  .hero-title {
+    font-family: 'Raleway', sans-serif; font-weight: 300;
+    font-size: clamp(34px, 5.6vw, 56px); letter-spacing: 0.05em;
+    line-height: 1.08; color: var(--text);
+  }
+  .hero-title .thin { font-weight: 200; }
+  .hero-divider { width: 56px; height: 1px; background-color: var(--gold); margin: 30px 0 28px; transform-origin: left; animation: drawLine 0.6s ease 0.6s both; }
+  .hero-sub {
+    font-family: 'Raleway', sans-serif; font-weight: 200;
+    font-size: clamp(18px, 2.2vw, 24px); letter-spacing: 0.06em;
+    color: var(--text); line-height: 1.4; max-width: 660px;
+  }
+  .hero-sub em { font-style: italic; color: var(--gold-pale); }
+
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px; margin-top: 48px;
+  }
+  .meta-cell { border-left: 1px solid var(--hairline-gold); padding-left: 16px; }
+  .meta-label {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--steel); margin-bottom: 8px;
+  }
+  .meta-value {
+    font-family: 'Raleway', sans-serif; font-size: 20px; font-weight: 300;
+    letter-spacing: 0.04em; color: var(--text);
+  }
+  .meta-value .small { font-size: 12px; color: var(--steel); letter-spacing: 0.1em; }
+
+  /* ── Section structure ── */
+  section { padding: 72px 0; position: relative; }
+  .sec-dark { background-color: var(--navy); }
+  .sec-slate { background-color: var(--slate); }
+  .sec-slate-2 { background-color: var(--slate-2); }
+
+  .sec-label {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--steel); margin-bottom: 14px;
+  }
+  .sec-title {
+    font-family: 'Raleway', sans-serif; font-weight: 300;
+    font-size: clamp(26px, 3.4vw, 36px); letter-spacing: 0.05em;
+    color: inherit; margin-bottom: 36px; line-height: 1.2;
+  }
+  .sec-title em { font-style: italic; color: var(--gold); }
+  .sec-title .thin { font-weight: 200; }
+
+  /* ── Exec summary cards ── */
+  .exec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .exec-card {
+    background-color: var(--slate-2); border-left: 2px solid var(--gold);
+    border-radius: 8px; padding: 22px;
+  }
+  .exec-card .label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--steel); margin-bottom: 10px; }
+  .exec-card .value { font-family: 'Raleway', sans-serif; font-size: 28px; font-weight: 300; color: var(--text); letter-spacing: 0.03em; }
+  .exec-card .sub { font-size: 11px; color: var(--steel); margin-top: 6px; line-height: 1.5; }
+
+  /* ── Body text ── */
+  .body-text { font-weight: 300; font-size: 14.5px; line-height: 1.85; color: var(--text); max-width: 820px; }
+  .body-text strong { font-weight: 600; color: var(--gold-pale); }
+  .body-text em { font-style: italic; color: var(--gold-pale); }
+  .body-text p + p { margin-top: 14px; }
+
+  /* ── Macro grid ── */
+  .macro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 28px; }
+  .macro-card {
+    background-color: rgba(255,255,255,0.03); border: 1px solid var(--hairline-dark);
+    border-radius: 8px; padding: 22px;
+  }
+  .macro-card .tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .macro-card .text { font-size: 13.5px; line-height: 1.75; color: var(--text); font-weight: 300; }
+  .macro-card .text strong { color: var(--gold-pale); font-weight: 500; }
+
+  /* ── Allocation visual ── */
+  .alloc-bar {
+    display: flex; height: 44px; border-radius: 8px; overflow: hidden;
+    margin-bottom: 18px; box-shadow: 0 0 0 1px var(--hairline-dark);
+  }
+  .alloc-seg {
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; color: var(--navy);
+  }
+  .alloc-equity { background: linear-gradient(90deg, var(--gold) 0%, #D4AF6A 100%); flex: 55; }
+  .alloc-ig { background: var(--gold-pale); flex: 25; color: var(--navy); }
+  .alloc-hy { background: #C4A32A; flex: 10; }
+  .alloc-alt { background: var(--steel); flex: 10; color: var(--text); }
+
+  .alloc-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; font-size: 12px; color: var(--steel); }
+  .alloc-legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+  .alloc-legend .cat { color: var(--text); font-weight: 500; letter-spacing: 0.04em; }
+
+  /* ── Rationale list ── */
+  .rationale { list-style: none; padding: 0; margin-top: 28px; }
+  .rationale li {
+    padding: 16px 0 16px 26px; position: relative;
+    border-bottom: 0.5px solid var(--hairline-dark);
+    font-size: 13.5px; font-weight: 300; line-height: 1.7; color: var(--text);
+  }
+  .rationale li:last-child { border-bottom: none; }
+  .rationale li::before {
+    content: ""; position: absolute; left: 0; top: 26px;
+    width: 12px; height: 1px; background: var(--gold);
+  }
+  .rationale li strong { color: var(--gold-pale); font-weight: 600; }
+
+  /* ── Holdings table ── */
+  .table-hint {
+    font-size: 11px; color: var(--steel); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 10px; font-weight: 500;
+  }
+  .table-hint::before {
+    content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); margin-right: 8px; vertical-align: middle;
+  }
+  .table-wrap { overflow-x: auto; margin-top: 6px; }
+  table.holdings {
+    width: 100%; min-width: 960px; border-collapse: collapse;
+    font-family: 'Mulish', sans-serif; font-size: 12.5px; font-weight: 300;
+  }
+  table.holdings thead th {
+    text-align: left; font-weight: 600; font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--steel);
+    padding: 14px 12px; border-bottom: 1px solid var(--hairline-gold);
+  }
+  table.holdings tbody tr {
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+  table.holdings tbody tr:hover {
+    background: rgba(184,149,74,0.05);
+  }
+  table.holdings tbody td {
+    padding: 16px 12px; vertical-align: top;
+    border-bottom: 0.5px solid var(--hairline-dark);
+    color: var(--text); line-height: 1.5;
+  }
+  table.holdings .ticker { font-family: 'Courier New', monospace; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; }
+  table.holdings .ticker::after {
+    content: "↗"; margin-left: 6px; font-size: 10px; opacity: 0.5;
+    transition: opacity 0.18s, transform 0.18s;
+    display: inline-block;
+  }
+  table.holdings tbody tr:hover .ticker::after { opacity: 1; transform: translateX(2px) translateY(-2px); }
+  table.holdings .name { font-size: 12px; color: var(--text); font-weight: 400; line-height: 1.4; }
+  table.holdings .name small { display: block; color: var(--steel); font-size: 10px; margin-top: 2px; letter-spacing: 0.03em; }
+  table.holdings .num { font-variant-numeric: tabular-nums; }
+  table.holdings .gain { color: var(--gain); font-weight: 600; }
+  table.holdings .loss { color: var(--loss); font-weight: 600; }
+  table.holdings .neutral { color: var(--gold-pale); font-weight: 500; }
+  table.holdings tfoot td {
+    padding: 16px 12px; border-top: 1px solid var(--hairline-gold);
+    font-weight: 600; color: var(--text);
+  }
+  table.holdings tfoot .label { color: var(--steel); letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; }
+
+  /* ── Scorecard rubric ── */
+  .rubric {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px; margin-top: 16px;
+  }
+  .rubric-cell {
+    padding: 14px 16px; border: 0.5px solid var(--hairline-dark); border-radius: 6px;
+    background: rgba(255,255,255,0.02);
+  }
+  .rubric-cell .m { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); margin-bottom: 6px; }
+  .rubric-cell .w { font-family: 'Raleway', sans-serif; font-size: 20px; font-weight: 300; color: var(--gold); }
+  .rubric-cell .d { font-size: 11px; color: var(--text); font-weight: 300; line-height: 1.5; margin-top: 6px; }
+
+  /* ── Structure card ── */
+  .structure-card {
+    background-color: var(--slate-2); border-top: 2px solid var(--gold);
+    border-radius: 8px; padding: 32px; margin-top: 20px;
+  }
+  .structure-card .badge {
+    display: inline-block; padding: 4px 10px; border-radius: 3px;
+    background: var(--gold); color: var(--navy); font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+  }
+  .structure-card h4 { font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 24px; letter-spacing: 0.04em; margin: 14px 0 8px; color: var(--text); }
+  .structure-card .amt { font-family: 'Raleway', sans-serif; font-size: 32px; font-weight: 200; color: var(--gold-pale); letter-spacing: 0.03em; margin-bottom: 18px; }
+  .structure-card p { font-size: 13.5px; color: var(--text); font-weight: 300; line-height: 1.75; max-width: 780px; }
+  .structure-card p + p { margin-top: 12px; }
+
+  .structure-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px; margin-top: 24px;
+  }
+  .struct-stat {
+    padding: 16px 18px; border-left: 1px solid var(--hairline-gold);
+    background: rgba(0,0,0,0.15); border-radius: 0 6px 6px 0;
+  }
+  .struct-stat .k { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--steel); margin-bottom: 6px; }
+  .struct-stat .v { font-family: 'Raleway', sans-serif; font-size: 16px; font-weight: 300; color: var(--text); letter-spacing: 0.04em; }
+
+  /* ── Triggers table ── */
+  .triggers { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .triggers th, .triggers td { padding: 14px 12px; text-align: left; font-size: 12.5px; }
+  .triggers thead th { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); font-weight: 600; border-bottom: 1px solid var(--hairline-gold); }
+  .triggers tbody td { border-bottom: 0.5px solid var(--hairline-dark); color: var(--text); font-weight: 300; line-height: 1.6; }
+  .triggers .level { color: var(--caution); font-weight: 600; font-family: 'Courier New', monospace; letter-spacing: 0.02em; }
+  .triggers .action { color: var(--gold-pale); font-weight: 500; }
+
+  /* ── Review band ── */
+  .review-band {
+    background-color: var(--slate-2); border-left: 2px solid var(--gold);
+    border-radius: 8px; padding: 28px;
+    display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: center;
+  }
+  .review-item .label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--steel); margin-bottom: 8px; }
+  .review-item .value { font-family: 'Raleway', sans-serif; font-size: 20px; font-weight: 300; color: var(--gold-pale); letter-spacing: 0.03em; }
+
+  /* ── Sources ── */
+  .src-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 16px; }
+  .src-card { background: var(--slate-2); padding: 20px; border-radius: 6px; border-top: 1px solid var(--hairline-gold); }
+  .src-card h5 { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; font-weight: 600; }
+  .src-card ul { list-style: none; padding: 0; }
+  .src-card ul li { padding: 5px 0; font-size: 12px; line-height: 1.5; }
+  .src-card a { color: var(--text); text-decoration: none; border-bottom: 0.5px dotted var(--steel); transition: color 0.2s, border-color 0.2s; }
+  .src-card a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .disclosure {
+    font-size: 11.5px; color: var(--steel); font-weight: 300; line-height: 1.7;
+    max-width: 820px; padding: 20px 22px; background: rgba(184,149,74,0.04);
+    border-left: 1px solid var(--hairline-gold); border-radius: 4px;
+  }
+  .disclosure strong { color: var(--gold-pale); font-weight: 600; display: block; margin-bottom: 6px; letter-spacing: 0.05em; }
+
+  footer {
+    background-color: var(--navy); padding: 56px 0 64px; border-top: 0.5px solid var(--hairline-dark);
+    text-align: center;
+  }
+  footer .wm { font-family: 'Raleway', sans-serif; font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--text); margin-bottom: 6px; }
+  footer .tg { font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 300; letter-spacing: 0.1em; font-style: italic; color: var(--gold-pale); margin-bottom: 24px; }
+  footer .contact { font-size: 11px; color: var(--steel); line-height: 2; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═════════════════════════ MODAL ═════════════════════════ */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(8, 15, 28, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .modal-card {
+    background: var(--paper);
+    color: var(--ink);
+    width: 100%; max-width: 1040px;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.45), 0 0 0 1px rgba(184,149,74,0.18);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    animation: modalIn 0.32s cubic-bezier(.22,.68,0,1.2) both;
+  }
+  .modal-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 28px 32px 20px;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    border-bottom: 1px solid var(--hairline-ink);
+  }
+  .modal-head .title-block { flex: 1; }
+  .modal-head .eyebrow {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .modal-head .eyebrow .pill {
+    display: inline-block; padding: 3px 8px; border-radius: 3px;
+    background: var(--ink); color: var(--gold-pale);
+    font-family: 'Courier New', monospace; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .modal-head h3 {
+    font-family: 'Raleway', sans-serif; font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 28px); letter-spacing: 0.03em;
+    color: var(--ink); line-height: 1.2;
+  }
+  .modal-head .isin {
+    font-family: 'Courier New', monospace; font-size: 11px;
+    color: var(--ink-soft); margin-top: 6px; letter-spacing: 0.04em;
+  }
+  .modal-close {
+    background: transparent; border: 1px solid var(--hairline-ink);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 18px; color: var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+    flex-shrink: 0;
+  }
+  .modal-close:hover { background: var(--ink); color: var(--gold); border-color: var(--ink); }
+
+  .modal-body {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; overflow-y: auto; flex: 1;
+  }
+  @media (max-width: 820px) {
+    .modal-body { grid-template-columns: 1fr; }
+  }
+
+  .modal-left {
+    padding: 28px 32px;
+    border-right: 1px solid var(--hairline-ink);
+  }
+  @media (max-width: 820px) {
+    .modal-left { border-right: none; border-bottom: 1px solid var(--hairline-ink); }
+  }
+  .modal-right {
+    padding: 28px 32px;
+    background: var(--paper-2);
+    display: flex; flex-direction: column;
+  }
+
+  .m-section-label {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .m-text {
+    font-size: 13.5px; line-height: 1.8; color: var(--ink-soft);
+    font-weight: 300; margin-bottom: 22px;
+  }
+  .m-text strong { color: var(--ink); font-weight: 600; }
+  .m-text em { color: var(--gold); font-style: italic; font-weight: 500; }
+
+  .m-fast-facts {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-bottom: 22px;
+    padding: 16px 18px;
+    background: var(--paper-2);
+    border-radius: 8px;
+    border-left: 2px solid var(--gold);
+  }
+  .m-fact .k {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .m-fact .v {
+    font-family: 'Raleway', sans-serif; font-size: 14px;
+    font-weight: 500; color: var(--ink); letter-spacing: 0.02em;
+  }
+
+  .m-metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    margin-top: 18px;
+    border-top: 1px solid var(--hairline-ink);
+    border-bottom: 1px solid var(--hairline-ink);
+  }
+  .m-metric {
+    padding: 14px 12px;
+    border-right: 0.5px solid var(--hairline-ink);
+  }
+  .m-metric:last-child { border-right: none; }
+  .m-metric .k {
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .m-metric .v {
+    font-family: 'Raleway', sans-serif; font-size: 16px;
+    font-weight: 600; color: var(--gold); letter-spacing: 0.02em;
+  }
+  .m-metric .v.neutral { color: var(--ink); }
+
+  .m-chart-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 260px; }
+  .m-chart-title { font-family: 'Raleway', sans-serif; font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; margin-bottom: 6px; }
+  .m-chart-sub { font-size: 11px; color: var(--ink-soft); margin-bottom: 16px; line-height: 1.5; }
+  .perf-chart { width: 100%; height: 260px; display: block; }
+  .perf-chart .grid-line { stroke: rgba(10,22,40,0.08); stroke-width: 0.5; }
+  .perf-chart .baseline { stroke: rgba(10,22,40,0.2); stroke-dasharray: 3,3; stroke-width: 0.6; }
+  .perf-chart .axis { stroke: rgba(10,22,40,0.25); stroke-width: 0.6; }
+  .perf-chart .label { fill: rgba(10,22,40,0.55); font-size: 9px; font-family: 'Mulish', sans-serif; }
+  .perf-chart .area-fill { fill: rgba(184,149,74,0.12); stroke: none; }
+  .perf-chart .series { fill: none; stroke: #B8954A; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .perf-chart .marker { fill: #B8954A; }
+  .perf-chart .marker-label { fill: var(--ink); font-size: 11px; font-family: 'Mulish', sans-serif; font-weight: 600; }
+
+  .m-tenor-pills {
+    display: flex; gap: 6px; margin-bottom: 14px;
+  }
+  .m-tenor-pill {
+    padding: 6px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 999px; background: var(--paper); color: var(--ink-soft);
+    border: 1px solid var(--hairline-ink); cursor: pointer; font-weight: 500;
+    transition: all 0.18s;
+  }
+  .m-tenor-pill.active { background: var(--ink); color: var(--gold-pale); border-color: var(--ink); }
+  .m-tenor-pill:hover:not(.active) { border-color: var(--gold); color: var(--ink); }
+
+  .m-foot {
+    padding: 16px 32px;
+    border-top: 1px solid var(--hairline-ink);
+    font-size: 10.5px; color: var(--ink-soft); line-height: 1.6;
+    background: var(--paper);
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: white; }
+    .modal-backdrop { display: none !important; }
+    section { page-break-inside: avoid; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="gold-bar"></div>
+  <div class="hero-mark" aria-hidden="true">
+    <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+      <rect x="1" y="1" width="66" height="66" stroke="#B8954A" stroke-width="0.75"/>
+      <rect x="14" y="14" width="40" height="40" stroke="rgba(184,149,74,0.45)" stroke-width="0.5"/>
+      <polyline points="22,48 30,40 38,44 46,28" stroke="#B8954A" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="46" cy="28" r="2.5" fill="#B8954A"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <p class="hero-eyebrow anim-1">Portfolio Construction Report · v2 · BVI Structure</p>
+    <h1 class="hero-title anim-2">Strategic Allocation<br><span class="thin">&amp; ETF Selection</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub anim-3">A macro-driven, cost-aware portfolio built for a<br><em>five-year growth mandate</em> in EUR, held in a tax-neutral offshore structure.</p>
+
+    <div class="hero-meta anim-4">
+      <div class="meta-cell">
+        <div class="meta-label">Account Domicile</div>
+        <div class="meta-value">BVI<span class="small"> · EUR base</span></div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Mandate Size</div>
+        <div class="meta-value">€1,000,000</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Horizon · Risk</div>
+        <div class="meta-value">5Y · Growth<span class="small"> (mid)</span></div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Report Date</div>
+        <div class="meta-value">19 April 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ EXEC SUMMARY ═══════════════ -->
+<section class="sec-slate reveal">
+  <div class="container">
+    <p class="sec-label">Executive Summary</p>
+    <h2 class="sec-title">Portfolio at a <em>glance</em></h2>
+
+    <div class="exec-grid">
+      <div class="exec-card">
+        <div class="label">Strategic Mix</div>
+        <div class="value">55 / 35 / 10</div>
+        <div class="sub">Equity · Debt · Alternatives</div>
+      </div>
+      <div class="exec-card">
+        <div class="label">Blended TER</div>
+        <div class="value">0.12%</div>
+        <div class="sub">≈ €1,150 p.a. on €1M</div>
+      </div>
+      <div class="exec-card">
+        <div class="label">3Y Backtest Return</div>
+        <div class="value">~13.4% p.a.</div>
+        <div class="sub">Weighted, past performance only</div>
+      </div>
+      <div class="exec-card">
+        <div class="label">Jurisdiction</div>
+        <div class="value">BVI</div>
+        <div class="sub">Tax-neutral corporate wrapper</div>
+      </div>
+      <div class="exec-card">
+        <div class="label">Holdings</div>
+        <div class="value">9 ETFs</div>
+        <div class="sub">UCITS · multi-issuer · EUR-accessible</div>
+      </div>
+      <div class="exec-card">
+        <div class="label">Next Review</div>
+        <div class="value">3 May 2026</div>
+        <div class="sub">Fortnightly cadence</div>
+      </div>
+    </div>
+
+    <p class="body-text" style="margin-top: 36px;">
+      The allocation is <strong>pro-risk</strong> on the strength of sturdy US growth and the AI capex cycle, but <em>capped below the top of the equity band</em> given compressed equity risk premium and a short five-year horizon that leaves little room to recover from a severe drawdown. The debt sleeve is <strong>IG-tilted</strong> (71% of debt) to shield against a late-cycle credit widening, with modest EUR HY carry. Alternatives are deployed as <em>genuine diversifiers</em> — gold, listed infrastructure, and AI-infrastructure exposure outside the index core.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════ MACRO VIEW ═══════════════ -->
+<section class="sec-dark reveal">
+  <div class="container">
+    <p class="sec-label">Part 1 · Macro Framework</p>
+    <h2 class="sec-title">The <em>regime</em> we are investing into</h2>
+
+    <p class="body-text">
+      Global growth is <strong>above-trend</strong>: Goldman Sachs projects ~2.8% globally and ~2.6% for the US in 2026, supported by fiscal front-loading and easier financial conditions. JP Morgan attaches a 35% probability to a US/global recession — a tail risk, not a base case. Europe is patchy but firming via a recovering fiscal impulse. The BlackRock Investment Institute remains pro-risk and overweight US equities on the AI theme, while flagging that traditional long-duration Treasuries are a <em>less reliable diversifier</em> than they once were.
+    </p>
+
+    <div class="macro-grid">
+      <div class="macro-card">
+        <div class="tag">Inflation</div>
+        <div class="text">Re-accelerating on energy. <strong>Brent $105–$115</strong> through April on a ~6-week Hormuz disruption, tapering to ~$80 by year-end. ECB revised 2026 HICP up to <strong>2.6%</strong>; BoE flags UK CPI potentially peaking near 3.5% in Q3. Medium-term disinflation path intact.</div>
+      </div>
+      <div class="macro-card">
+        <div class="tag">Policy Rates</div>
+        <div class="text">Fed at <strong>3.50–3.75%</strong> (held 18 March); dots signal one cut in 2026 and one in 2027. ECB at 2.00% DFR, on hold. BoE on hold. Consensus bias: <em>later and shallower</em> cuts than Q1 pricing implied.</div>
+      </div>
+      <div class="macro-card">
+        <div class="tag">Currency</div>
+        <div class="text">DXY at <strong>~98.7</strong> (+2.1% YTD), capped by cut expectations; stretched short positioning creates squeeze risk into the 28–29 April FOMC. Consensus targets mid-90s into year-end once cuts land. EUR remains supported by on-hold ECB.</div>
+      </div>
+      <div class="macro-card">
+        <div class="tag">Credit</div>
+        <div class="text">IG and HY spreads entered April <em>historically tight</em>; the oil and growth shock has leaned them modestly wider. Precise OAS levels require a live data refresh at each review — flagged per the framework's no-fabrication rule.</div>
+      </div>
+      <div class="macro-card">
+        <div class="tag">Equity Risk Premium</div>
+        <div class="text">Compressed. US equities are pricing a <strong>benign earnings path</strong> supported by AI capex and credit-financed buybacks. Asymmetric downside if growth slips — a constraint on sizing equity at the top of the permitted band.</div>
+      </div>
+      <div class="macro-card">
+        <div class="tag">Geopolitics</div>
+        <div class="text">(1) <strong>Israel–Iran / Strait of Hormuz</strong> — live, the binding variable on oil and inflation. (2) Russia–NATO hybrid escalation on the European periphery. (3) US fiscal and tariff policy shocks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STRATEGIC ALLOCATION ═══════════════ -->
+<section class="sec-slate-2 reveal">
+  <div class="container">
+    <p class="sec-label">Part 2 · Strategic Allocation</p>
+    <h2 class="sec-title">Weights, <em>justified</em></h2>
+
+    <div class="alloc-bar">
+      <div class="alloc-seg alloc-equity">EQUITY · 55%</div>
+      <div class="alloc-seg alloc-ig">IG · 25%</div>
+      <div class="alloc-seg alloc-hy">HY · 10%</div>
+      <div class="alloc-seg alloc-alt">ALT · 10%</div>
+    </div>
+
+    <div class="alloc-legend">
+      <div><span class="dot" style="background: var(--gold);"></span><span class="cat">Equity</span> · 55% · mid-to-upper permitted band (30–70%)</div>
+      <div><span class="dot" style="background: var(--gold-pale);"></span><span class="cat">Investment Grade</span> · 25% · 71% of debt bucket</div>
+      <div><span class="dot" style="background: var(--caution);"></span><span class="cat">High Yield</span> · 10% · modest, carry-only size</div>
+      <div><span class="dot" style="background: var(--steel);"></span><span class="cat">Alternatives</span> · 10% · top of permitted band (0–15%)</div>
+    </div>
+
+    <ul class="rationale">
+      <li><strong>Equity at 55%.</strong> Pro-risk into US growth delta and AI capex, but capped below 70% given compressed ERP and the <em>short horizon asymmetry</em>: five years leaves no meaningful recovery runway after a severe drawdown.</li>
+      <li><strong>IG overweight within debt (71%).</strong> Tight HY spreads, an oil-driven inflation shock, and a 35% recession tail argue for more IG than HY. PIMCO's OW 5–10Y / UW 30Y view guides intermediate duration selection inside the IG sleeve.</li>
+      <li><strong>Short-to-intermediate duration bias.</strong> Avoid the long end given PIMCO's curve-steepening thesis and a Fed/ECB path that is shallower than earlier pricing suggested.</li>
+      <li><strong>Alternatives at 10%.</strong> Addresses the "diversification mirage" BlackRock II calls out — gold as geopolitical and real-rate hedge, infrastructure as fiscal-beneficiary defensive, AI-infrastructure as growth exposure outside the index core.</li>
+      <li><strong>Currency policy.</strong> EUR share classes preferred where material; USD exposure on the global core left unhedged — hedging costs EUR and the USD view is neutral-to-softer.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ HOLDINGS TABLE ═══════════════ -->
+<section class="sec-dark reveal">
+  <div class="container">
+    <p class="sec-label">Part 3 · Portfolio Construction</p>
+    <h2 class="sec-title">Holdings with <em>full scorecard</em></h2>
+
+    <p class="body-text" style="margin-bottom: 24px;">
+      Nine UCITS ETFs, issuer-agnostic, scored on return, volatility, and cost. Data pulled from issuer factsheets on justETF as of April 2026. Three-year annualised returns are derived from reported cumulative totals; Sharpe estimates use a <strong>3.0% EUR risk-free proxy</strong> (ESTR-aligned). No figures fabricated.
+    </p>
+    <p class="table-hint">Click any row for full profile &amp; performance chart</p>
+
+    <div class="table-wrap">
+      <table class="holdings" id="holdingsTable">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>€ Amount</th>
+            <th>TER</th>
+            <th>AUM (€M)</th>
+            <th>1Y TR</th>
+            <th>3Y Ann</th>
+            <th>3Y Vol</th>
+            <th>Est. Sharpe<br><small>3Y</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows populated by JS -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="label">Totals</td>
+            <td></td>
+            <td class="num">100%</td>
+            <td class="num">€1,000,000</td>
+            <td class="num">0.12%<br><small style="color: var(--steel);">blended</small></td>
+            <td></td>
+            <td colspan="4" style="color: var(--steel); font-weight: 300; font-size: 11px; text-align: right;">Past performance ≠ future returns · Sharpe est. Rf = 3.0% ESTR proxy</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <p class="sec-label" style="margin-top: 40px;">Scoring Rubric Applied</p>
+    <div class="rubric">
+      <div class="rubric-cell"><div class="m">12M TR vs. bmk</div><div class="w">15%</div><div class="d">Net of fees. Shown as 1Y TR.</div></div>
+      <div class="rubric-cell"><div class="m">36M TR vs. bmk</div><div class="w">20%</div><div class="d">Annualised from 3Y cumulative.</div></div>
+      <div class="rubric-cell"><div class="m">Ann. volatility 36M</div><div class="w">15%</div><div class="d">Lower is better, mandate-adjusted.</div></div>
+      <div class="rubric-cell"><div class="m">Sharpe 36M</div><div class="w">20%</div><div class="d">Est. with Rf = 3M EUR ESTR ≈ 3.0%.</div></div>
+      <div class="rubric-cell"><div class="m">TER</div><div class="w">10%</div><div class="d">Shown in scorecard.</div></div>
+      <div class="rubric-cell"><div class="m">AUM &amp; liquidity</div><div class="w">10%</div><div class="d">All picks &gt; €900M ex. XIFE (flagged).</div></div>
+      <div class="rubric-cell"><div class="m">Team &amp; tenure</div><div class="w">10%</div><div class="d">Passive trackers — low style-drift risk.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STRUCTURE ═══════════════ -->
+<section class="sec-slate reveal">
+  <div class="container">
+    <p class="sec-label">Part 4 · Account Structure</p>
+    <h2 class="sec-title">A <em>tax-neutral</em> offshore vehicle</h2>
+
+    <p class="body-text">
+      The portfolio sits inside a <strong>British Virgin Islands</strong> structure — typically a BVI Business Company (BC) or a BVI-approved fund holding the brokerage account. Under the BVI tax regime, the vehicle pays no corporate income tax, no capital gains tax, and no withholding on dividends or interest. That removes the full French fiscal overlay that shaped v1 (PEA caps, PFU flat tax, UK Reporting Fund Status, accumulation-vs-distribution trade-offs), and lets portfolio construction be driven <em>purely by return, volatility, and cost</em>.
+    </p>
+
+    <div class="structure-card">
+      <span class="badge">BVI BC</span>
+      <h4>Single pooled structure · no wrapper split</h4>
+      <div class="amt">€1,000,000</div>
+      <p>
+        All nine holdings sit in one brokerage account held by the BVI entity. Accumulation share classes are still preferred where available, for operational simplicity and clean NAV reporting — not for tax-deferral (there is no tax to defer). USD-denominated assets are held unhedged; base currency for NAV and reporting is EUR.
+      </p>
+
+      <div class="structure-grid">
+        <div class="struct-stat"><div class="k">Entity Type</div><div class="v">BVI Business Company</div></div>
+        <div class="struct-stat"><div class="k">Corporate Tax</div><div class="v">Nil</div></div>
+        <div class="struct-stat"><div class="k">Capital Gains</div><div class="v">Nil</div></div>
+        <div class="struct-stat"><div class="k">WHT on EUR Dividends</div><div class="v">Nil at fund level</div></div>
+        <div class="struct-stat"><div class="k">Base Currency</div><div class="v">EUR</div></div>
+        <div class="struct-stat"><div class="k">ETF Universe</div><div class="v">UCITS (unrestricted)</div></div>
+      </div>
+
+      <p style="margin-top: 24px; font-size: 12.5px; color: var(--steel);">
+        <em>Disclosure.</em> Tax treatment of distributions back to the ultimate beneficial owner depends on their personal residence — the BVI structure is neutral at the vehicle level, not for the individual. Substance, CRS/FATCA reporting, and economic-substance filings remain the entity's responsibility. Execution requires a registered agent and a bank or prime broker willing to onboard the structure.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ RISKS & TRIGGERS ═══════════════ -->
+<section class="sec-dark reveal">
+  <div class="container">
+    <p class="sec-label">Part 5 · Risks &amp; Monitoring</p>
+    <h2 class="sec-title">When the portfolio <em>must move</em></h2>
+
+    <p class="body-text">
+      Every trigger below is a <strong>pre-committed action</strong>, sized to force discipline rather than discretion. Scheduled rebalances occur every two weeks; any category drift exceeding <strong>±5 percentage points</strong> from its target triggers a mid-cycle rebalance. The events below force off-cycle action.
+    </p>
+
+    <table class="triggers">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Level</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Oil shock, sustained</td><td class="level">Brent &gt; $120/bbl</td><td class="action">Trim equity 5pp → add to IG (XBLC) and gold (SGLD).</td></tr>
+        <tr><td>Credit stress</td><td class="level">HY OAS &gt; 500 bps</td><td class="action">Exit XHYA entirely. Roll proceeds into XBLC.</td></tr>
+        <tr><td>Rates disorder · EUR</td><td class="level">10Y Bund &gt; 3.50%</td><td class="action">Shorten duration. Rotate half of CSBGE7 into 1–3Y EUR govt.</td></tr>
+        <tr><td>Rates disorder · USD</td><td class="level">10Y UST &gt; 5.00%</td><td class="action">Review hedging on USD-denominated equity (WRDUSA, CSPX).</td></tr>
+        <tr><td>Dollar strength</td><td class="level">DXY &gt; 105</td><td class="action">Add EUR-hedged share class on global equity sleeve.</td></tr>
+        <tr><td>Dollar weakness</td><td class="level">DXY &lt; 92</td><td class="action">Keep unhedged — EUR strength is a tailwind on USD assets.</td></tr>
+        <tr><td>Volatility regime</td><td class="level">VIX &gt; 30, two weeks</td><td class="action">Cut equity to 45–50% band. Raise gold to 6%.</td></tr>
+        <tr><td>Geopolitical escalation</td><td class="level">Hormuz closure &gt; 8 wks</td><td class="action">Raise gold to 6–7%. Halve HY exposure.</td></tr>
+        <tr><td>Central bank emergency</td><td class="level">Off-cycle move</td><td class="action">Immediate full-portfolio review — do not wait for the fortnightly window.</td></tr>
+        <tr><td>Drift</td><td class="level">&gt; ±5pp from target</td><td class="action">Mid-cycle rebalance to target weights.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="review-band" style="margin-top: 40px;">
+      <div class="review-item">
+        <div class="label">Next Scheduled Review</div>
+        <div class="value">Sunday, 3 May 2026</div>
+      </div>
+      <div class="review-item">
+        <div class="label">Cadence</div>
+        <div class="value">Fortnightly · 2 weeks</div>
+      </div>
+      <div class="review-item">
+        <div class="label">Off-cycle Trigger</div>
+        <div class="value">CB emergency · credit event · geopolitical shock</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SOURCES ═══════════════ -->
+<section class="sec-slate-2 reveal">
+  <div class="container">
+    <p class="sec-label">Part 6 · Sources &amp; Disclosures</p>
+    <h2 class="sec-title">Citations and <em>conflicts</em></h2>
+
+    <div class="src-grid">
+      <div class="src-card">
+        <h5>Tier 1 · Primary Thesis</h5>
+        <ul>
+          <li><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm" target="_blank" rel="noopener">Fed FOMC Statement · 18 Mar 2026</a></li>
+          <li><a href="https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260319~3057739775.en.html" target="_blank" rel="noopener">ECB Monetary Policy · 19 Mar 2026</a></li>
+          <li><a href="https://www.bankofengland.co.uk/-/media/boe/files/monetary-policy-summary-and-minutes/2026/monetary-policy-summary-and-minutes-march-2026.pdf" target="_blank" rel="noopener">BoE Policy Summary · Mar 2026</a></li>
+          <li><a href="https://www.goldmansachs.com/insights/goldman-sachs-research/macro-outlook-2026-sturdy-growth-stagnant-jobs-stable-prices" target="_blank" rel="noopener">Goldman Sachs · Macro Outlook 2026</a></li>
+          <li><a href="https://www.jpmorgan.com/insights/global-research/outlook/market-outlook" target="_blank" rel="noopener">JP Morgan · 2026 Market Outlook</a></li>
+          <li><a href="https://www.blackrock.com/corporate/insights/blackrock-investment-institute/publications/outlook" target="_blank" rel="noopener">BlackRock Investment Institute · 2026 Outlook</a></li>
+          <li><a href="https://www.pimco.com/gbl/en/insights/uncertainty-is-certain" target="_blank" rel="noopener">PIMCO · Cyclical Outlook</a></li>
+          <li><a href="https://www.imf.org/-/media/files/publications/weo/2026/april/english/ch1.pdf" target="_blank" rel="noopener">IMF · WEO April 2026</a></li>
+        </ul>
+      </div>
+      <div class="src-card">
+        <h5>Tier 2 · Corroboration</h5>
+        <ul>
+          <li><a href="https://global.morningstar.com/en-eu/etfs/best-euro-corporate-bond-etfs" target="_blank" rel="noopener">Morningstar · EUR Corporate Bond ETFs</a></li>
+          <li><a href="https://global.morningstar.com/en-gb/economy/ecb-leaves-rates-unchanged-lifts-2026-inflation-outlook-iran-war" target="_blank" rel="noopener">Morningstar · ECB Inflation Revision</a></li>
+          <li><a href="https://ahasignals.com/dxy-forecast-april-2026/" target="_blank" rel="noopener">AhaSignals · DXY April 2026</a></li>
+          <li><a href="https://www.eurasiagroup.net/issues/top-risks-2026" target="_blank" rel="noopener">Eurasia Group · Top Risks 2026</a></li>
+          <li><a href="https://www.cfr.org/articles/five-takeaways-cfrs-2026-conflict-risk-assessment" target="_blank" rel="noopener">CFR · 2026 Conflict Risk Assessment</a></li>
+          <li><a href="https://fortune.com/2026/03/25/will-there-be-recession-goldman-forecast-oil-price-inflation-economy/" target="_blank" rel="noopener">Fortune · GS Oil &amp; Recession Update</a></li>
+        </ul>
+      </div>
+      <div class="src-card">
+        <h5>Fund Factsheets · justETF</h5>
+        <ul>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00BD4TXV59" target="_blank" rel="noopener">UBS Core MSCI World (WRDUSA)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00B5BMR087" target="_blank" rel="noopener">iShares Core S&amp;P 500 (CSPX)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00B53QG562" target="_blank" rel="noopener">iShares Core MSCI EMU (CEU)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=LU0478205379" target="_blank" rel="noopener">Xtrackers EUR Corp Bond 1C (XBLC)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00B3VTML14" target="_blank" rel="noopener">iShares € Govt Bond 3–7Y (CSBGE7)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=LU1109943388" target="_blank" rel="noopener">Xtrackers EUR HY 1C (XHYA)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00B579F325" target="_blank" rel="noopener">Invesco Physical Gold (SGLD)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00BYZNF849" target="_blank" rel="noopener">Xtrackers Global Infra ESG (XIFE)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00BDVPNG13" target="_blank" rel="noopener">WisdomTree AI (WTAI)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="disclosure" style="margin-top: 36px;">
+      <strong>Conflict Disclosure.</strong>
+      BlackRock Investment Institute is cited as a Tier 1 research source; the portfolio holds three iShares products (CSPX, CEU, CSBGE7) totalling 33% of NAV, alongside six products from five other issuers (UBS, Xtrackers/DWS, Invesco, WisdomTree). Issuer concentration is mitigated but not eliminated.
+    </div>
+
+    <div class="disclosure" style="margin-top: 14px;">
+      <strong>Data Integrity.</strong>
+      Returns, volatility, and AUM figures pulled from issuer factsheets via justETF in April 2026. Three-year annualised returns derived from reported cumulative totals. Sharpe estimates use a 3.0% EUR risk-free proxy (ESTR-aligned). Performance charts in the per-ticker modals use piecewise-exponential interpolation between reported 5Y / 3Y / 1Y endpoints — directional, not tick-level. No figures fabricated.
+    </div>
+
+    <div class="disclosure" style="margin-top: 14px;">
+      <strong>Regulatory.</strong>
+      This report is a framework output for analytical purposes, not regulated investment advice for any individual. The BVI vehicle is tax-neutral at entity level only; distributions to the ultimate beneficial owner remain subject to their personal tax residence rules. Validate the structure, jurisdiction, and execution with licensed tax and legal counsel before deployment. Past performance is not indicative of future results. Investing involves risk of loss of capital.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="wm">JC Asset Management</div>
+    <div class="tg">Clarity builds confidence.</div>
+    <div class="contact">
+      jc@jcconsultingadv.com · linkedin.com/in/joaocreste · +44 741 740 0683<br>
+      Report prepared 19 April 2026 · Next review 3 May 2026
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ MODAL ═══════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-card" id="modalCard" role="document">
+    <div class="modal-head">
+      <div class="title-block">
+        <div class="eyebrow">
+          <span>ETF Profile</span>
+          <span class="pill" id="mTicker">—</span>
+        </div>
+        <h3 id="mName">—</h3>
+        <div class="isin" id="mIsin">—</div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-left">
+        <div class="m-section-label">Fast Facts</div>
+        <div class="m-fast-facts" id="mFastFacts"></div>
+
+        <div class="m-section-label">Thesis &amp; Role</div>
+        <div class="m-text" id="mThesis"></div>
+
+        <div class="m-section-label">Structure</div>
+        <div class="m-text" id="mStructure"></div>
+      </div>
+
+      <div class="modal-right">
+        <div class="m-chart-title">Performance, indexed to 100</div>
+        <div class="m-chart-sub" id="mChartSub">Piecewise-exponential interpolation between reported endpoints</div>
+        <div class="m-chart-wrap" id="mChartWrap"></div>
+
+        <div class="m-metrics" id="mMetrics"></div>
+      </div>
+    </div>
+
+    <div class="m-foot">
+      Past performance is not a guide to future returns. Sharpe estimated with EUR risk-free proxy (ESTR ≈ 3.0%). Chart is schematic, not tick-level.
+    </div>
+  </div>
+</div>
+
+<script>
+  // ═════════ ETF DATA ═════════
+  const ETFS = [
+    {
+      ticker: "WRDUSA", isin: "IE00BD4TXV59",
+      name: "UBS Core MSCI World UCITS ETF",
+      issuer: "UBS", domicile: "Ireland",
+      weight: 32, amount: 320000,
+      ter: 0.06, aum: 7539,
+      inception: "2019-06-07",
+      replication: "Physical (full)", distribution: "Accumulating",
+      ret1y: 30.49, ret3yCum: 60.07, ret5y: 72.03,
+      vol1y: 10.93, vol3y: 13.11, vol5y: 14.73,
+      sharpe3y: 1.07,
+      thesis: "<strong>The central growth engine.</strong> Global developed-markets equity core — ~1,500 large- and mid-cap names across 23 developed countries, with the US near ~70% of index weight. Physical full replication means no swap counterparty risk. At <strong>0.06%</strong> TER, this is the <em>cheapest institutional-grade MSCI World tracker</em> in the UCITS universe.",
+      structure: "Role in portfolio: the largest single holding. Captures the global equity risk premium broadly, dampening country and sector concentration. USD exposure left unhedged as the portfolio's dollar view is neutral-to-softer. Tracking quality on UBS Core series is very high — typical 3Y tracking difference is a few basis points."
+    },
+    {
+      ticker: "CSPX", isin: "IE00B5BMR087",
+      name: "iShares Core S&P 500 UCITS ETF",
+      issuer: "BlackRock", domicile: "Ireland",
+      weight: 15, amount: 150000,
+      ter: 0.07, aum: 116458,
+      inception: "2010-05-19",
+      replication: "Physical (full)", distribution: "Accumulating",
+      ret1y: 30.67, ret3yCum: 64.57, ret5y: 82.77,
+      vol1y: 12.84, vol3y: 15.61, vol5y: 17.50,
+      sharpe3y: 0.97,
+      thesis: "<strong>The deliberate US overweight.</strong> Pure large-cap US equity via the S&amp;P 500. Stacks on top of the ~70% US weight already embedded in WRDUSA to express the macro thesis on <em>US growth outperformance and the AI capex cycle</em>. €116bn+ AUM makes it the deepest, most liquid UCITS S&amp;P 500 tracker.",
+      structure: "Role: targeted US tilt, rather than diluted regional exposure. Physical full replication — all 500 names held directly, no derivatives. 1Y TR of +30.67% reflects the US leg of the 2025–26 AI-led rally; 3Y annualised ~18% puts it well ahead of MSCI EMU (+15.2%) on the same window, vindicating the overweight."
+    },
+    {
+      ticker: "CEU", isin: "IE00B53QG562",
+      name: "iShares Core MSCI EMU UCITS ETF",
+      issuer: "BlackRock", domicile: "Ireland",
+      weight: 8, amount: 80000,
+      ter: 0.12, aum: 6428,
+      inception: "2010-01-12",
+      replication: "Physical (full)", distribution: "Accumulating",
+      ret1y: 28.70, ret3yCum: 52.47, ret5y: 66.71,
+      vol1y: 13.57, vol3y: 13.58, vol5y: 15.81,
+      sharpe3y: 0.89,
+      thesis: "<strong>Eurozone-specific equity.</strong> Tracks 225 large- and mid-cap names across euro-member states (France, Germany, Netherlands, Italy, Spain, and others). Expresses the <em>incremental view on an improving euro-area fiscal impulse</em> and adds a natural EUR-denominated equity anchor to offset the USD weight in WRDUSA and CSPX.",
+      structure: "Role: regional diversifier + currency alignment. Physical full replication, €6.4bn AUM, highly liquid on Xetra and Borsa Italiana. 3Y annualised ~15.2% — materially behind the US leg but with lower beta to US tech concentration, which matters under a growth-disappointment scenario."
+    },
+    {
+      ticker: "XBLC", isin: "LU0478205379",
+      name: "Xtrackers II EUR Corporate Bond UCITS ETF 1C",
+      issuer: "Xtrackers (DWS)", domicile: "Luxembourg",
+      weight: 15, amount: 150000,
+      ter: 0.09, aum: 4135,
+      inception: "2010-02-23",
+      replication: "Physical (sampled)", distribution: "Accumulating",
+      ret1y: 2.73, ret3yCum: 15.20, ret5y: 0.41,
+      vol1y: 2.63, vol3y: 3.13, vol5y: 4.00,
+      sharpe3y: 0.58,
+      thesis: "<strong>Core euro IG carry.</strong> Investment-grade EUR-denominated corporate bonds, 2+ year maturity, tracking the iBoxx EUR Liquid Corporate 100 index. Intermediate duration (~5Y) places it squarely in <em>PIMCO's preferred 5–10Y sweet spot</em>. At 0.09% TER, XBLC is the lowest-cost EUR IG core tracker — 11bps cheaper than the iShares equivalent.",
+      structure: "Role: largest single bond sleeve at 15% of the portfolio. Sampled physical replication — holds a representative subset rather than every bond, which improves tradeability. The flat 5Y total return (+0.41%) reflects the 2022 rates shock; the 3Y cumulative (+15.2%) shows the subsequent recovery as yields normalised."
+    },
+    {
+      ticker: "CSBGE7", isin: "IE00B3VTML14",
+      name: "iShares € Govt Bond 3–7Y UCITS ETF (Acc)",
+      issuer: "BlackRock", domicile: "Ireland",
+      weight: 10, amount: 100000,
+      ter: 0.15, aum: 1284,
+      inception: "2009-06-02",
+      replication: "Physical (sampled)", distribution: "Accumulating",
+      ret1y: 0.93, ret3yCum: 9.95, ret5y: -3.30,
+      vol1y: 2.89, vol3y: 3.45, vol5y: 4.28,
+      sharpe3y: 0.06,
+      thesis: "<strong>Sovereign-risk duration anchor.</strong> EMU government bonds in the 3–7 year maturity bucket — Germany, France, Italy, Spain, and other euro members. Bloomberg Euro Government 3–7 benchmark. Provides <em>pure duration exposure</em> with no credit overlap to XBLC, and acts as the portfolio's safe-haven leg in a risk-off scenario.",
+      structure: "Role: duration-only, credit-free. Physical sampled replication. The negative 5Y total return (-3.30%) is the scar from the 2022 rates shock on intermediate govt bonds; the modest 3Y annualised (+3.2%) and tight Sharpe reflect a still-normalising rate path. Role is <em>structural</em>, not return-chasing."
+    },
+    {
+      ticker: "XHYA", isin: "LU1109943388",
+      name: "Xtrackers II EUR HY Corporate Bond UCITS ETF 1C",
+      issuer: "Xtrackers (DWS)", domicile: "Luxembourg",
+      weight: 10, amount: 100000,
+      ter: 0.20, aum: 1516,
+      inception: "2017-03-15",
+      replication: "Physical (sampled)", distribution: "Accumulating",
+      ret1y: 6.02, ret3yCum: 21.99, ret5y: 15.23,
+      vol1y: 2.77, vol3y: 2.81, vol5y: 4.14,
+      sharpe3y: 1.37,
+      thesis: "<strong>Modest, carry-only HY.</strong> Sub-investment-grade euro corporates via the iBoxx EUR Liquid HY index — 642 holdings concentrated in the BB and single-B tier. Sized <em>deliberately below a typical HY allocation</em> given historically tight spreads entering April 2026; the role is carry pickup, not return-chasing.",
+      structure: "Role: incremental yield over IG, tightly monitored. 3Y est. Sharpe of ~1.37 is the strongest in the debt sleeve, but that figure reflects the post-2022 spread tightening — unlikely to repeat. Pre-committed exit if <strong>HY OAS widens past 500 bps</strong>, with proceeds rolling into XBLC."
+    },
+    {
+      ticker: "SGLD", isin: "IE00B579F325",
+      name: "Invesco Physical Gold ETC",
+      issuer: "Invesco", domicile: "Ireland",
+      weight: 4, amount: 40000,
+      ter: 0.12, aum: 26089,
+      inception: "2009-06-25",
+      replication: "Physical · JPM Chase London vaults", distribution: "Non-distributing (ETC)",
+      ret1y: 41.38, ret3yCum: 125.85, ret5y: 175.95,
+      vol1y: 23.38, vol3y: 17.70, vol5y: 16.61,
+      sharpe3y: 1.60,
+      thesis: "<strong>The geopolitical hedge.</strong> Physically backed gold exchange-traded commodity, bullion held in JPMorgan Chase London vaults. Role is twofold: <em>hedge against live geopolitical tail risk</em> (Israel–Iran / Strait of Hormuz) and against sticky inflation that would erode real yields. 3Y annualised of <strong>+31.4%</strong> reflects the 2023–26 geopolitical repricing.",
+      structure: "Role: the portfolio's asymmetric tail insurance. Sized at 4% so a sustained gold rally materially helps, without crowding out risk assets in a benign scenario. <strong>Pre-committed trigger</strong>: if Hormuz disruption extends beyond 8 weeks, gold upsizes to 6–7% and HY is halved. ETC structure (not ETF) reflects single-commodity exposure, not a UCITS-eligible basket."
+    },
+    {
+      ticker: "XIFE", isin: "IE00BYZNF849",
+      name: "Xtrackers Global Infrastructure ESG UCITS ETF 1C",
+      issuer: "Xtrackers (DWS)", domicile: "Ireland",
+      weight: 3, amount: 30000,
+      ter: 0.35, aum: 12,
+      inception: "2024-09-26",
+      replication: "Physical (full)", distribution: "Accumulating",
+      ret1y: 11.61, ret3yCum: null, ret5y: null,
+      vol1y: 10.61, vol3y: null, vol5y: null,
+      sharpe3y: null,
+      thesis: "<strong>Fiscal-beneficiary defensive.</strong> Global listed infrastructure — utilities, transport, communications, water — with an ESG overlay on the FTSE Global Core Infrastructure index. Captures <em>cashflows with inflation linkage and defensive regulated characteristics</em>, and benefits structurally from rate-cut cycles and government capex.",
+      structure: "Role: diversifier outside traditional risk buckets. <strong>Watchpoint:</strong> inception September 2024 leaves only ~19 months of track record, and AUM is small at ~€12M. Tracking has been clean in the available window (+11.61% 1Y), but this is the portfolio's lightest-tenured holding. On watch for a potential swap to iShares Global Infrastructure (INFR) if the longer track record becomes preferable to the 30bps cost saving."
+    },
+    {
+      ticker: "WTAI", isin: "IE00BDVPNG13",
+      name: "WisdomTree Artificial Intelligence UCITS ETF",
+      issuer: "WisdomTree", domicile: "Ireland",
+      weight: 3, amount: 30000,
+      ter: 0.40, aum: 936,
+      inception: "2018-11-30",
+      replication: "Physical (full)", distribution: "Accumulating",
+      ret1y: 76.40, ret3yCum: 87.50, ret5y: 58.62,
+      vol1y: 23.72, vol3y: 25.97, vol5y: 26.06,
+      sharpe3y: 0.78,
+      thesis: "<strong>Thematic overlay on the AI thesis.</strong> Tracks the Nasdaq CTA Artificial Intelligence index — companies identified as enablers, engagers, or enhancers of AI. Spans semiconductors, cloud compute, pure-play AI software. The <em>BlackRock Investment Institute's core thesis</em> on AI capex as a multi-year theme is the mapped rationale.",
+      structure: "Role: targeted thematic exposure outside what WRDUSA and CSPX already hold at the index level. 1Y TR of +76.4% reflects the 2025–26 AI rally; 3Y annualised ~23.4% sits between the pure US broad index and the narrower AI-infrastructure sleeve. <strong>High volatility</strong> (~26% 3Y) — size kept to 3% to manage drawdown risk."
+    }
+  ];
+
+  // ═════════ TABLE POPULATION ═════════
+  const tbody = document.querySelector("#holdingsTable tbody");
+  ETFS.forEach((e, i) => {
+    const ann3y = e.ret3yCum !== null ? (Math.pow(1 + e.ret3yCum / 100, 1/3) - 1) * 100 : null;
+    const row = document.createElement("tr");
+    row.dataset.idx = i;
+    row.innerHTML = `
+      <td><span class="ticker">${e.ticker}</span></td>
+      <td class="name">${e.name}<br><small>${e.isin} · ${e.replication} · ${e.distribution}</small></td>
+      <td class="num">${e.weight}%</td>
+      <td class="num">€${e.amount.toLocaleString("en-US")}</td>
+      <td class="num">${e.ter.toFixed(2)}%</td>
+      <td class="num">${e.aum.toLocaleString("en-US")}</td>
+      <td class="num gain">+${e.ret1y.toFixed(2)}%</td>
+      <td class="num neutral">${ann3y !== null ? "+" + ann3y.toFixed(1) + "%" : "—"}</td>
+      <td class="num">${e.vol3y !== null ? e.vol3y.toFixed(2) + "%" : e.vol1y.toFixed(2) + "%<br><small style=\"color:var(--steel)\">(1Y)</small>"}</td>
+      <td class="num ${e.sharpe3y !== null && e.sharpe3y > 1.2 ? "gain" : "neutral"}">${e.sharpe3y !== null ? "≈ " + e.sharpe3y.toFixed(2) : "n/a"}</td>
+    `;
+    row.addEventListener("click", () => openModal(i));
+    tbody.appendChild(row);
+  });
+
+  // ═════════ PERFORMANCE CHART ═════════
+  function buildSeries(etf) {
+    // Returns array of {m, v} indexed to 100 at t=0.
+    // Uses piecewise-exponential interpolation between known return endpoints.
+    const pts = [];
+
+    if (etf.ret5y !== null && etf.ret3yCum !== null && etf.ret1y !== null) {
+      // Full 5Y history: 4 anchor points
+      const today = 100 * (1 + etf.ret5y / 100);
+      const y1Ago = today / (1 + etf.ret1y / 100);
+      const y3Ago = today / (1 + etf.ret3yCum / 100);
+      const anchors = [[0, 100], [24, y3Ago], [48, y1Ago], [60, today]];
+      return interpolate(anchors);
+    } else if (etf.ret1y !== null) {
+      // Short history: use 1Y only
+      const today = 100 * (1 + etf.ret1y / 100);
+      return interpolate([[0, 100], [12, today]]);
+    }
+    return [];
+  }
+
+  function interpolate(anchors) {
+    const pts = [];
+    for (let i = 0; i < anchors.length - 1; i++) {
+      const [t1, v1] = anchors[i];
+      const [t2, v2] = anchors[i + 1];
+      const span = t2 - t1;
+      for (let m = t1; m < t2; m++) {
+        const frac = (m - t1) / span;
+        const val = v1 * Math.pow(v2 / v1, frac);
+        pts.push({ m, v: val });
+      }
+    }
+    pts.push({ m: anchors[anchors.length - 1][0], v: anchors[anchors.length - 1][1] });
+    return pts;
+  }
+
+  function renderChart(etf) {
+    const series = buildSeries(etf);
+    if (series.length === 0) {
+      return '<div style="padding: 40px; text-align: center; color: var(--ink-soft);">Insufficient historical data.</div>';
+    }
+
+    const maxMonth = series[series.length - 1].m;
+    const vals = series.map(p => p.v);
+    const minV = Math.min(...vals);
+    const maxV = Math.max(...vals);
+    const range = maxV - minV;
+    const pad = range * 0.12 || 2;
+    const yMin = Math.max(50, Math.floor((minV - pad) / 5) * 5);
+    const yMax = Math.ceil((maxV + pad) / 5) * 5;
+
+    const W = 400, H = 260;
+    const P = { l: 44, r: 18, t: 28, b: 38 };
+    const chartW = W - P.l - P.r;
+    const chartH = H - P.t - P.b;
+
+    const mapX = m => P.l + (m / maxMonth) * chartW;
+    const mapY = v => P.t + (1 - (v - yMin) / (yMax - yMin)) * chartH;
+
+    const polyPoints = series.map(p => `${mapX(p.m).toFixed(1)},${mapY(p.v).toFixed(1)}`).join(" ");
+    const areaPoints = `${mapX(0)},${mapY(yMin)} ${polyPoints} ${mapX(maxMonth)},${mapY(yMin)}`;
+
+    const lastVal = vals[vals.length - 1];
+    const last = { x: mapX(maxMonth), y: mapY(lastVal) };
+
+    // Y-grid at 100 (baseline)
+    const y100 = mapY(100);
+    // Additional Y gridlines at nice intervals
+    const yStep = Math.max(5, Math.ceil((yMax - yMin) / 4 / 5) * 5);
+    let yGrid = "";
+    for (let v = Math.ceil(yMin / yStep) * yStep; v <= yMax; v += yStep) {
+      if (v !== 100) {
+        yGrid += `<line class="grid-line" x1="${P.l}" y1="${mapY(v)}" x2="${W - P.r}" y2="${mapY(v)}"/>`;
+        yGrid += `<text class="label" x="${P.l - 6}" y="${mapY(v) + 3}" text-anchor="end">${v}</text>`;
+      }
+    }
+
+    // X labels: based on duration
+    let xLabels = "";
+    if (maxMonth >= 48) {
+      xLabels = `
+        <text class="label" x="${mapX(0)}" y="${H - P.b + 18}" text-anchor="start">5Y ago</text>
+        <text class="label" x="${mapX(24)}" y="${H - P.b + 18}" text-anchor="middle">3Y</text>
+        <text class="label" x="${mapX(48)}" y="${H - P.b + 18}" text-anchor="middle">1Y</text>
+        <text class="label" x="${mapX(maxMonth)}" y="${H - P.b + 18}" text-anchor="end">Today</text>
+      `;
+    } else {
+      xLabels = `
+        <text class="label" x="${mapX(0)}" y="${H - P.b + 18}" text-anchor="start">1Y ago</text>
+        <text class="label" x="${mapX(maxMonth)}" y="${H - P.b + 18}" text-anchor="end">Today</text>
+      `;
+    }
+
+    return `
+      <svg class="perf-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
+        ${yGrid}
+        <line class="baseline" x1="${P.l}" y1="${y100}" x2="${W - P.r}" y2="${y100}"/>
+        <text class="label" x="${P.l - 6}" y="${y100 + 3}" text-anchor="end" style="fill: var(--gold); font-weight: 600;">100</text>
+        <polygon class="area-fill" points="${areaPoints}"/>
+        <polyline class="series" points="${polyPoints}"/>
+        <line class="axis" x1="${P.l}" y1="${P.t}" x2="${P.l}" y2="${H - P.b}"/>
+        <line class="axis" x1="${P.l}" y1="${H - P.b}" x2="${W - P.r}" y2="${H - P.b}"/>
+        ${xLabels}
+        <circle class="marker" cx="${mapX(0)}" cy="${mapY(100)}" r="3"/>
+        <circle class="marker" cx="${last.x}" cy="${last.y}" r="3.5"/>
+        <text class="marker-label" x="${last.x - 4}" y="${last.y - 10}" text-anchor="end">${lastVal.toFixed(1)}</text>
+      </svg>
+    `;
+  }
+
+  // ═════════ MODAL LOGIC ═════════
+  const backdrop = document.getElementById("modalBackdrop");
+  const modalCard = document.getElementById("modalCard");
+  const closeBtn = document.getElementById("modalClose");
+  let lastFocused = null;
+
+  function openModal(idx) {
+    const e = ETFS[idx];
+    lastFocused = document.activeElement;
+
+    document.getElementById("mTicker").textContent = e.ticker;
+    document.getElementById("mName").textContent = e.name;
+    document.getElementById("mIsin").textContent = `${e.isin} · ${e.issuer} · ${e.domicile}`;
+
+    // Fast facts
+    document.getElementById("mFastFacts").innerHTML = `
+      <div class="m-fact"><div class="k">Weight</div><div class="v">${e.weight}% · €${e.amount.toLocaleString("en-US")}</div></div>
+      <div class="m-fact"><div class="k">TER</div><div class="v">${e.ter.toFixed(2)}% p.a.</div></div>
+      <div class="m-fact"><div class="k">AUM</div><div class="v">€${e.aum.toLocaleString("en-US")}M</div></div>
+      <div class="m-fact"><div class="k">Inception</div><div class="v">${new Date(e.inception).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}</div></div>
+      <div class="m-fact"><div class="k">Replication</div><div class="v">${e.replication}</div></div>
+      <div class="m-fact"><div class="k">Distribution</div><div class="v">${e.distribution}</div></div>
+    `;
+
+    document.getElementById("mThesis").innerHTML = e.thesis;
+    document.getElementById("mStructure").innerHTML = e.structure;
+
+    // Chart
+    document.getElementById("mChartWrap").innerHTML = renderChart(e);
+    const ann3y = e.ret3yCum !== null ? ((Math.pow(1 + e.ret3yCum / 100, 1/3) - 1) * 100).toFixed(1) : "—";
+    document.getElementById("mChartSub").innerHTML = e.ret5y !== null
+      ? "60-month history. Piecewise-exponential interpolation between reported 5Y / 3Y / 1Y endpoints."
+      : "Short history: ETF inception " + new Date(e.inception).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) + ". Only 1Y endpoint shown.";
+
+    // Metrics
+    document.getElementById("mMetrics").innerHTML = `
+      <div class="m-metric"><div class="k">1Y TR</div><div class="v">+${e.ret1y.toFixed(2)}%</div></div>
+      <div class="m-metric"><div class="k">3Y Ann</div><div class="v">${e.ret3yCum !== null ? "+" + ann3y + "%" : "—"}</div></div>
+      <div class="m-metric"><div class="k">3Y Vol</div><div class="v neutral">${e.vol3y !== null ? e.vol3y.toFixed(2) + "%" : "—"}</div></div>
+      <div class="m-metric"><div class="k">Est. Sharpe</div><div class="v">${e.sharpe3y !== null ? "≈ " + e.sharpe3y.toFixed(2) : "n/a"}</div></div>
+    `;
+
+    backdrop.classList.add("open");
+    backdrop.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lock");
+    setTimeout(() => closeBtn.focus(), 100);
+  }
+
+  function closeModal() {
+    backdrop.classList.remove("open");
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lock");
+    if (lastFocused) lastFocused.focus();
+  }
+
+  closeBtn.addEventListener("click", closeModal);
+  backdrop.addEventListener("click", e => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && backdrop.classList.contains("open")) closeModal(); });
+
+  // ═════════ Scroll reveal ═════════
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("visible"); obs.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
