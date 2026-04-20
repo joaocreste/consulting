@@ -591,6 +591,83 @@
   .backtest-card .backtest-legend .item {
     font-size: 12px;
   }
+
+  .backtest-stats {
+    margin-top: 28px;
+    background: #FFFFFF;
+    border: 1px solid rgba(10,22,40,0.06);
+    border-radius: 12px;
+    padding: 22px 26px 20px;
+    box-shadow: 0 4px 20px rgba(10,22,40,0.06);
+  }
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap; gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(10,22,40,0.08);
+  }
+  .stats-header .label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .stats-header .note {
+    font-size: 10.5px;
+    color: rgba(10,22,40,0.5);
+    font-weight: 400;
+    font-style: italic;
+  }
+  .stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Mulish', sans-serif;
+  }
+  .stats-table thead th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(10,22,40,0.55);
+    font-weight: 600;
+    border-bottom: 1px solid rgba(10,22,40,0.12);
+  }
+  .stats-table thead th:not(:first-child) {
+    text-align: right;
+  }
+  .stats-table tbody td {
+    padding: 14px 12px;
+    font-size: 14px;
+    color: var(--ink);
+    border-bottom: 0.5px solid rgba(10,22,40,0.07);
+    font-variant-numeric: tabular-nums;
+  }
+  .stats-table tbody td:first-child {
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .stats-table tbody td:not(:first-child) {
+    text-align: right;
+    font-weight: 500;
+  }
+  .stats-table tbody tr:last-child td { border-bottom: none; }
+  .stats-table td.best {
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .stats-table td.best::after {
+    content: " ★";
+    font-size: 10px;
+    letter-spacing: 0;
+    opacity: 0.7;
+  }
   .backtest-chart {
     width: 100%;
     height: auto;
@@ -1310,6 +1387,61 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="backtest-stats">
+      <div class="stats-header">
+        <span class="label">
+          <span data-lang="en">Comparative Statistics · 3-Year Window</span>
+          <span data-lang="pt">Estatísticas Comparativas · Janela de 3 Anos</span>
+        </span>
+        <span class="note">
+          <span data-lang="en">Computed from daily adjusted closes · Sharpe uses Rf = 4.0% · ★ = best on the row</span>
+          <span data-lang="pt">Calculado dos fechamentos ajustados diários · Sharpe usa Rf = 4,0% · ★ = melhor na linha</span>
+        </span>
+      </div>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th><span data-lang="en">Metric</span><span data-lang="pt">Métrica</span></th>
+            <th><span data-lang="en">Portfolio</span><span data-lang="pt">Portfólio</span></th>
+            <th>MSCI World</th>
+            <th>S&amp;P 500</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span data-lang="en">Total return (3Y)</span><span data-lang="pt">Retorno total (3A)</span></td>
+            <td>+55.37%</td>
+            <td>+74.41%</td>
+            <td class="best">+80.85%</td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Annualised volatility</span><span data-lang="pt">Volatilidade anualizada</span></td>
+            <td class="best">9.79%</td>
+            <td>14.21%</td>
+            <td>15.14%</td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Sharpe ratio</span><span data-lang="pt">Índice de Sharpe</span></td>
+            <td class="best">1.21</td>
+            <td>1.15</td>
+            <td>1.18</td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Max 5-day drawdown</span><span data-lang="pt">Drawdown máx. 5 dias</span></td>
+            <td class="best">−7.82%</td>
+            <td>−11.26%</td>
+            <td>−11.50%</td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Max 30-day drawdown</span><span data-lang="pt">Drawdown máx. 30 dias</span></td>
+            <td class="best">−9.96%</td>
+            <td>−15.03%</td>
+            <td>−16.20%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
