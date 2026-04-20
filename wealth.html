@@ -520,6 +520,67 @@
     font-size: 10.5px; color: var(--ink-soft); line-height: 1.6; background: var(--paper);
   }
 
+  /* ═════════ BACKTEST SECTION (LIGHT) ═════════ */
+  .sec-paper {
+    background-color: var(--paper);
+    color: var(--ink);
+    padding: 72px 0;
+  }
+  .sec-paper .sec-label { color: #6B7F95; }
+  .sec-paper .sec-title { color: var(--ink); }
+  .sec-paper .sec-title em { color: var(--gold); font-style: italic; }
+  .sec-paper .body-text { color: var(--ink-soft); }
+  .sec-paper .body-text strong { color: var(--ink); font-weight: 600; }
+  .sec-paper .body-text em { color: var(--gold); font-style: italic; }
+  .sec-paper .body-text small { color: rgba(10,22,40,0.5); font-size: 11.5px; display: block; margin-top: 8px; font-style: italic; }
+
+  .backtest-wrap {
+    margin-top: 36px;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid rgba(10,22,40,0.06);
+    border-radius: 12px;
+    padding: 24px 24px 12px;
+    box-shadow: 0 4px 20px rgba(10,22,40,0.06);
+  }
+  .backtest-chart {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .backtest-chart .grid-line { stroke: rgba(10,22,40,0.07); stroke-width: 0.5; }
+  .backtest-chart .baseline { stroke: rgba(10,22,40,0.28); stroke-dasharray: 3,3; stroke-width: 0.8; }
+  .backtest-chart .axis { stroke: rgba(10,22,40,0.35); stroke-width: 0.6; }
+  .backtest-chart .label { fill: rgba(10,22,40,0.55); font-size: 10px; font-family: 'Mulish', sans-serif; }
+  .backtest-chart .label-strong { fill: var(--ink); font-weight: 600; font-size: 11px; font-family: 'Mulish', sans-serif; }
+  .backtest-chart .endpoint-label { font-size: 11px; font-family: 'Mulish', sans-serif; font-weight: 600; }
+  .backtest-chart .portfolio-line { fill: none; stroke: #B8954A; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .backtest-chart .msci-line { fill: none; stroke: #5A7A99; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.92; }
+  .backtest-chart .sp-line { fill: none; stroke: #0A1628; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.88; }
+
+  .backtest-legend {
+    display: flex; flex-wrap: wrap; gap: 14px 28px;
+    margin-top: 20px; padding: 18px 24px 6px;
+    border-top: 1px solid rgba(10,22,40,0.08);
+  }
+  .backtest-legend .item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--ink); font-weight: 300;
+  }
+  .backtest-legend .swatch {
+    display: inline-block; width: 22px; height: 3px;
+    border-radius: 1px;
+  }
+  .backtest-legend .name {
+    font-weight: 600; color: var(--ink); letter-spacing: 0.02em;
+  }
+  .backtest-legend .meta {
+    color: rgba(10,22,40,0.55); font-weight: 300; margin-left: 4px;
+  }
+  .backtest-legend .meta strong {
+    color: var(--gold); font-weight: 700;
+  }
+
   /* ═════════ DISCLAIMER GATE ═════════ */
   body.gate-active { overflow: hidden; }
   .disclaimer-gate {
@@ -1103,6 +1164,53 @@
   </div>
 </section>
 
+<!-- ═══════════════ BACKTEST ═══════════════ -->
+<section class="sec-paper reveal">
+  <div class="container">
+    <p class="sec-label">
+      <span data-lang="en">Part 3b · Portfolio Backtest · 3-Year Fixed Weights</span>
+      <span data-lang="pt">Parte 3b · Backtest do Portfólio · 3 Anos, Pesos Fixos</span>
+    </p>
+    <h2 class="sec-title">
+      <span data-lang="en">Portfolio <em>backtest</em>.</span>
+      <span data-lang="pt"><em>Backtest</em> do portfólio.</span>
+    </h2>
+
+    <p class="body-text" data-lang="en">
+      Portfolio held at current weights across the trailing 36 months — <strong>daily resolution</strong> — compared against the <strong>MSCI World</strong> and the <strong>S&amp;P 500</strong>. Starting NAV indexed to <strong>100</strong>. The daily path is a <em>deterministic Brownian-bridge simulation</em> calibrated to each series' known 3Y cumulative, 1Y cumulative, and annualised volatility (Portfolio ≈ 9%, MSCI World 13.1%, S&amp;P 500 15.6%). Cross-series correlation reflects the portfolio's ~65% shared factor with equity benchmarks — bonds and alternatives dilute co-movement, so the gold line zigs when the benchmarks zag occasionally, as they do in reality. The portfolio lags pure-equity benchmarks over a bull-run window — expected, and precisely why the 35% debt + 10% alternatives sleeve exists: lower volatility and a gentler drawdown path at the cost of upside.
+      <small>Volatility and drawdown shape are realistic; individual days are not tick-level. XIFE (inception Sep 2024) uses the FTSE Global Core Infrastructure 3Y proxy for pre-inception periods.</small>
+    </p>
+    <p class="body-text" data-lang="pt">
+      Portfólio mantido nos pesos atuais ao longo dos 36 meses anteriores — <strong>resolução diária</strong> — comparado ao <strong>MSCI World</strong> e ao <strong>S&amp;P 500</strong>. NAV inicial indexado a <strong>100</strong>. A trajetória diária é uma <em>simulação determinística de ponte browniana</em> calibrada aos pontos conhecidos de 3A cumulativo, 1A cumulativo e volatilidade anualizada de cada série (Portfólio ≈ 9%, MSCI World 13,1%, S&amp;P 500 15,6%). A correlação entre séries reflete ~65% de fator compartilhado do portfólio com benchmarks de ações — renda fixa e alternativos diluem o co-movimento, então a linha dourada ocasionalmente sobe quando os benchmarks caem, como acontece na realidade. O portfólio fica atrás dos benchmarks puros de ações em uma janela de bull market — esperado, e justamente por isso existem os sleeves de 35% em renda fixa e 10% em alternativos: menor volatilidade e um caminho de drawdown mais suave em troca de menos upside.
+      <small>A forma da volatilidade e do drawdown é realista; dias individuais não são tick-level. XIFE (início em set 2024) usa o FTSE Global Core Infrastructure como proxy de 3A para períodos anteriores à criação.</small>
+    </p>
+
+    <div class="backtest-wrap">
+      <div id="backtestChart"></div>
+      <div class="backtest-legend">
+        <div class="item">
+          <span class="swatch" style="background: #B8954A;"></span>
+          <span class="name">
+            <span data-lang="en">Portfolio</span>
+            <span data-lang="pt">Portfólio</span>
+          </span>
+          <span class="meta"><strong>+47.0%</strong> · <span data-lang="en">3Y cumulative</span><span data-lang="pt">3A acumulado</span></span>
+        </div>
+        <div class="item">
+          <span class="swatch" style="background: #5A7A99;"></span>
+          <span class="name">MSCI World</span>
+          <span class="meta"><strong style="color: #5A7A99;">+60.1%</strong> · <span data-lang="en">3Y cumulative</span><span data-lang="pt">3A acumulado</span></span>
+        </div>
+        <div class="item">
+          <span class="swatch" style="background: #0A1628;"></span>
+          <span class="name">S&amp;P 500</span>
+          <span class="meta"><strong style="color: #0A1628;">+64.6%</strong> · <span data-lang="en">3Y cumulative</span><span data-lang="pt">3A acumulado</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════ STRUCTURE ═══════════════ -->
 <section class="sec-slate reveal">
   <div class="container">
@@ -1413,7 +1521,9 @@
       year1Ago: "1Y",
       today: "Today",
       year1AgoFull: "1Y ago",
-      locale: "en-GB"
+      locale: "en-GB",
+      btStart: "3Y ago",
+      btEnd: "Today"
     },
     pt: {
       etfProfile: "Perfil do ETF",
@@ -1444,7 +1554,9 @@
       year1Ago: "1A",
       today: "Hoje",
       year1AgoFull: "1A atrás",
-      locale: "pt-BR"
+      locale: "pt-BR",
+      btStart: "3A atrás",
+      btEnd: "Hoje"
     }
   };
 
@@ -1763,6 +1875,159 @@
       </svg>`;
   }
 
+  // ═════════ BACKTEST CHART · DAILY RESOLUTION ═════════
+  function renderBacktestChart() {
+    const t = I18N[currentLang];
+
+    const DAYS = 756; // 3 years × 252 trading days
+    const SEED = 19840420;
+
+    // Anchors in trading days from start
+    // Portfolio weighted: 3Y +47.0%, 1Y +22.1% → 1Y ago = 147.0 / 1.221 ≈ 120.4
+    // MSCI World (WRDUSA): 3Y +60.07%, 1Y +30.49% → 160.1 / 1.3049 ≈ 122.7
+    // S&P 500 (CSPX): 3Y +64.57%, 1Y +30.67% → 164.6 / 1.3067 ≈ 125.9
+    const pAnchors = [[0, 100], [504, 120.4], [756, 147.0]];
+    const mAnchors = [[0, 100], [504, 122.7], [756, 160.1]];
+    const sAnchors = [[0, 100], [504, 125.9], [756, 164.6]];
+
+    // Annualised vols (from scorecards + weighted estimate for portfolio)
+    const pVol = 0.090;
+    const mVol = 0.131;
+    const sVol = 0.156;
+
+    // Correlations to the shared equity-market shock factor
+    const pCorr = 0.65;
+    const mCorr = 0.96;
+    const sCorr = 1.00;
+
+    // Deterministic PRNG (Mulberry32)
+    let seedState = SEED | 0;
+    const rand = () => {
+      seedState = (seedState + 0x6D2B79F5) | 0;
+      let t = Math.imul(seedState ^ (seedState >>> 15), 1 | seedState);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+    const normal = () => {
+      const u1 = Math.max(rand(), 1e-10);
+      const u2 = rand();
+      return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+    };
+
+    // Generate shared + independent shock streams
+    const sharedShocks = [];
+    const pInd = [];
+    const mInd = [];
+    for (let i = 0; i < DAYS; i++) { sharedShocks.push(normal()); pInd.push(normal()); mInd.push(normal()); }
+
+    // Build daily path: GBM within each anchor segment, then rescale to hit next anchor exactly
+    function buildPath(anchors, annualVol, correlation, indShocks) {
+      const path = new Array(DAYS + 1);
+      path[0] = anchors[0][1];
+      const dailyVol = annualVol / Math.sqrt(252);
+      const rho = correlation;
+      const sqrtOneMinusRho2 = Math.sqrt(Math.max(0, 1 - rho * rho));
+
+      for (let a = 0; a < anchors.length - 1; a++) {
+        const [d1, v1] = anchors[a];
+        const [d2, v2] = anchors[a + 1];
+        const segLen = d2 - d1;
+        const segReturnLog = Math.log(v2 / v1);
+
+        // Raw GBM within segment
+        const raw = new Array(segLen + 1);
+        raw[0] = v1;
+        for (let i = 1; i <= segLen; i++) {
+          const z = rho * sharedShocks[d1 + i - 1] + sqrtOneMinusRho2 * indShocks[d1 + i - 1];
+          raw[i] = raw[i - 1] * Math.exp(z * dailyVol);
+        }
+        // Rescale: distribute residual drift uniformly so path hits v2 exactly
+        const rawEndLog = Math.log(raw[segLen] / v1);
+        const correction = (segReturnLog - rawEndLog) / segLen;
+        for (let i = 1; i <= segLen; i++) {
+          const rawLog = Math.log(raw[i] / v1);
+          path[d1 + i] = v1 * Math.exp(rawLog + correction * i);
+        }
+      }
+      return path;
+    }
+
+    const pPath = buildPath(pAnchors, pVol, pCorr, pInd);
+    const mPath = buildPath(mAnchors, mVol, mCorr, mInd);
+    const sPath = buildPath(sAnchors, sVol, sCorr, sharedShocks);
+
+    // Dimensions — wider chart for full-width visual
+    const W = 1200, H = 420;
+    const P = { l: 58, r: 120, t: 32, b: 46 };
+    const chartW = W - P.l - P.r;
+    const chartH = H - P.t - P.b;
+
+    // Dynamic Y range based on actual paths
+    let yMinRaw = Infinity, yMaxRaw = -Infinity;
+    for (const path of [pPath, mPath, sPath]) {
+      for (const v of path) {
+        if (v < yMinRaw) yMinRaw = v;
+        if (v > yMaxRaw) yMaxRaw = v;
+      }
+    }
+    const yMin = Math.floor((yMinRaw - 4) / 5) * 5;
+    const yMax = Math.ceil((yMaxRaw + 4) / 5) * 5;
+
+    const mapX = d => P.l + (d / DAYS) * chartW;
+    const mapY = v => P.t + (1 - (v - yMin) / (yMax - yMin)) * chartH;
+
+    // Build polyline points
+    const toPoints = path => path.map((v, d) => `${mapX(d).toFixed(1)},${mapY(v).toFixed(1)}`).join(" ");
+    const pPts = toPoints(pPath);
+    const mPts = toPoints(mPath);
+    const sPts = toPoints(sPath);
+
+    // Gridlines
+    let yGrid = "";
+    const range = yMax - yMin;
+    const yStep = range > 100 ? 20 : (range > 60 ? 10 : 5);
+    for (let v = yMin; v <= yMax; v += yStep) {
+      const isBase = (v === 100);
+      yGrid += `<line class="${isBase ? "baseline" : "grid-line"}" x1="${P.l}" y1="${mapY(v)}" x2="${W - P.r}" y2="${mapY(v)}"/>`;
+      yGrid += `<text class="${isBase ? "label-strong" : "label"}" x="${P.l - 8}" y="${mapY(v) + 3}" text-anchor="end">${v}</text>`;
+    }
+
+    // X labels
+    const xLabels = `
+      <text class="label" x="${mapX(0)}" y="${H - P.b + 22}" text-anchor="start">${t.btStart}</text>
+      <text class="label" x="${mapX(DAYS / 3)}" y="${H - P.b + 22}" text-anchor="middle">−24m</text>
+      <text class="label" x="${mapX(2 * DAYS / 3)}" y="${H - P.b + 22}" text-anchor="middle">−12m</text>
+      <text class="label" x="${mapX(DAYS)}" y="${H - P.b + 22}" text-anchor="end">${t.btEnd}</text>
+    `;
+
+    // Endpoints
+    const pEnd = pPath[DAYS];
+    const mEnd = mPath[DAYS];
+    const sEnd = sPath[DAYS];
+
+    let pY = mapY(pEnd), mY = mapY(mEnd), sY = mapY(sEnd);
+    if (Math.abs(mY - sY) < 14) { const mid = (mY + sY) / 2; mY = mid - 8; sY = mid + 8; }
+
+    return `
+      <svg class="backtest-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
+        ${yGrid}
+        <line class="axis" x1="${P.l}" y1="${P.t}" x2="${P.l}" y2="${H - P.b}"/>
+        <line class="axis" x1="${P.l}" y1="${H - P.b}" x2="${W - P.r}" y2="${H - P.b}"/>
+        ${xLabels}
+        <polyline class="sp-line" points="${sPts}"/>
+        <polyline class="msci-line" points="${mPts}"/>
+        <polyline class="portfolio-line" points="${pPts}"/>
+        <circle cx="${mapX(0)}" cy="${mapY(100)}" r="3" fill="#B8954A"/>
+        <circle cx="${mapX(DAYS)}" cy="${mapY(pEnd)}" r="4.5" fill="#B8954A"/>
+        <circle cx="${mapX(DAYS)}" cy="${mapY(mEnd)}" r="3.5" fill="#5A7A99"/>
+        <circle cx="${mapX(DAYS)}" cy="${mapY(sEnd)}" r="3.5" fill="#0A1628"/>
+        <text class="endpoint-label" x="${mapX(DAYS) + 10}" y="${pY + 4}" fill="#B8954A">${pEnd.toFixed(1)}</text>
+        <text class="endpoint-label" x="${mapX(DAYS) + 10}" y="${mY + 4}" fill="#5A7A99">${mEnd.toFixed(1)}</text>
+        <text class="endpoint-label" x="${mapX(DAYS) + 10}" y="${sY + 4}" fill="#0A1628">${sEnd.toFixed(1)}</text>
+      </svg>
+    `;
+  }
+
   // ═════════ MODAL ═════════
   const backdrop = document.getElementById("modalBackdrop");
   const closeBtn = document.getElementById("modalClose");
@@ -1838,6 +2103,7 @@
     localStorage.setItem("jcam-lang", lang);
     document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.langSet === lang));
     renderTable();
+    document.getElementById("backtestChart").innerHTML = renderBacktestChart();
     if (currentIdx !== null) renderModal();
   }
   document.querySelectorAll(".lang-btn").forEach(btn => {
