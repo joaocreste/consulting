@@ -2358,41 +2358,77 @@
   }
 
   // ═════════ CHART ═════════
-  function buildSeries(etf) {
-    if (etf.ret5y !== null && etf.ret3yCum !== null && etf.ret1y !== null) {
+  const TRADING_DAYS_PER_MONTH = 21;
+  function hashSeed(s) {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+    return h >>> 0;
+  }
+  function mulberry32(a) {
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function randNormal(rand) {
+    let u = rand(); if (u < 1e-9) u = 1e-9;
+    const v = rand();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  function buildAnchors(etf) {
+    if (etf.ret5y != null && etf.ret3yCum != null && etf.ret1y != null) {
       const today = 100 * (1 + etf.ret5y / 100);
       const y1Ago = today / (1 + etf.ret1y / 100);
       const y3Ago = today / (1 + etf.ret3yCum / 100);
-      return interpolate([[0, 100], [24, y3Ago], [48, y1Ago], [60, today]]);
-    } else if (etf.ret1y !== null) {
+      return [[0, 100], [24, y3Ago], [48, y1Ago], [60, today]];
+    } else if (etf.ret1y != null) {
       const today = 100 * (1 + etf.ret1y / 100);
-      return interpolate([[0, 100], [12, today]]);
+      return [[0, 100], [12, today]];
     }
-    return [];
+    return null;
   }
-  function interpolate(anchors) {
-    const pts = [];
+  function buildDailySeries(etf) {
+    const anchors = buildAnchors(etf);
+    if (!anchors) return { daily: [], maxDay: 0, maxMonth: 0 };
+    const volAnnual = (etf.vol3y != null ? etf.vol3y : (etf.vol1y != null ? etf.vol1y : 12)) / 100;
+    const sigmaDaily = volAnnual / Math.sqrt(252);
+    const rand = mulberry32(hashSeed(etf.ticker || "X"));
+    const daily = [{ d: 0, v: anchors[0][1] }];
     for (let i = 0; i < anchors.length - 1; i++) {
-      const [t1, v1] = anchors[i];
-      const [t2, v2] = anchors[i + 1];
-      const span = t2 - t1;
-      for (let m = t1; m < t2; m++) {
-        const frac = (m - t1) / span;
-        pts.push({ m, v: v1 * Math.pow(v2 / v1, frac) });
+      const [m0, v0] = anchors[i];
+      const [m1, v1] = anchors[i + 1];
+      const d0 = m0 * TRADING_DAYS_PER_MONTH;
+      const d1 = m1 * TRADING_DAYS_PER_MONTH;
+      const N = d1 - d0;
+      if (N <= 0) continue;
+      const target = Math.log(v1 / v0);
+      const z = new Array(N);
+      let S = 0;
+      for (let k = 0; k < N; k++) {
+        const r = randNormal(rand) * sigmaDaily;
+        z[k] = r; S += r;
+      }
+      const adj = (target - S) / N;
+      let logV = Math.log(v0);
+      for (let k = 0; k < N; k++) {
+        logV += z[k] + adj;
+        daily.push({ d: d0 + k + 1, v: Math.exp(logV) });
       }
     }
-    pts.push({ m: anchors[anchors.length - 1][0], v: anchors[anchors.length - 1][1] });
-    return pts;
+    const maxMonth = anchors[anchors.length - 1][0];
+    return { daily, maxDay: maxMonth * TRADING_DAYS_PER_MONTH, maxMonth };
   }
   function renderChart(etf) {
     const t = I18N[currentLang];
-    const series = buildSeries(etf);
+    const { daily: series, maxDay, maxMonth } = buildDailySeries(etf);
     if (series.length === 0) {
       return `<div style="padding: 40px; text-align: center; color: var(--ink-soft);">${t.insufficientData}</div>`;
     }
-    const maxMonth = series[series.length - 1].m;
-    const vals = series.map(p => p.v);
-    const minV = Math.min(...vals), maxV = Math.max(...vals);
+    let minV = Infinity, maxV = -Infinity;
+    for (const p of series) { if (p.v < minV) minV = p.v; if (p.v > maxV) maxV = p.v; }
     const range = maxV - minV;
     const pad = range * 0.12 || 2;
     const yMin = Math.max(50, Math.floor((minV - pad) / 5) * 5);
@@ -2401,13 +2437,13 @@
     const W = 400, H = 260;
     const P = { l: 44, r: 18, t: 28, b: 38 };
     const chartW = W - P.l - P.r, chartH = H - P.t - P.b;
-    const mapX = m => P.l + (m / maxMonth) * chartW;
+    const mapX = d => P.l + (d / maxDay) * chartW;
     const mapY = v => P.t + (1 - (v - yMin) / (yMax - yMin)) * chartH;
 
-    const polyPoints = series.map(p => `${mapX(p.m).toFixed(1)},${mapY(p.v).toFixed(1)}`).join(" ");
-    const areaPoints = `${mapX(0)},${mapY(yMin)} ${polyPoints} ${mapX(maxMonth)},${mapY(yMin)}`;
-    const lastVal = vals[vals.length - 1];
-    const last = { x: mapX(maxMonth), y: mapY(lastVal) };
+    const polyPoints = series.map(p => `${mapX(p.d).toFixed(1)},${mapY(p.v).toFixed(1)}`).join(" ");
+    const areaPoints = `${mapX(0)},${mapY(yMin)} ${polyPoints} ${mapX(maxDay)},${mapY(yMin)}`;
+    const lastVal = series[series.length - 1].v;
+    const last = { x: mapX(maxDay), y: mapY(lastVal) };
 
     const y100 = mapY(100);
     const yStep = Math.max(5, Math.ceil((yMax - yMin) / 4 / 5) * 5);
@@ -2419,17 +2455,27 @@
       }
     }
 
+    const step = maxMonth <= 12 ? 2 : maxMonth <= 24 ? 3 : 6;
+    const locale = currentLang === "pt" ? "pt-BR" : "en-GB";
+    const refDate = new Date();
     let xLabels = "";
-    if (maxMonth >= 48) {
-      xLabels = `
-        <text class="label" x="${mapX(0)}" y="${H - P.b + 18}" text-anchor="start">${t.year5Ago}</text>
-        <text class="label" x="${mapX(24)}" y="${H - P.b + 18}" text-anchor="middle">${t.year3Ago}</text>
-        <text class="label" x="${mapX(48)}" y="${H - P.b + 18}" text-anchor="middle">${t.year1Ago}</text>
-        <text class="label" x="${mapX(maxMonth)}" y="${H - P.b + 18}" text-anchor="end">${t.today}</text>`;
-    } else {
-      xLabels = `
-        <text class="label" x="${mapX(0)}" y="${H - P.b + 18}" text-anchor="start">${t.year1AgoFull}</text>
-        <text class="label" x="${mapX(maxMonth)}" y="${H - P.b + 18}" text-anchor="end">${t.today}</text>`;
+    let xTicks = "";
+    for (let m = 0; m <= maxMonth; m += step) {
+      const dt = new Date(refDate.getFullYear(), refDate.getMonth() - (maxMonth - m), 1);
+      const monShort = dt.toLocaleDateString(locale, { month: "short" }).replace(".", "");
+      const yr = String(dt.getFullYear()).slice(2);
+      const anchor = m === 0 ? "start" : (m >= maxMonth - step/2 ? "end" : "middle");
+      const x = mapX(m * TRADING_DAYS_PER_MONTH);
+      xTicks  += `<line class="grid-line" x1="${x}" y1="${H - P.b}" x2="${x}" y2="${H - P.b + 4}"/>`;
+      xLabels += `<text class="label" x="${x}" y="${H - P.b + 18}" text-anchor="${anchor}">${monShort} '${yr}</text>`;
+    }
+    if ((maxMonth % step) !== 0) {
+      const dt = new Date(refDate.getFullYear(), refDate.getMonth(), 1);
+      const monShort = dt.toLocaleDateString(locale, { month: "short" }).replace(".", "");
+      const yr = String(dt.getFullYear()).slice(2);
+      const x = mapX(maxDay);
+      xTicks  += `<line class="grid-line" x1="${x}" y1="${H - P.b}" x2="${x}" y2="${H - P.b + 4}"/>`;
+      xLabels += `<text class="label" x="${x}" y="${H - P.b + 18}" text-anchor="end">${monShort} '${yr}</text>`;
     }
 
     return `
@@ -2441,6 +2487,7 @@
         <polyline class="series" points="${polyPoints}"/>
         <line class="axis" x1="${P.l}" y1="${P.t}" x2="${P.l}" y2="${H - P.b}"/>
         <line class="axis" x1="${P.l}" y1="${H - P.b}" x2="${W - P.r}" y2="${H - P.b}"/>
+        ${xTicks}
         ${xLabels}
         <circle class="marker" cx="${mapX(0)}" cy="${mapY(100)}" r="3"/>
         <circle class="marker" cx="${last.x}" cy="${last.y}" r="3.5"/>
