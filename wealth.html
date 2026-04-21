@@ -1039,7 +1039,7 @@
           <span data-lang="en">Strategic Mix</span>
           <span data-lang="pt">Mix Estratégico</span>
         </div>
-        <div class="value">55 / 35 / 10</div>
+        <div class="value" data-bind="strategicMix">55 / 35 / 10</div>
         <div class="sub">
           <span data-lang="en">Equity · Debt · Alternatives</span>
           <span data-lang="pt">Ações · Renda Fixa · Alternativos</span>
@@ -1052,8 +1052,8 @@
         </div>
         <div class="value">0.12%</div>
         <div class="sub">
-          <span data-lang="en">≈ €1,150 p.a. on €1M</span>
-          <span data-lang="pt">≈ €1.150 ao ano sobre €1M</span>
+          <span data-lang="en" data-bind="terCostEn">≈ €1,150 p.a. on €1M</span>
+          <span data-lang="pt" data-bind="terCostPt">≈ €1.150 ao ano sobre €1M</span>
         </div>
       </div>
       <div class="exec-card">
@@ -1117,12 +1117,12 @@
           <span data-lang="pt">Próxima Revisão</span>
         </div>
         <div class="value">
-          <span data-lang="en">3 May 2026</span>
-          <span data-lang="pt">3 de maio de 2026</span>
+          <span data-lang="en" data-bind="nextReviewEn">3 May 2026</span>
+          <span data-lang="pt" data-bind="nextReviewPt">3 de maio de 2026</span>
         </div>
         <div class="sub">
-          <span data-lang="en">Fortnightly cadence</span>
-          <span data-lang="pt">Cadência quinzenal</span>
+          <span data-lang="en" data-bind="cadenceAdjEn">Fortnightly cadence</span>
+          <span data-lang="pt" data-bind="cadenceAdjPt">Cadência quinzenal</span>
         </div>
       </div>
     </div>
@@ -1311,7 +1311,7 @@
             </td>
             <td></td>
             <td class="num">100%</td>
-            <td class="num">€1,000,000</td>
+            <td class="num" data-bind="mandateFormatted">€1,000,000</td>
             <td class="num">0.12%<br><small style="color: var(--steel);"><span data-lang="en">blended</span><span data-lang="pt">ponderado</span></small></td>
             <td></td>
             <td colspan="4" style="color: var(--steel); font-weight: 300; font-size: 11px; text-align: right;">
@@ -1712,7 +1712,7 @@
     <div class="review-band" style="margin-top: 40px;">
       <div class="review-item">
         <div class="label"><span data-lang="en">Next Scheduled Review</span><span data-lang="pt">Próxima Revisão Agendada</span></div>
-        <div class="value"><span data-lang="en">Sunday, 3 May 2026</span><span data-lang="pt">Domingo, 3 de maio de 2026</span></div>
+        <div class="value"><span data-lang="en" data-bind="nextReviewLongEn">Sunday, 3 May 2026</span><span data-lang="pt" data-bind="nextReviewLongPt">Domingo, 3 de maio de 2026</span></div>
       </div>
       <div class="review-item">
         <div class="label"><span data-lang="en">Cadence</span><span data-lang="pt">Cadência</span></div>
@@ -2004,15 +2004,15 @@
           <label data-lang="en" for="fExpReturn">Expected return (% p.a.)</label>
           <label data-lang="pt" for="fExpReturn">Retorno esperado (% a.a.)</label>
           <input id="fExpReturn" type="number" min="0" max="30" step="0.1">
-          <span class="hint" data-lang="en">Forward-looking target for the blended portfolio</span>
-          <span class="hint" data-lang="pt">Meta prospectiva para o portfólio ponderado</span>
+          <span class="hint" data-lang="en">Target. Model estimate for current bands: <strong id="muHintEn">—</strong></span>
+          <span class="hint" data-lang="pt">Meta. Estimativa do modelo para as faixas atuais: <strong id="muHintPt">—</strong></span>
         </div>
         <div class="pers-field">
           <label data-lang="en" for="fMaxVol">Max volatility (% p.a.)</label>
           <label data-lang="pt" for="fMaxVol">Volatilidade máx. (% a.a.)</label>
           <input id="fMaxVol" type="number" min="0" max="40" step="0.1">
-          <span class="hint" data-lang="en">Hard cap on annualised realised volatility</span>
-          <span class="hint" data-lang="pt">Teto rígido sobre a volatilidade realizada anualizada</span>
+          <span class="hint" data-lang="en">Hard cap. Model estimate for current bands: <strong id="sigmaHintEn">—</strong></span>
+          <span class="hint" data-lang="pt">Teto rígido. Estimativa do modelo para as faixas atuais: <strong id="sigmaHintPt">—</strong></span>
         </div>
       </div>
 
@@ -2331,17 +2331,20 @@
     const catLabels = { equity: t.catEquity, ig: t.catIg, hy: t.catHy, alt: t.catAlt };
     const tbody = document.querySelector("#holdingsTable tbody");
     tbody.innerHTML = "";
+    const mandate = (policyState && policyState.mandate) || 1000000;
+    const currency = (policyState && policyState.currency) || "EUR";
     ETFS.forEach((e, i) => {
       const ann3y = e.ret3yCum !== null ? (Math.pow(1 + e.ret3yCum / 100, 1/3) - 1) * 100 : null;
       const row = document.createElement("tr");
       row.dataset.idx = i;
       const repl = currentLang === "pt" ? e.replicationPt : e.replication;
       const dist = currentLang === "pt" ? e.distributionPt : e.distribution;
+      const rowAmount = formatMandate(mandate * e.weight / 100, currency);
       row.innerHTML = `
         <td><span class="ticker">${e.ticker}</span></td>
         <td class="name">${e.name}<br><span class="cat-pill cat-${e.cat}">${catLabels[e.cat]}</span><br><small>${e.isin} · ${repl} · ${dist}</small></td>
         <td class="num">${e.weight}%</td>
-        <td class="num">€${e.amount.toLocaleString("en-US")}</td>
+        <td class="num">${rowAmount}</td>
         <td class="num">${e.ter.toFixed(2)}%</td>
         <td class="num">${e.aum.toLocaleString("en-US")}</td>
         <td class="num gain">+${e.ret1y.toFixed(2)}%</td>
@@ -2824,21 +2827,102 @@
     const rounded = Math.round(amount);
     return `${meta.symbol}${rounded.toLocaleString(meta.locale)}`;
   }
+  function formatDate(d, lang, long) {
+    try {
+      const locale = lang === "pt" ? "pt-BR" : "en-GB";
+      const opts = long
+        ? { weekday: "long", day: "numeric", month: "long", year: "numeric" }
+        : { day: "numeric", month: "long", year: "numeric" };
+      let s = d.toLocaleDateString(locale, opts);
+      if (lang === "pt" && long) s = s.charAt(0).toUpperCase() + s.slice(1);
+      return s;
+    } catch (_) {
+      return d.toISOString().slice(0, 10);
+    }
+  }
+  function addWeeks(date, weeks) {
+    const d = new Date(date.getTime());
+    d.setDate(d.getDate() + weeks * 7);
+    return d;
+  }
+  function cadenceAdjective(weeks, lang) {
+    const isPt = lang === "pt";
+    if (weeks === 1)  return isPt ? "Cadência semanal"     : "Weekly cadence";
+    if (weeks === 2)  return isPt ? "Cadência quinzenal"    : "Fortnightly cadence";
+    if (weeks === 4)  return isPt ? "Cadência mensal"       : "Monthly cadence";
+    if (weeks === 13) return isPt ? "Cadência trimestral"   : "Quarterly cadence";
+    return isPt ? `Cadência a cada ${weeks} semanas` : `Every-${weeks}-weeks cadence`;
+  }
 
+  // ═════════ COMPUTE LAYER ═════════
+  const ASSET_ASSUMPTIONS = {
+    equity: { mu: 8.5, sigma: 15.0 },
+    ig:     { mu: 4.5, sigma: 5.0 },
+    hy:     { mu: 6.5, sigma: 9.0 },
+    alt:    { mu: 7.0, sigma: 11.0 }
+  };
+  const ASSET_CORR = {
+    "equity|ig":  -0.10,
+    "equity|hy":  0.60,
+    "equity|alt": 0.50,
+    "ig|hy":      0.40,
+    "ig|alt":     0.20,
+    "hy|alt":     0.35
+  };
+  function assetCorr(a, b) {
+    if (a === b) return 1;
+    return ASSET_CORR[`${a}|${b}`] ?? ASSET_CORR[`${b}|${a}`] ?? 0;
+  }
+  function weightsFromAllocation(a) {
+    return { equity: a.eq / 100, ig: a.ig / 100, hy: a.hy / 100, alt: a.alt / 100 };
+  }
+  function deriveExpectedReturn(w) {
+    let mu = 0;
+    for (const k of Object.keys(w)) mu += w[k] * ASSET_ASSUMPTIONS[k].mu;
+    return mu;
+  }
+  function derivePortfolioVol(w) {
+    let variance = 0;
+    const keys = Object.keys(w);
+    for (const i of keys) for (const j of keys) {
+      variance += w[i] * w[j] * ASSET_ASSUMPTIONS[i].sigma * ASSET_ASSUMPTIONS[j].sigma * assetCorr(i, j);
+    }
+    return Math.sqrt(Math.max(0, variance));
+  }
+
+  const BLENDED_TER_PCT = 0.12;
+
+  function computePortfolio(st) {
+    const a = computeAllocation(st);
+    const w = weightsFromAllocation(a);
+    const muDerived = deriveExpectedReturn(w);
+    const sigmaDerived = derivePortfolioVol(w);
+    const struct = STRUCTURES[st.structure] || STRUCTURES.BVI;
+    const ccy = CCY[st.currency] || CCY.EUR;
+    const nextReview = addWeeks(new Date(), st.cadenceWeeks);
+    const terCost = st.mandate * BLENDED_TER_PCT / 100;
+    return {
+      state: st, alloc: a, weights: w,
+      muDerived, sigmaDerived,
+      blendedTerPct: BLENDED_TER_PCT, terCost,
+      nextReview, struct, ccy,
+      strategicMix: `${a.eq} / ${a.ig + a.hy} / ${a.alt}`
+    };
+  }
+
+  // ═════════ RENDER LAYER ═════════
   function bindValues(values) {
     Object.keys(values).forEach(k => {
       document.querySelectorAll(`[data-bind="${k}"]`).forEach(el => { el.textContent = values[k]; });
     });
   }
-
-  function renderPolicy() {
-    const st = policyState;
-    const a = computeAllocation(st);
-    const struct = STRUCTURES[st.structure] || STRUCTURES.BVI;
-    const ccy = CCY[st.currency] || CCY.EUR;
+  function modelToValues(model) {
+    const st = model.state, a = model.alloc, struct = model.struct;
     const hEn = st.horizon <= 10 ? HORIZON_WORD_EN[st.horizon] : String(st.horizon);
     const hPt = st.horizon <= 10 ? HORIZON_WORD_PT[st.horizon] : String(st.horizon);
-    const values = {
+    const mandateFmt = formatMandate(st.mandate, st.currency);
+    const terCostFmt = formatMandate(model.terCost, st.currency);
+    return {
       eqPct: a.eq, igPct: a.ig, hyPct: a.hy, altPct: a.alt,
       eqMin: st.eqMin, eqMax: st.eqMax,
       altMin: st.altMin, altMax: st.altMax,
@@ -2850,7 +2934,7 @@
       hyPhraseEn: hyPhrase(a.hy, "en"),
       hyPhrasePt: hyPhrase(a.hy, "pt"),
       ccyCode: st.currency,
-      mandateFormatted: formatMandate(st.mandate, st.currency),
+      mandateFormatted: mandateFmt,
       horizonYears: st.horizon,
       horizonWord: hEn,
       horizonWordPt: hPt,
@@ -2866,18 +2950,46 @@
       cadencePhrasePt: cadencePhrase(st.cadenceWeeks, "pt"),
       cadenceValueEn: cadenceValue(st.cadenceWeeks, "en"),
       cadenceValuePt: cadenceValue(st.cadenceWeeks, "pt"),
+      cadenceAdjEn: cadenceAdjective(st.cadenceWeeks, "en"),
+      cadenceAdjPt: cadenceAdjective(st.cadenceWeeks, "pt"),
       driftPp: st.driftPp,
       expReturnFormatted: `${Number(st.expReturn).toFixed(1)}% p.a.`,
-      maxVolFormatted: `${Number(st.maxVol).toFixed(1)}% p.a.`
+      maxVolFormatted:    `${Number(st.maxVol).toFixed(1)}% p.a.`,
+      strategicMix: model.strategicMix,
+      nextReviewEn:     formatDate(model.nextReview, "en", false),
+      nextReviewPt:     formatDate(model.nextReview, "pt", false),
+      nextReviewLongEn: formatDate(model.nextReview, "en", true),
+      nextReviewLongPt: formatDate(model.nextReview, "pt", true),
+      terCostEn: `≈ ${formatMandate(model.terCost, st.currency)} p.a. on ${mandateFmt}`,
+      terCostPt: `≈ ${formatMandate(model.terCost, st.currency)} ao ano sobre ${mandateFmt}`
     };
-    bindValues(values);
+  }
+  function updateAllocBar(a) {
     const segMap = { equity: a.eq, ig: a.ig, hy: a.hy, alt: a.alt };
     document.querySelectorAll("#allocBar .alloc-seg").forEach(seg => {
-      const key = seg.dataset.seg;
-      const v = segMap[key] ?? 0;
+      const v = segMap[seg.dataset.seg] ?? 0;
       seg.style.flex = v > 0 ? String(v) : "0 0 0";
       seg.style.display = v > 0 ? "" : "none";
     });
+  }
+  function updateHints(model) {
+    const mu = `${model.muDerived.toFixed(1)}% p.a.`;
+    const sg = `${model.sigmaDerived.toFixed(1)}% p.a.`;
+    const setIf = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    setIf("muHintEn", mu); setIf("muHintPt", mu);
+    setIf("sigmaHintEn", sg); setIf("sigmaHintPt", sg);
+  }
+  function renderAll(model) {
+    bindValues(modelToValues(model));
+    updateAllocBar(model.alloc);
+    if (typeof renderTable === "function") renderTable();
+    updateHints(model);
+  }
+  function renderPolicy() { renderAll(computePortfolio(policyState)); }
+  function setPolicy(patch) {
+    policyState = { ...policyState, ...patch };
+    savePolicy();
+    renderAll(computePortfolio(policyState));
   }
 
   // ═════════ PERSONALISE MODAL ═════════
@@ -2958,9 +3070,21 @@
       return isPt ? "Volatilidade máxima deve estar entre 0 e 40%." : "Max volatility must be between 0 and 40%.";
     return null;
   }
+  function previewFromForm() {
+    try {
+      const tentative = readForm();
+      const numericKeys = ["eqMin","eqMax","debtMin","debtMax","altMin","altMax","igFloor","cadenceWeeks","driftPp","mandate","horizon"];
+      if (!numericKeys.every(k => Number.isFinite(tentative[k]))) return;
+      if (tentative.eqMin > tentative.eqMax || tentative.debtMin > tentative.debtMax || tentative.altMin > tentative.altMax) return;
+      if (tentative.eqMin + tentative.debtMin + tentative.altMin > 100) return;
+      if (tentative.eqMax + tentative.debtMax + tentative.altMax < 100) return;
+      updateHints(computePortfolio(tentative));
+    } catch (_) { /* ignore transient states while typing */ }
+  }
   function openPersonalise() {
     persLastFocus = document.activeElement;
     hydrateForm(policyState);
+    updateHints(computePortfolio(policyState));
     persError.textContent = "";
     persBackdrop.classList.add("open");
     persBackdrop.setAttribute("aria-hidden", "false");
@@ -2978,19 +3102,29 @@
     const err = validate(next);
     if (err) { persError.textContent = err; return; }
     persError.textContent = "";
-    policyState = next;
-    savePolicy();
-    renderPolicy();
+    setPolicy(next);
     closePersonalise();
   }
   persOpenBtn.addEventListener("click", openPersonalise);
   persCloseBtn.addEventListener("click", closePersonalise);
   persCancel.addEventListener("click", closePersonalise);
-  persReset.addEventListener("click", () => { hydrateForm(DEFAULT_POLICY); persError.textContent = ""; });
+  persReset.addEventListener("click", () => {
+    hydrateForm(DEFAULT_POLICY);
+    updateHints(computePortfolio(DEFAULT_POLICY));
+    persError.textContent = "";
+  });
   persGenerate.addEventListener("click", generate);
   persBackdrop.addEventListener("click", e => { if (e.target === persBackdrop) closePersonalise(); });
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && persBackdrop.classList.contains("open")) closePersonalise();
+  });
+  ["fCurrency","fMandate","fHorizon","fRisk","fStructure","fUniverse",
+   "fEqMin","fEqMax","fDebtMin","fDebtMax","fAltMin","fAltMax","fIgFloor",
+   "fCadence","fDrift"].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const evt = el.tagName === "SELECT" ? "change" : "input";
+    el.addEventListener(evt, previewFromForm);
   });
 
   // ═════════ LANGUAGE SWITCHING ═════════
