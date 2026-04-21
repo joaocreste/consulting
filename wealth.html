@@ -56,11 +56,14 @@
   html[lang="en"] [data-lang="pt"] { display: none !important; }
   html[lang="pt"] [data-lang="en"] { display: none !important; }
 
-  /* ═════════ LANGUAGE SWITCHER ═════════ */
-  .lang-switch {
+  /* ═════════ TOP MENU (lang + personalise) ═════════ */
+  .top-menu {
     position: fixed;
-    top: 18px; right: 22px;
+    top: 16px; right: 22px;
     z-index: 2500;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .lang-switch {
     display: flex; align-items: center; gap: 6px;
   }
   .lang-btn {
@@ -80,6 +83,28 @@
   .lang-btn.active { opacity: 1; }
   .lang-btn:focus-visible { outline: 1.5px solid var(--gold); outline-offset: 2px; }
 
+  .top-divider {
+    width: 1px; height: 14px;
+    background: rgba(255,255,255,0.18);
+  }
+  .personalise-btn {
+    background: transparent;
+    border: 1px solid rgba(184,149,74,0.45);
+    color: var(--gold);
+    padding: 7px 14px 6px;
+    border-radius: 3px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .personalise-btn:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .personalise-btn:focus-visible { outline: 1.5px solid var(--gold); outline-offset: 2px; }
+
   /* ═════════ HERO ═════════ */
   .hero {
     min-height: 92vh;
@@ -88,9 +113,9 @@
     padding: 72px 0 56px; position: relative; overflow: hidden;
   }
   .gold-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background-color: var(--gold); }
-  .hero-mark { position: absolute; top: 36px; right: 88px; width: 68px; height: 68px; }
+  .hero-mark { position: absolute; top: 36px; left: 32px; width: 68px; height: 68px; }
   @media (max-width: 640px) {
-    .hero-mark { right: 24px; top: 80px; }
+    .hero-mark { left: 20px; top: 32px; }
   }
   .hero-eyebrow {
     font-size: 9px; font-weight: 500; letter-spacing: 0.22em;
@@ -520,6 +545,95 @@
     font-size: 10.5px; color: var(--ink-soft); line-height: 1.6; background: var(--paper);
   }
 
+  /* ═════════ PERSONALISE MODAL ═════════ */
+  .pers-card { max-width: 960px; }
+  .pers-body {
+    padding: 24px 32px 28px;
+    overflow-y: auto;
+    background: var(--paper);
+    flex: 1;
+  }
+  .pers-intro {
+    font-size: 12.5px; color: var(--ink-soft); font-weight: 300;
+    margin-bottom: 22px; line-height: 1.7;
+    padding-bottom: 16px; border-bottom: 1px solid var(--hairline-ink);
+  }
+  .pers-section-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--gold);
+    margin: 22px 0 12px; padding-bottom: 6px;
+    border-bottom: 0.5px solid var(--hairline-gold);
+  }
+  .pers-section-title:first-child { margin-top: 0; }
+  .pers-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px 18px;
+  }
+  .pers-field { display: flex; flex-direction: column; gap: 5px; }
+  .pers-field label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .pers-field input, .pers-field select {
+    background: #FFFFFF; color: var(--ink);
+    border: 1px solid var(--hairline-ink);
+    border-radius: 4px; padding: 8px 10px;
+    font-family: 'Mulish', sans-serif; font-size: 13px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .pers-field input:focus, .pers-field select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,149,74,0.18);
+  }
+  .pers-field .hint {
+    font-size: 10.5px; color: rgba(10,22,40,0.5); font-weight: 300;
+  }
+  .pers-range { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pers-range .mini { display: flex; flex-direction: column; gap: 4px; }
+  .pers-range .mini span {
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(10,22,40,0.5);
+  }
+
+  .pers-foot {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 16px 32px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--hairline-ink);
+  }
+  .pers-error {
+    font-size: 11.5px; color: var(--loss); font-weight: 500; line-height: 1.5;
+    flex: 1;
+  }
+  .pers-error:empty { display: none; }
+  .pers-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .btn-ghost, .btn-primary {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .btn-ghost {
+    background: transparent; color: var(--ink-soft);
+    border: 1px solid var(--hairline-ink);
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+  .btn-primary {
+    background: var(--ink); color: var(--gold);
+    border: 1px solid var(--ink);
+  }
+  .btn-primary:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+
+  @media (max-width: 640px) {
+    .pers-body { padding: 20px 20px 24px; }
+    .pers-foot { flex-direction: column; align-items: stretch; }
+    .pers-actions { justify-content: flex-end; }
+  }
+
   /* ═════════ BACKTEST SECTION (LIGHT) ═════════ */
   .sec-paper {
     background-color: var(--paper);
@@ -774,24 +888,31 @@
 </head>
 <body class="gate-active">
 
-<!-- ═══════════════ LANGUAGE SWITCHER ═══════════════ -->
-<div class="lang-switch" role="group" aria-label="Language / Idioma">
-  <button class="lang-btn active" id="langEn" data-lang-set="en" aria-label="English" title="English">
-    <svg viewBox="0 0 60 40" preserveAspectRatio="none">
-      <rect width="60" height="40" fill="#012169"/>
-      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#FFF" stroke-width="5"/>
-      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="2"/>
-      <path d="M30,0 V40 M0,20 H60" stroke="#FFF" stroke-width="8"/>
-      <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="4"/>
-    </svg>
+<!-- ═══════════════ TOP MENU ═══════════════ -->
+<div class="top-menu">
+  <button class="personalise-btn" id="openPersonalise" type="button" aria-haspopup="dialog" aria-controls="personaliseBackdrop">
+    <span data-lang="en">Personalise</span>
+    <span data-lang="pt">Personalizar</span>
   </button>
-  <button class="lang-btn" id="langPt" data-lang-set="pt" aria-label="Português" title="Português">
-    <svg viewBox="0 0 60 42" preserveAspectRatio="none">
-      <rect width="60" height="42" fill="#009C3B"/>
-      <polygon points="30,6 54,21 30,36 6,21" fill="#FEDF00"/>
-      <circle cx="30" cy="21" r="7" fill="#002776"/>
-    </svg>
-  </button>
+  <span class="top-divider" aria-hidden="true"></span>
+  <div class="lang-switch" role="group" aria-label="Language / Idioma">
+    <button class="lang-btn active" id="langEn" data-lang-set="en" aria-label="English" title="English">
+      <svg viewBox="0 0 60 40" preserveAspectRatio="none">
+        <rect width="60" height="40" fill="#012169"/>
+        <path d="M0,0 L60,40 M60,0 L0,40" stroke="#FFF" stroke-width="5"/>
+        <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="2"/>
+        <path d="M30,0 V40 M0,20 H60" stroke="#FFF" stroke-width="8"/>
+        <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="4"/>
+      </svg>
+    </button>
+    <button class="lang-btn" id="langPt" data-lang-set="pt" aria-label="Português" title="Português">
+      <svg viewBox="0 0 60 42" preserveAspectRatio="none">
+        <rect width="60" height="42" fill="#009C3B"/>
+        <polygon points="30,6 54,21 30,36 6,21" fill="#FEDF00"/>
+        <circle cx="30" cy="21" r="7" fill="#002776"/>
+      </svg>
+    </button>
+  </div>
 </div>
 
 <!-- ═══════════════ DISCLAIMER GATE ═══════════════ -->
@@ -845,8 +966,8 @@
 
   <div class="container">
     <p class="hero-eyebrow anim-1">
-      <span data-lang="en">Portfolio Construction Report · v2 · BVI Structure</span>
-      <span data-lang="pt">Relatório de Construção de Portfólio · v2 · Estrutura BVI</span>
+      <span data-lang="en">Portfolio Construction Report · v2 · <span data-bind="structureLabel">BVI</span> Structure</span>
+      <span data-lang="pt">Relatório de Construção de Portfólio · v2 · Estrutura <span data-bind="structureLabel">BVI</span></span>
     </p>
     <h1 class="hero-title anim-2">
       <span data-lang="en">Strategic Allocation<br><span class="thin">&amp; ETF Selection</span></span>
@@ -854,8 +975,8 @@
     </h1>
     <div class="hero-divider"></div>
     <p class="hero-sub anim-3">
-      <span data-lang="en">A macro-driven, cost-aware portfolio built for a<br><em>five-year growth mandate</em> in EUR, held in a tax-neutral offshore structure.</span>
-      <span data-lang="pt">Um portfólio orientado por macro e atento a custos, construído para um<br><em>mandato de crescimento de cinco anos</em> em EUR, mantido em estrutura offshore fiscalmente neutra.</span>
+      <span data-lang="en">A macro-driven, cost-aware portfolio built for a<br><em><span data-bind="horizonWord">five</span>-year <span data-bind="riskLabelEn">growth</span> mandate</em> in <span data-bind="ccyCode">EUR</span>, held in a <span data-bind="structurePhraseEn">tax-neutral offshore</span> structure.</span>
+      <span data-lang="pt">Um portfólio orientado por macro e atento a custos, construído para um<br><em>mandato de <span data-bind="riskLabelPt">crescimento</span> de <span data-bind="horizonWordPt">cinco</span> anos</em> em <span data-bind="ccyCode">EUR</span>, mantido em estrutura <span data-bind="structurePhrasePt">offshore fiscalmente neutra</span>.</span>
     </p>
 
     <div class="hero-meta anim-4">
@@ -864,9 +985,9 @@
           <span data-lang="en">Account Domicile</span>
           <span data-lang="pt">Domicílio da Conta</span>
         </div>
-        <div class="meta-value">BVI<span class="small">
-          <span data-lang="en"> · EUR base</span>
-          <span data-lang="pt"> · base EUR</span>
+        <div class="meta-value"><span data-bind="structureLabel">BVI</span><span class="small">
+          <span data-lang="en"> · <span data-bind="ccyCode">EUR</span> base</span>
+          <span data-lang="pt"> · base <span data-bind="ccyCode">EUR</span></span>
         </span></div>
       </div>
       <div class="meta-cell">
@@ -874,7 +995,7 @@
           <span data-lang="en">Mandate Size</span>
           <span data-lang="pt">Tamanho do Mandato</span>
         </div>
-        <div class="meta-value">€1,000,000</div>
+        <div class="meta-value" data-bind="mandateFormatted">€1,000,000</div>
       </div>
       <div class="meta-cell">
         <div class="meta-label">
@@ -882,8 +1003,8 @@
           <span data-lang="pt">Horizonte · Risco</span>
         </div>
         <div class="meta-value">
-          <span data-lang="en">5Y · Growth<span class="small"> (mid)</span></span>
-          <span data-lang="pt">5 anos · Crescimento<span class="small"> (médio)</span></span>
+          <span data-lang="en"><span data-bind="horizonYears">5</span>Y · <span data-bind="riskLabelEn">Growth</span></span>
+          <span data-lang="pt"><span data-bind="horizonYears">5</span> anos · <span data-bind="riskLabelPt">Crescimento</span></span>
         </div>
       </div>
       <div class="meta-cell">
@@ -944,6 +1065,28 @@
         <div class="sub">
           <span data-lang="en">Weighted, past performance only</span>
           <span data-lang="pt">Ponderado, apenas desempenho passado</span>
+        </div>
+      </div>
+      <div class="exec-card">
+        <div class="label">
+          <span data-lang="en">Expected Return</span>
+          <span data-lang="pt">Retorno Esperado</span>
+        </div>
+        <div class="value" data-bind="expReturnFormatted">8.0% p.a.</div>
+        <div class="sub">
+          <span data-lang="en">Forward target, blended portfolio</span>
+          <span data-lang="pt">Meta prospectiva, portfólio ponderado</span>
+        </div>
+      </div>
+      <div class="exec-card">
+        <div class="label">
+          <span data-lang="en">Max Volatility</span>
+          <span data-lang="pt">Volatilidade Máx.</span>
+        </div>
+        <div class="value" data-bind="maxVolFormatted">12.0% p.a.</div>
+        <div class="sub">
+          <span data-lang="en">Hard cap, annualised</span>
+          <span data-lang="pt">Teto rígido, anualizado</span>
         </div>
       </div>
       <div class="exec-card">
@@ -1077,45 +1220,45 @@
       <span data-lang="pt">Pesos, <em>justificados</em></span>
     </h2>
 
-    <div class="alloc-bar">
-      <div class="alloc-seg alloc-equity">
-        <span data-lang="en">EQUITY · 55%</span>
-        <span data-lang="pt">AÇÕES · 55%</span>
+    <div class="alloc-bar" id="allocBar">
+      <div class="alloc-seg alloc-equity" data-seg="equity">
+        <span data-lang="en">EQUITY · <span data-bind="eqPct">55</span>%</span>
+        <span data-lang="pt">AÇÕES · <span data-bind="eqPct">55</span>%</span>
       </div>
-      <div class="alloc-seg alloc-ig">IG · 25%</div>
-      <div class="alloc-seg alloc-hy">HY · 10%</div>
-      <div class="alloc-seg alloc-alt">
-        <span data-lang="en">ALT · 10%</span>
-        <span data-lang="pt">ALT · 10%</span>
+      <div class="alloc-seg alloc-ig" data-seg="ig">IG · <span data-bind="igPct">25</span>%</div>
+      <div class="alloc-seg alloc-hy" data-seg="hy">HY · <span data-bind="hyPct">10</span>%</div>
+      <div class="alloc-seg alloc-alt" data-seg="alt">
+        <span data-lang="en">ALT · <span data-bind="altPct">10</span>%</span>
+        <span data-lang="pt">ALT · <span data-bind="altPct">10</span>%</span>
       </div>
     </div>
 
     <div class="alloc-legend" data-lang="en">
-      <div><span class="dot" style="background: var(--gold);"></span><span class="cat">Equity</span> · 55% · mid-to-upper permitted band (30–70%)</div>
-      <div><span class="dot" style="background: var(--gold-pale);"></span><span class="cat">Investment Grade</span> · 25% · 71% of debt bucket</div>
-      <div><span class="dot" style="background: var(--caution);"></span><span class="cat">High Yield</span> · 10% · modest, carry-only size</div>
-      <div><span class="dot" style="background: var(--steel);"></span><span class="cat">Alternatives</span> · 10% · top of permitted band (0–15%)</div>
+      <div><span class="dot" style="background: var(--gold);"></span><span class="cat">Equity</span> · <span data-bind="eqPct">55</span>% · <span data-bind="eqBandPhraseEn">mid-to-upper permitted band</span> (<span data-bind="eqMin">30</span>–<span data-bind="eqMax">70</span>%)</div>
+      <div><span class="dot" style="background: var(--gold-pale);"></span><span class="cat">Investment Grade</span> · <span data-bind="igPct">25</span>% · <span data-bind="igShare">71</span>% of debt bucket</div>
+      <div><span class="dot" style="background: var(--caution);"></span><span class="cat">High Yield</span> · <span data-bind="hyPct">10</span>% · <span data-bind="hyPhraseEn">modest, carry-only size</span></div>
+      <div><span class="dot" style="background: var(--steel);"></span><span class="cat">Alternatives</span> · <span data-bind="altPct">10</span>% · <span data-bind="altBandPhraseEn">top of permitted band</span> (<span data-bind="altMin">0</span>–<span data-bind="altMax">15</span>%)</div>
     </div>
     <div class="alloc-legend" data-lang="pt">
-      <div><span class="dot" style="background: var(--gold);"></span><span class="cat">Ações</span> · 55% · faixa média-superior permitida (30–70%)</div>
-      <div><span class="dot" style="background: var(--gold-pale);"></span><span class="cat">Grau de Investimento</span> · 25% · 71% do bucket de dívida</div>
-      <div><span class="dot" style="background: var(--caution);"></span><span class="cat">High Yield</span> · 10% · modesto, apenas para carrego</div>
-      <div><span class="dot" style="background: var(--steel);"></span><span class="cat">Alternativos</span> · 10% · topo da faixa permitida (0–15%)</div>
+      <div><span class="dot" style="background: var(--gold);"></span><span class="cat">Ações</span> · <span data-bind="eqPct">55</span>% · <span data-bind="eqBandPhrasePt">faixa média-superior permitida</span> (<span data-bind="eqMin">30</span>–<span data-bind="eqMax">70</span>%)</div>
+      <div><span class="dot" style="background: var(--gold-pale);"></span><span class="cat">Grau de Investimento</span> · <span data-bind="igPct">25</span>% · <span data-bind="igShare">71</span>% do bucket de dívida</div>
+      <div><span class="dot" style="background: var(--caution);"></span><span class="cat">High Yield</span> · <span data-bind="hyPct">10</span>% · <span data-bind="hyPhrasePt">modesto, apenas para carrego</span></div>
+      <div><span class="dot" style="background: var(--steel);"></span><span class="cat">Alternativos</span> · <span data-bind="altPct">10</span>% · <span data-bind="altBandPhrasePt">topo da faixa permitida</span> (<span data-bind="altMin">0</span>–<span data-bind="altMax">15</span>%)</div>
     </div>
 
     <ul class="rationale" data-lang="en">
-      <li><strong>Equity at 55%.</strong> Pro-risk into US growth delta and AI capex, but capped below 70% given compressed ERP and the <em>short horizon asymmetry</em>: five years leaves no meaningful recovery runway after a severe drawdown.</li>
-      <li><strong>IG overweight within debt (71%).</strong> Tight HY spreads, an oil-driven inflation shock, and a 35% recession tail argue for more IG than HY. PIMCO's OW 5–10Y / UW 30Y view guides intermediate duration selection inside the IG sleeve.</li>
+      <li><strong>Equity at <span data-bind="eqPct">55</span>%.</strong> Pro-risk into US growth delta and AI capex, but capped below <span data-bind="eqMax">70</span>% given compressed ERP and the <em>short horizon asymmetry</em>: <span data-bind="horizonWord">five</span> years leaves no meaningful recovery runway after a severe drawdown.</li>
+      <li><strong>IG overweight within debt (<span data-bind="igShare">71</span>%).</strong> Tight HY spreads, an oil-driven inflation shock, and a 35% recession tail argue for more IG than HY. PIMCO's OW 5–10Y / UW 30Y view guides intermediate duration selection inside the IG sleeve.</li>
       <li><strong>Short-to-intermediate duration bias.</strong> Avoid the long end given PIMCO's curve-steepening thesis and a Fed/ECB path that is shallower than earlier pricing suggested.</li>
-      <li><strong>Alternatives at 10%.</strong> Addresses the "diversification mirage" BlackRock II calls out — gold as geopolitical and real-rate hedge, infrastructure as fiscal-beneficiary defensive, AI-infrastructure as growth exposure outside the index core.</li>
-      <li><strong>Currency policy.</strong> EUR share classes preferred where material; USD exposure on the global core left unhedged — hedging costs EUR and the USD view is neutral-to-softer.</li>
+      <li><strong>Alternatives at <span data-bind="altPct">10</span>%.</strong> Addresses the "diversification mirage" BlackRock II calls out — gold as geopolitical and real-rate hedge, infrastructure as fiscal-beneficiary defensive, AI-infrastructure as growth exposure outside the index core.</li>
+      <li><strong>Currency policy.</strong> <span data-bind="ccyCode">EUR</span> share classes preferred where material; USD exposure on the global core left unhedged — hedging costs <span data-bind="ccyCode">EUR</span> and the USD view is neutral-to-softer.</li>
     </ul>
     <ul class="rationale" data-lang="pt">
-      <li><strong>Ações em 55%.</strong> Pró-risco no diferencial de crescimento dos EUA e no capex de IA, mas limitado abaixo de 70% dado o ERP comprimido e a <em>assimetria de horizonte curto</em>: cinco anos não oferecem tempo relevante de recuperação após um drawdown severo.</li>
-      <li><strong>Overweight em IG dentro da dívida (71%).</strong> Spreads apertados em HY, choque de inflação por petróleo e cauda recessiva de 35% sustentam mais IG do que HY. A visão do PIMCO de OW 5–10 anos / UW 30 anos orienta a seleção de duration intermediária no sleeve de IG.</li>
+      <li><strong>Ações em <span data-bind="eqPct">55</span>%.</strong> Pró-risco no diferencial de crescimento dos EUA e no capex de IA, mas limitado abaixo de <span data-bind="eqMax">70</span>% dado o ERP comprimido e a <em>assimetria de horizonte curto</em>: <span data-bind="horizonWordPt">cinco</span> anos não oferecem tempo relevante de recuperação após um drawdown severo.</li>
+      <li><strong>Overweight em IG dentro da dívida (<span data-bind="igShare">71</span>%).</strong> Spreads apertados em HY, choque de inflação por petróleo e cauda recessiva de 35% sustentam mais IG do que HY. A visão do PIMCO de OW 5–10 anos / UW 30 anos orienta a seleção de duration intermediária no sleeve de IG.</li>
       <li><strong>Viés de duration curto-intermediário.</strong> Evitar a ponta longa dada a tese de curve steepening do PIMCO e uma trajetória Fed/BCE mais rasa do que o preço indicava.</li>
-      <li><strong>Alternativos em 10%.</strong> Endereça a "miragem de diversificação" apontada pelo BlackRock II — ouro como hedge geopolítico e de taxa real, infraestrutura como defensiva beneficiária de estímulo fiscal, infraestrutura de IA como crescimento fora do núcleo do índice.</li>
-      <li><strong>Política cambial.</strong> Classes em EUR preferidas onde relevante; exposição em USD no núcleo global mantida sem hedge — hedge custa EUR e a visão sobre o USD é neutra-a-mais-fraca.</li>
+      <li><strong>Alternativos em <span data-bind="altPct">10</span>%.</strong> Endereça a "miragem de diversificação" apontada pelo BlackRock II — ouro como hedge geopolítico e de taxa real, infraestrutura como defensiva beneficiária de estímulo fiscal, infraestrutura de IA como crescimento fora do núcleo do índice.</li>
+      <li><strong>Política cambial.</strong> Classes em <span data-bind="ccyCode">EUR</span> preferidas onde relevante; exposição em USD no núcleo global mantida sem hedge — hedge custa <span data-bind="ccyCode">EUR</span> e a visão sobre o USD é neutra-a-mais-fraca.</li>
     </ul>
   </div>
 </section>
@@ -1466,12 +1609,12 @@
     </p>
 
     <div class="structure-card">
-      <span class="badge">BVI BC</span>
+      <span class="badge" data-bind="structureBadge">BVI BC</span>
       <h4>
         <span data-lang="en">Single pooled structure · no wrapper split</span>
         <span data-lang="pt">Estrutura única agregada · sem divisão de wrapper</span>
       </h4>
-      <div class="amt">€1,000,000</div>
+      <div class="amt" data-bind="mandateFormatted">€1,000,000</div>
       <p data-lang="en">
         All nine holdings sit in one brokerage account held by the BVI entity. Accumulation share classes are still preferred where available, for operational simplicity and clean NAV reporting — not for tax-deferral (there is no tax to defer). USD-denominated assets are held unhedged; base currency for NAV and reporting is EUR.
       </p>
@@ -1482,7 +1625,7 @@
       <div class="structure-grid">
         <div class="struct-stat">
           <div class="k"><span data-lang="en">Entity Type</span><span data-lang="pt">Tipo de Entidade</span></div>
-          <div class="v"><span data-lang="en">BVI Business Company</span><span data-lang="pt">BVI Business Company</span></div>
+          <div class="v" data-bind="structureFull">BVI Business Company</div>
         </div>
         <div class="struct-stat">
           <div class="k"><span data-lang="en">Corporate Tax</span><span data-lang="pt">Imposto Corporativo</span></div>
@@ -1493,16 +1636,16 @@
           <div class="v"><span data-lang="en">Nil</span><span data-lang="pt">Nulo</span></div>
         </div>
         <div class="struct-stat">
-          <div class="k"><span data-lang="en">WHT on EUR Dividends</span><span data-lang="pt">Retenção em Dividendos EUR</span></div>
+          <div class="k"><span data-lang="en">WHT on <span data-bind="ccyCode">EUR</span> Dividends</span><span data-lang="pt">Retenção em Dividendos <span data-bind="ccyCode">EUR</span></span></div>
           <div class="v"><span data-lang="en">Nil at fund level</span><span data-lang="pt">Nulo no nível do fundo</span></div>
         </div>
         <div class="struct-stat">
           <div class="k"><span data-lang="en">Base Currency</span><span data-lang="pt">Moeda-Base</span></div>
-          <div class="v">EUR</div>
+          <div class="v" data-bind="ccyCode">EUR</div>
         </div>
         <div class="struct-stat">
           <div class="k"><span data-lang="en">ETF Universe</span><span data-lang="pt">Universo de ETFs</span></div>
-          <div class="v"><span data-lang="en">UCITS (unrestricted)</span><span data-lang="pt">UCITS (sem restrição)</span></div>
+          <div class="v" data-bind="universeLabel">UCITS (unrestricted)</div>
         </div>
       </div>
 
@@ -1529,10 +1672,10 @@
     </h2>
 
     <p class="body-text" data-lang="en">
-      Every trigger below is a <strong>pre-committed action</strong>, sized to force discipline rather than discretion. Scheduled rebalances occur every two weeks; any category drift exceeding <strong>±5 percentage points</strong> from its target triggers a mid-cycle rebalance. The events below force off-cycle action.
+      Every trigger below is a <strong>pre-committed action</strong>, sized to force discipline rather than discretion. Scheduled rebalances occur <span data-bind="cadencePhraseEn">every two weeks</span>; any category drift exceeding <strong>±<span data-bind="driftPp">5</span> percentage points</strong> from its target triggers a mid-cycle rebalance. The events below force off-cycle action.
     </p>
     <p class="body-text" data-lang="pt">
-      Cada gatilho abaixo é uma <strong>ação pré-comprometida</strong>, dimensionada para forçar disciplina em vez de discrição. Rebalanceamentos programados ocorrem a cada duas semanas; qualquer drift de categoria superior a <strong>±5 pontos percentuais</strong> frente ao alvo dispara um rebalanceamento intermediário. Os eventos abaixo forçam ação fora do ciclo.
+      Cada gatilho abaixo é uma <strong>ação pré-comprometida</strong>, dimensionada para forçar disciplina em vez de discrição. Rebalanceamentos programados ocorrem <span data-bind="cadencePhrasePt">a cada duas semanas</span>; qualquer drift de categoria superior a <strong>±<span data-bind="driftPp">5</span> pontos percentuais</strong> frente ao alvo dispara um rebalanceamento intermediário. Os eventos abaixo forçam ação fora do ciclo.
     </p>
 
     <table class="triggers" data-lang="en">
@@ -1547,7 +1690,7 @@
         <tr><td>Volatility regime</td><td class="level">VIX &gt; 30, two weeks</td><td class="action">Cut equity to 45–50% band. Raise gold to 6%.</td></tr>
         <tr><td>Geopolitical escalation</td><td class="level">Hormuz closure &gt; 8 wks</td><td class="action">Raise gold to 6–7%. Halve HY exposure.</td></tr>
         <tr><td>Central bank emergency</td><td class="level">Off-cycle move</td><td class="action">Immediate full-portfolio review — do not wait for the fortnightly window.</td></tr>
-        <tr><td>Drift</td><td class="level">&gt; ±5pp from target</td><td class="action">Mid-cycle rebalance to target weights.</td></tr>
+        <tr><td>Drift</td><td class="level">&gt; ±<span data-bind="driftPp">5</span>pp from target</td><td class="action">Mid-cycle rebalance to target weights.</td></tr>
       </tbody>
     </table>
     <table class="triggers" data-lang="pt">
@@ -1562,7 +1705,7 @@
         <tr><td>Regime de volatilidade</td><td class="level">VIX &gt; 30 por duas semanas</td><td class="action">Reduzir ações para faixa 45–50%. Aumentar ouro para 6%.</td></tr>
         <tr><td>Escalada geopolítica</td><td class="level">Ormuz fechado &gt; 8 sem.</td><td class="action">Aumentar ouro para 6–7%. Cortar HY pela metade.</td></tr>
         <tr><td>Emergência de banco central</td><td class="level">Movimento fora do ciclo</td><td class="action">Revisão imediata de portfólio — não aguardar a janela quinzenal.</td></tr>
-        <tr><td>Drift</td><td class="level">&gt; ±5pp do alvo</td><td class="action">Rebalanceamento intermediário para os pesos-alvo.</td></tr>
+        <tr><td>Drift</td><td class="level">&gt; ±<span data-bind="driftPp">5</span>pp do alvo</td><td class="action">Rebalanceamento intermediário para os pesos-alvo.</td></tr>
       </tbody>
     </table>
 
@@ -1573,7 +1716,10 @@
       </div>
       <div class="review-item">
         <div class="label"><span data-lang="en">Cadence</span><span data-lang="pt">Cadência</span></div>
-        <div class="value"><span data-lang="en">Fortnightly · 2 weeks</span><span data-lang="pt">Quinzenal · 2 semanas</span></div>
+        <div class="value">
+          <span data-lang="en" data-bind="cadenceValueEn">Fortnightly · 2 weeks</span>
+          <span data-lang="pt" data-bind="cadenceValuePt">Quinzenal · 2 semanas</span>
+        </div>
       </div>
       <div class="review-item">
         <div class="label"><span data-lang="en">Off-cycle Trigger</span><span data-lang="pt">Gatilho Fora de Ciclo</span></div>
@@ -1720,6 +1866,193 @@
 
     <div class="m-foot" id="mFoot">
       Past performance is not a guide to future returns. Sharpe estimated with EUR risk-free proxy (ESTR ≈ 3.0%). Chart is schematic, not tick-level.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PERSONALISE MODAL ═══════════════ -->
+<div class="modal-backdrop" id="personaliseBackdrop" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="persTitle">
+  <div class="modal-card pers-card" id="personaliseCard" role="document">
+    <div class="modal-head">
+      <div class="title-block">
+        <div class="eyebrow">
+          <span data-lang="en">Investment Policy</span>
+          <span data-lang="pt">Política de Investimento</span>
+          <span class="pill">CLIENT · EDITABLE</span>
+        </div>
+        <h3 id="persTitle">
+          <span data-lang="en">Personalise the mandate</span>
+          <span data-lang="pt">Personalize o mandato</span>
+        </h3>
+      </div>
+      <button class="modal-close" id="persClose" aria-label="Close">×</button>
+    </div>
+
+    <div class="pers-body">
+      <p class="pers-intro">
+        <span data-lang="en">Edit the guardrails that shape this portfolio — hard bands, the IG floor inside the debt bucket, rebalancing cadence, and ETF universe. Click <strong>Generate</strong> to rebuild the report against the new policy.</span>
+        <span data-lang="pt">Edite as diretrizes que orientam este portfólio — faixas rígidas, piso de IG dentro do bucket de dívida, cadência de rebalanceamento e universo de ETFs. Clique em <strong>Gerar</strong> para reconstruir o relatório com a nova política.</span>
+      </p>
+
+      <div class="pers-section-title">
+        <span data-lang="en">Client Profile</span>
+        <span data-lang="pt">Perfil do Cliente</span>
+      </div>
+      <div class="pers-grid">
+        <div class="pers-field">
+          <label data-lang="en" for="fCurrency">Base currency</label>
+          <label data-lang="pt" for="fCurrency">Moeda-base</label>
+          <select id="fCurrency">
+            <option value="EUR">EUR · Euro</option>
+            <option value="USD">USD · US Dollar</option>
+            <option value="GBP">GBP · Pound Sterling</option>
+            <option value="BRL">BRL · Real</option>
+            <option value="CHF">CHF · Swiss Franc</option>
+          </select>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fMandate">Mandate size</label>
+          <label data-lang="pt" for="fMandate">Tamanho do mandato</label>
+          <input id="fMandate" type="number" min="10000" step="10000" />
+          <span class="hint" data-lang="en">Total capital (base currency units)</span>
+          <span class="hint" data-lang="pt">Capital total (unidades da moeda-base)</span>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fHorizon">Horizon (years)</label>
+          <label data-lang="pt" for="fHorizon">Horizonte (anos)</label>
+          <input id="fHorizon" type="number" min="1" max="40" step="1" />
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fRisk">Risk tolerance</label>
+          <label data-lang="pt" for="fRisk">Tolerância ao risco</label>
+          <select id="fRisk">
+            <option value="conservative">Conservative / Conservador</option>
+            <option value="balanced">Balanced / Equilibrado</option>
+            <option value="growth">Growth / Crescimento</option>
+            <option value="aggressive">Aggressive / Agressivo</option>
+          </select>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fStructure">Tax domicile / structure</label>
+          <label data-lang="pt" for="fStructure">Domicílio fiscal / estrutura</label>
+          <select id="fStructure">
+            <option value="BVI">BVI Business Company</option>
+            <option value="Cayman">Cayman Fund</option>
+            <option value="UK-ISA">UK · ISA</option>
+            <option value="UK-SIPP">UK · SIPP</option>
+            <option value="UK-GIA">UK · Taxable GIA</option>
+            <option value="US-Taxable">US · Taxable Brokerage</option>
+            <option value="EU-Taxable">EU · Taxable Brokerage</option>
+            <option value="Offshore-Bond">Offshore Bond Wrapper</option>
+          </select>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fUniverse">ETF universe</label>
+          <label data-lang="pt" for="fUniverse">Universo de ETFs</label>
+          <select id="fUniverse">
+            <option value="UCITS">UCITS (Ireland / Luxembourg)</option>
+            <option value="US">US-listed (40 Act)</option>
+            <option value="Mixed">Mixed · unrestricted</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pers-section-title">
+        <span data-lang="en">Hard Policy Bands</span>
+        <span data-lang="pt">Faixas Rígidas de Política</span>
+      </div>
+      <div class="pers-grid">
+        <div class="pers-field">
+          <label data-lang="en">Equity (%)</label>
+          <label data-lang="pt">Ações (%)</label>
+          <div class="pers-range">
+            <div class="mini"><span>Min</span><input id="fEqMin" type="number" min="0" max="100" step="1"></div>
+            <div class="mini"><span>Max</span><input id="fEqMax" type="number" min="0" max="100" step="1"></div>
+          </div>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en">Debt · IG + HY (%)</label>
+          <label data-lang="pt">Dívida · IG + HY (%)</label>
+          <div class="pers-range">
+            <div class="mini"><span>Min</span><input id="fDebtMin" type="number" min="0" max="100" step="1"></div>
+            <div class="mini"><span>Max</span><input id="fDebtMax" type="number" min="0" max="100" step="1"></div>
+          </div>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en">Alternatives (%)</label>
+          <label data-lang="pt">Alternativos (%)</label>
+          <div class="pers-range">
+            <div class="mini"><span>Min</span><input id="fAltMin" type="number" min="0" max="100" step="1"></div>
+            <div class="mini"><span>Max</span><input id="fAltMax" type="number" min="0" max="100" step="1"></div>
+          </div>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fIgFloor">IG floor within debt (%)</label>
+          <label data-lang="pt" for="fIgFloor">Piso de IG na dívida (%)</label>
+          <input id="fIgFloor" type="number" min="0" max="100" step="1">
+          <span class="hint" data-lang="en">Share of the debt sleeve held in Investment Grade</span>
+          <span class="hint" data-lang="pt">Fatia do sleeve de dívida mantida em IG</span>
+        </div>
+      </div>
+
+      <div class="pers-section-title">
+        <span data-lang="en">Return &amp; Risk Targets</span>
+        <span data-lang="pt">Metas de Retorno e Risco</span>
+      </div>
+      <div class="pers-grid">
+        <div class="pers-field">
+          <label data-lang="en" for="fExpReturn">Expected return (% p.a.)</label>
+          <label data-lang="pt" for="fExpReturn">Retorno esperado (% a.a.)</label>
+          <input id="fExpReturn" type="number" min="0" max="30" step="0.1">
+          <span class="hint" data-lang="en">Forward-looking target for the blended portfolio</span>
+          <span class="hint" data-lang="pt">Meta prospectiva para o portfólio ponderado</span>
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fMaxVol">Max volatility (% p.a.)</label>
+          <label data-lang="pt" for="fMaxVol">Volatilidade máx. (% a.a.)</label>
+          <input id="fMaxVol" type="number" min="0" max="40" step="0.1">
+          <span class="hint" data-lang="en">Hard cap on annualised realised volatility</span>
+          <span class="hint" data-lang="pt">Teto rígido sobre a volatilidade realizada anualizada</span>
+        </div>
+      </div>
+
+      <div class="pers-section-title">
+        <span data-lang="en">Rebalancing Discipline</span>
+        <span data-lang="pt">Disciplina de Rebalanceamento</span>
+      </div>
+      <div class="pers-grid">
+        <div class="pers-field">
+          <label data-lang="en" for="fCadence">Cadence (weeks)</label>
+          <label data-lang="pt" for="fCadence">Cadência (semanas)</label>
+          <input id="fCadence" type="number" min="1" max="52" step="1">
+        </div>
+        <div class="pers-field">
+          <label data-lang="en" for="fDrift">Drift tolerance (±pp)</label>
+          <label data-lang="pt" for="fDrift">Tolerância de drift (±pp)</label>
+          <input id="fDrift" type="number" min="1" max="20" step="1">
+          <span class="hint" data-lang="en">Mid-cycle rebalance if any category drifts by more</span>
+          <span class="hint" data-lang="pt">Rebalanceio intermediário se alguma categoria exceder</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pers-foot">
+      <div class="pers-error" id="persError"></div>
+      <div class="pers-actions">
+        <button class="btn-ghost" id="persReset" type="button">
+          <span data-lang="en">Reset</span>
+          <span data-lang="pt">Reiniciar</span>
+        </button>
+        <button class="btn-ghost" id="persCancel" type="button">
+          <span data-lang="en">Cancel</span>
+          <span data-lang="pt">Cancelar</span>
+        </button>
+        <button class="btn-primary" id="persGenerate" type="button">
+          <span data-lang="en">Generate</span>
+          <span data-lang="pt">Gerar</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -2342,6 +2675,324 @@
   backdrop.addEventListener("click", e => { if (e.target === backdrop) closeModal(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && backdrop.classList.contains("open")) closeModal(); });
 
+  // ═════════ PERSONALISE · POLICY STATE & REGENERATION ═════════
+  const DEFAULT_POLICY = {
+    currency: "EUR",
+    mandate: 1000000,
+    horizon: 5,
+    risk: "growth",
+    structure: "BVI",
+    universe: "UCITS",
+    eqMin: 30, eqMax: 70,
+    debtMin: 20, debtMax: 60,
+    altMin: 0, altMax: 15,
+    igFloor: 71,
+    cadenceWeeks: 2,
+    driftPp: 5,
+    expReturn: 8.0,
+    maxVol: 12.0
+  };
+  let policyState = loadPolicy();
+
+  const RISK_TS = {
+    conservative: { eq: 0.15, alt: 0.25 },
+    balanced:     { eq: 0.40, alt: 0.50 },
+    growth:       { eq: 0.625, alt: 0.667 },
+    aggressive:   { eq: 0.95, alt: 0.95 }
+  };
+  const RISK_LABEL_EN = { conservative: "Conservative", balanced: "Balanced", growth: "Growth", aggressive: "Aggressive" };
+  const RISK_LABEL_PT = { conservative: "Conservador", balanced: "Equilibrado", growth: "Crescimento", aggressive: "Agressivo" };
+
+  const CCY = {
+    EUR: { symbol: "€", locale: "de-DE" },
+    USD: { symbol: "$", locale: "en-US" },
+    GBP: { symbol: "£", locale: "en-GB" },
+    BRL: { symbol: "R$ ", locale: "pt-BR" },
+    CHF: { symbol: "CHF ", locale: "de-CH" }
+  };
+
+  const STRUCTURES = {
+    "BVI":          { label: "BVI",          badge: "BVI BC",    full: "BVI Business Company",              phraseEn: "tax-neutral offshore",  phrasePt: "offshore fiscalmente neutra" },
+    "Cayman":       { label: "Cayman",       badge: "CAYMAN",    full: "Cayman Islands Fund",               phraseEn: "tax-neutral offshore",  phrasePt: "offshore fiscalmente neutra" },
+    "UK-ISA":       { label: "UK ISA",       badge: "ISA",       full: "UK Individual Savings Account",     phraseEn: "UK tax-wrapped ISA",    phrasePt: "com envoltório fiscal ISA no Reino Unido" },
+    "UK-SIPP":      { label: "UK SIPP",      badge: "SIPP",      full: "UK Self-Invested Personal Pension", phraseEn: "UK pension-wrapped",    phrasePt: "com envoltório previdenciário no Reino Unido" },
+    "UK-GIA":       { label: "UK GIA",       badge: "GIA",       full: "UK Taxable General Investment Account", phraseEn: "UK taxable brokerage", phrasePt: "corretora tributável no Reino Unido" },
+    "US-Taxable":   { label: "US Taxable",   badge: "US TAX",    full: "US Taxable Brokerage",              phraseEn: "US taxable brokerage",  phrasePt: "corretora tributável nos EUA" },
+    "EU-Taxable":   { label: "EU Taxable",   badge: "EU TAX",    full: "EU Taxable Brokerage",              phraseEn: "EU taxable brokerage",  phrasePt: "corretora tributável na UE" },
+    "Offshore-Bond":{ label: "Offshore Bond",badge: "BOND",      full: "Offshore Bond Wrapper",             phraseEn: "offshore-bond-wrapped", phrasePt: "com envoltório de bond offshore" }
+  };
+
+  const UNIVERSE_LABEL = {
+    UCITS: "UCITS (unrestricted)",
+    US:    "US-listed (40 Act)",
+    Mixed: "Mixed · UCITS + US-listed"
+  };
+
+  const HORIZON_WORD_EN = ["zero","one","two","three","four","five","six","seven","eight","nine","ten"];
+  const HORIZON_WORD_PT = ["zero","um","dois","três","quatro","cinco","seis","sete","oito","nove","dez"];
+
+  function loadPolicy() {
+    try {
+      const raw = localStorage.getItem("jcam-policy");
+      if (!raw) return { ...DEFAULT_POLICY };
+      const parsed = JSON.parse(raw);
+      return { ...DEFAULT_POLICY, ...parsed };
+    } catch (_) { return { ...DEFAULT_POLICY }; }
+  }
+  function savePolicy() { try { localStorage.setItem("jcam-policy", JSON.stringify(policyState)); } catch (_) {} }
+
+  function computeAllocation(st) {
+    const t = RISK_TS[st.risk] || RISK_TS.growth;
+    let eq  = st.eqMin  + t.eq  * (st.eqMax  - st.eqMin);
+    let alt = st.altMin + t.alt * (st.altMax - st.altMin);
+    let debt = 100 - eq - alt;
+    if (debt < st.debtMin) {
+      let gap = st.debtMin - debt;
+      const eqCut  = Math.min(gap, eq  - st.eqMin);  eq  -= eqCut;  debt += eqCut;  gap -= eqCut;
+      if (gap > 0) { const altCut = Math.min(gap, alt - st.altMin); alt -= altCut; debt += altCut; }
+    } else if (debt > st.debtMax) {
+      let gap = debt - st.debtMax;
+      const eqUp  = Math.min(gap, st.eqMax  - eq);   eq  += eqUp;   debt -= eqUp;   gap -= eqUp;
+      if (gap > 0) { const altUp = Math.min(gap, st.altMax - alt); alt += altUp; debt -= altUp; }
+    }
+    eq  = Math.max(0, Math.round(eq));
+    alt = Math.max(0, Math.round(alt));
+    debt = Math.max(0, 100 - eq - alt);
+    const ig = Math.round(debt * st.igFloor / 100);
+    const hy = Math.max(0, debt - ig);
+    const igShare = debt > 0 ? Math.round(ig / debt * 100) : 0;
+    return { eq, debt, ig, hy, alt, igShare };
+  }
+
+  function eqBandPhrase(eqPct, eqMin, eqMax, lang) {
+    const span = eqMax - eqMin; if (span <= 0) return lang === "pt" ? "faixa fixa" : "fixed band";
+    const frac = (eqPct - eqMin) / span;
+    if (lang === "pt") {
+      if (frac >= 0.8) return "topo da faixa permitida";
+      if (frac >= 0.55) return "faixa média-superior permitida";
+      if (frac >= 0.35) return "meio da faixa permitida";
+      if (frac >= 0.15) return "faixa inferior-média permitida";
+      return "base da faixa permitida";
+    }
+    if (frac >= 0.8) return "top of permitted band";
+    if (frac >= 0.55) return "mid-to-upper permitted band";
+    if (frac >= 0.35) return "middle of permitted band";
+    if (frac >= 0.15) return "lower-to-mid permitted band";
+    return "bottom of permitted band";
+  }
+  function altBandPhrase(altPct, altMin, altMax, lang) {
+    const span = altMax - altMin; if (span <= 0) return lang === "pt" ? "faixa fixa" : "fixed band";
+    const frac = (altPct - altMin) / span;
+    if (lang === "pt") {
+      if (frac >= 0.8) return "topo da faixa permitida";
+      if (frac >= 0.4) return "meio da faixa permitida";
+      return "base da faixa permitida";
+    }
+    if (frac >= 0.8) return "top of permitted band";
+    if (frac >= 0.4) return "middle of permitted band";
+    return "bottom of permitted band";
+  }
+  function hyPhrase(hyPct, lang) {
+    if (lang === "pt") {
+      if (hyPct === 0) return "ausente, sem exposição a HY";
+      if (hyPct <= 8) return "modesto, apenas para carrego";
+      if (hyPct <= 15) return "carrego moderado";
+      return "overweight tático em HY";
+    }
+    if (hyPct === 0) return "absent, no HY exposure";
+    if (hyPct <= 8) return "modest, carry-only size";
+    if (hyPct <= 15) return "moderate carry bucket";
+    return "tactical HY overweight";
+  }
+  function cadencePhrase(weeks, lang) {
+    const isPt = lang === "pt";
+    if (weeks === 1) return isPt ? "a cada semana" : "every week";
+    if (weeks === 2) return isPt ? "a cada duas semanas" : "every two weeks";
+    if (weeks === 4) return isPt ? "a cada quatro semanas" : "every four weeks";
+    return isPt ? `a cada ${weeks} semanas` : `every ${weeks} weeks`;
+  }
+  function cadenceValue(weeks, lang) {
+    const isPt = lang === "pt";
+    if (weeks === 1) return isPt ? "Semanal · 1 semana" : "Weekly · 1 week";
+    if (weeks === 2) return isPt ? "Quinzenal · 2 semanas" : "Fortnightly · 2 weeks";
+    if (weeks === 4) return isPt ? "Mensal · 4 semanas" : "Monthly · 4 weeks";
+    if (weeks === 13) return isPt ? "Trimestral · 13 semanas" : "Quarterly · 13 weeks";
+    return isPt ? `A cada ${weeks} semanas` : `Every ${weeks} weeks`;
+  }
+  function formatMandate(amount, currency) {
+    const meta = CCY[currency] || CCY.EUR;
+    const rounded = Math.round(amount);
+    return `${meta.symbol}${rounded.toLocaleString(meta.locale)}`;
+  }
+
+  function bindValues(values) {
+    Object.keys(values).forEach(k => {
+      document.querySelectorAll(`[data-bind="${k}"]`).forEach(el => { el.textContent = values[k]; });
+    });
+  }
+
+  function renderPolicy() {
+    const st = policyState;
+    const a = computeAllocation(st);
+    const struct = STRUCTURES[st.structure] || STRUCTURES.BVI;
+    const ccy = CCY[st.currency] || CCY.EUR;
+    const hEn = st.horizon <= 10 ? HORIZON_WORD_EN[st.horizon] : String(st.horizon);
+    const hPt = st.horizon <= 10 ? HORIZON_WORD_PT[st.horizon] : String(st.horizon);
+    const values = {
+      eqPct: a.eq, igPct: a.ig, hyPct: a.hy, altPct: a.alt,
+      eqMin: st.eqMin, eqMax: st.eqMax,
+      altMin: st.altMin, altMax: st.altMax,
+      igShare: a.igShare,
+      eqBandPhraseEn: eqBandPhrase(a.eq, st.eqMin, st.eqMax, "en"),
+      eqBandPhrasePt: eqBandPhrase(a.eq, st.eqMin, st.eqMax, "pt"),
+      altBandPhraseEn: altBandPhrase(a.alt, st.altMin, st.altMax, "en"),
+      altBandPhrasePt: altBandPhrase(a.alt, st.altMin, st.altMax, "pt"),
+      hyPhraseEn: hyPhrase(a.hy, "en"),
+      hyPhrasePt: hyPhrase(a.hy, "pt"),
+      ccyCode: st.currency,
+      mandateFormatted: formatMandate(st.mandate, st.currency),
+      horizonYears: st.horizon,
+      horizonWord: hEn,
+      horizonWordPt: hPt,
+      riskLabelEn: RISK_LABEL_EN[st.risk],
+      riskLabelPt: RISK_LABEL_PT[st.risk],
+      structureLabel: struct.label,
+      structureBadge: struct.badge,
+      structureFull: struct.full,
+      structurePhraseEn: struct.phraseEn,
+      structurePhrasePt: struct.phrasePt,
+      universeLabel: UNIVERSE_LABEL[st.universe] || st.universe,
+      cadencePhraseEn: cadencePhrase(st.cadenceWeeks, "en"),
+      cadencePhrasePt: cadencePhrase(st.cadenceWeeks, "pt"),
+      cadenceValueEn: cadenceValue(st.cadenceWeeks, "en"),
+      cadenceValuePt: cadenceValue(st.cadenceWeeks, "pt"),
+      driftPp: st.driftPp,
+      expReturnFormatted: `${Number(st.expReturn).toFixed(1)}% p.a.`,
+      maxVolFormatted: `${Number(st.maxVol).toFixed(1)}% p.a.`
+    };
+    bindValues(values);
+    const segMap = { equity: a.eq, ig: a.ig, hy: a.hy, alt: a.alt };
+    document.querySelectorAll("#allocBar .alloc-seg").forEach(seg => {
+      const key = seg.dataset.seg;
+      const v = segMap[key] ?? 0;
+      seg.style.flex = v > 0 ? String(v) : "0 0 0";
+      seg.style.display = v > 0 ? "" : "none";
+    });
+  }
+
+  // ═════════ PERSONALISE MODAL ═════════
+  const persBackdrop = document.getElementById("personaliseBackdrop");
+  const persOpenBtn  = document.getElementById("openPersonalise");
+  const persCloseBtn = document.getElementById("persClose");
+  const persCancel   = document.getElementById("persCancel");
+  const persReset    = document.getElementById("persReset");
+  const persGenerate = document.getElementById("persGenerate");
+  const persError    = document.getElementById("persError");
+  let persLastFocus = null;
+
+  function hydrateForm(st) {
+    document.getElementById("fCurrency").value = st.currency;
+    document.getElementById("fMandate").value = st.mandate;
+    document.getElementById("fHorizon").value = st.horizon;
+    document.getElementById("fRisk").value = st.risk;
+    document.getElementById("fStructure").value = st.structure;
+    document.getElementById("fUniverse").value = st.universe;
+    document.getElementById("fEqMin").value = st.eqMin;
+    document.getElementById("fEqMax").value = st.eqMax;
+    document.getElementById("fDebtMin").value = st.debtMin;
+    document.getElementById("fDebtMax").value = st.debtMax;
+    document.getElementById("fAltMin").value = st.altMin;
+    document.getElementById("fAltMax").value = st.altMax;
+    document.getElementById("fIgFloor").value = st.igFloor;
+    document.getElementById("fCadence").value = st.cadenceWeeks;
+    document.getElementById("fDrift").value = st.driftPp;
+    document.getElementById("fExpReturn").value = st.expReturn;
+    document.getElementById("fMaxVol").value = st.maxVol;
+  }
+  function readForm() {
+    return {
+      currency: document.getElementById("fCurrency").value,
+      mandate: Number(document.getElementById("fMandate").value),
+      horizon: parseInt(document.getElementById("fHorizon").value, 10),
+      risk: document.getElementById("fRisk").value,
+      structure: document.getElementById("fStructure").value,
+      universe: document.getElementById("fUniverse").value,
+      eqMin: parseInt(document.getElementById("fEqMin").value, 10),
+      eqMax: parseInt(document.getElementById("fEqMax").value, 10),
+      debtMin: parseInt(document.getElementById("fDebtMin").value, 10),
+      debtMax: parseInt(document.getElementById("fDebtMax").value, 10),
+      altMin: parseInt(document.getElementById("fAltMin").value, 10),
+      altMax: parseInt(document.getElementById("fAltMax").value, 10),
+      igFloor: parseInt(document.getElementById("fIgFloor").value, 10),
+      cadenceWeeks: parseInt(document.getElementById("fCadence").value, 10),
+      driftPp: parseInt(document.getElementById("fDrift").value, 10),
+      expReturn: parseFloat(document.getElementById("fExpReturn").value),
+      maxVol: parseFloat(document.getElementById("fMaxVol").value)
+    };
+  }
+  function validate(st) {
+    const isPt = currentLang === "pt";
+    const errs = [];
+    const num = ["mandate","horizon","eqMin","eqMax","debtMin","debtMax","altMin","altMax","igFloor","cadenceWeeks","driftPp","expReturn","maxVol"];
+    for (const k of num) { if (!Number.isFinite(st[k])) errs.push(isPt ? `Campo inválido: ${k}` : `Invalid field: ${k}`); }
+    if (errs.length) return errs[0];
+    if (st.mandate < 1000)           return isPt ? "Mandato deve ser ≥ 1.000." : "Mandate must be ≥ 1,000.";
+    if (st.horizon < 1 || st.horizon > 40) return isPt ? "Horizonte deve estar entre 1 e 40 anos." : "Horizon must be between 1 and 40 years.";
+    if (st.eqMin > st.eqMax || st.debtMin > st.debtMax || st.altMin > st.altMax)
+      return isPt ? "Em cada faixa, o mínimo deve ser ≤ máximo." : "For each band, min must be ≤ max.";
+    if ([st.eqMin,st.eqMax,st.debtMin,st.debtMax,st.altMin,st.altMax].some(v => v < 0 || v > 100))
+      return isPt ? "Faixas devem estar entre 0 e 100%." : "Bands must be between 0 and 100%.";
+    if (st.eqMin + st.debtMin + st.altMin > 100)
+      return isPt ? "Os mínimos somados ultrapassam 100%." : "Sum of minimums exceeds 100%.";
+    if (st.eqMax + st.debtMax + st.altMax < 100)
+      return isPt ? "Os máximos somados não alcançam 100%." : "Sum of maximums falls short of 100%.";
+    if (st.igFloor < 0 || st.igFloor > 100)
+      return isPt ? "Piso de IG deve estar entre 0 e 100%." : "IG floor must be between 0 and 100%.";
+    if (st.cadenceWeeks < 1 || st.cadenceWeeks > 52)
+      return isPt ? "Cadência deve estar entre 1 e 52 semanas." : "Cadence must be between 1 and 52 weeks.";
+    if (st.driftPp < 1 || st.driftPp > 30)
+      return isPt ? "Tolerância de drift deve estar entre 1 e 30 pp." : "Drift tolerance must be between 1 and 30 pp.";
+    if (st.expReturn < 0 || st.expReturn > 30)
+      return isPt ? "Retorno esperado deve estar entre 0 e 30%." : "Expected return must be between 0 and 30%.";
+    if (st.maxVol < 0 || st.maxVol > 40)
+      return isPt ? "Volatilidade máxima deve estar entre 0 e 40%." : "Max volatility must be between 0 and 40%.";
+    return null;
+  }
+  function openPersonalise() {
+    persLastFocus = document.activeElement;
+    hydrateForm(policyState);
+    persError.textContent = "";
+    persBackdrop.classList.add("open");
+    persBackdrop.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lock");
+    setTimeout(() => document.getElementById("fRisk").focus(), 40);
+  }
+  function closePersonalise() {
+    persBackdrop.classList.remove("open");
+    persBackdrop.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lock");
+    if (persLastFocus && typeof persLastFocus.focus === "function") persLastFocus.focus();
+  }
+  function generate() {
+    const next = readForm();
+    const err = validate(next);
+    if (err) { persError.textContent = err; return; }
+    persError.textContent = "";
+    policyState = next;
+    savePolicy();
+    renderPolicy();
+    closePersonalise();
+  }
+  persOpenBtn.addEventListener("click", openPersonalise);
+  persCloseBtn.addEventListener("click", closePersonalise);
+  persCancel.addEventListener("click", closePersonalise);
+  persReset.addEventListener("click", () => { hydrateForm(DEFAULT_POLICY); persError.textContent = ""; });
+  persGenerate.addEventListener("click", generate);
+  persBackdrop.addEventListener("click", e => { if (e.target === persBackdrop) closePersonalise(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && persBackdrop.classList.contains("open")) closePersonalise();
+  });
+
   // ═════════ LANGUAGE SWITCHING ═════════
   function setLanguage(lang) {
     currentLang = lang;
@@ -2352,6 +3003,7 @@
     document.getElementById("backtestChart3Y").innerHTML = renderBacktestChart3Y();
     document.getElementById("backtestChart12M").innerHTML = renderBacktestChart12M();
     if (currentIdx !== null) renderModal();
+    renderPolicy();
   }
   document.querySelectorAll(".lang-btn").forEach(btn => {
     btn.addEventListener("click", () => setLanguage(btn.dataset.langSet));
