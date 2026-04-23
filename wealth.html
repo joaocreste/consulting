@@ -820,6 +820,81 @@
     color: var(--gold); font-weight: 700;
   }
 
+  /* ═════════ SCATTER · TTM RISK / RETURN ═════════ */
+  .scatter-card {
+    margin-top: 28px;
+    background: #FFFFFF;
+    border: 1px solid rgba(10,22,40,0.06);
+    border-radius: 12px;
+    padding: 22px 26px 18px;
+    box-shadow: 0 4px 20px rgba(10,22,40,0.06);
+  }
+  .scatter-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap; gap: 8px;
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(10,22,40,0.08);
+  }
+  .scatter-card-title {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .scatter-card-window {
+    font-size: 10.5px;
+    color: rgba(10,22,40,0.5);
+    font-weight: 400;
+    font-style: italic;
+  }
+  .scatter-chart {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .scatter-chart .grid-line { stroke: rgba(10,22,40,0.07); stroke-width: 0.5; }
+  .scatter-chart .baseline { stroke: rgba(10,22,40,0.28); stroke-dasharray: 3,3; stroke-width: 0.8; }
+  .scatter-chart .axis { stroke: rgba(10,22,40,0.35); stroke-width: 0.6; }
+  .scatter-chart .label { fill: rgba(10,22,40,0.6); font-size: 18px; font-family: 'Mulish', sans-serif; }
+  .scatter-chart .axis-title { fill: var(--ink); font-size: 20px; font-family: 'Mulish', sans-serif; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .scatter-chart .point-label { font-size: 12px; font-family: 'Mulish', sans-serif; font-weight: 600; fill: var(--ink); }
+  .scatter-chart .point-label-bold { font-size: 14px; font-weight: 800; letter-spacing: 0.02em; }
+  .scatter-chart .leader { stroke: rgba(10,22,40,0.28); stroke-width: 0.7; fill: none; }
+  .scatter-chart .etf-point-eq  { fill: #B8954A; }
+  .scatter-chart .etf-point-ig  { fill: #5A7A99; }
+  .scatter-chart .etf-point-hy  { fill: #C4A32A; }
+  .scatter-chart .etf-point-alt { fill: #8A6B4F; }
+  .scatter-chart .etf-point { stroke: #FFFFFF; stroke-width: 1.5; opacity: 0.88; }
+  .scatter-chart .bench-portfolio { fill: #B8954A; stroke: #FFFFFF; stroke-width: 2; }
+  .scatter-chart .bench-msci      { fill: #5A7A99; stroke: #FFFFFF; stroke-width: 2; }
+  .scatter-chart .bench-sp        { fill: #0A1628; stroke: #FFFFFF; stroke-width: 2; }
+  .scatter-chart .bench-halo { fill: none; stroke-width: 2; opacity: 0.32; }
+  .scatter-legend {
+    display: flex; flex-wrap: wrap; gap: 10px 22px;
+    padding: 14px 2px 2px;
+    border-top: 1px solid rgba(10,22,40,0.08);
+    margin-top: 12px;
+  }
+  .scatter-legend .item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--ink); font-weight: 400;
+  }
+  .scatter-legend .dot {
+    display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  }
+  .scatter-legend .dot.bench { width: 12px; height: 12px; border: 2px solid #FFFFFF; box-shadow: 0 0 0 1px rgba(10,22,40,0.25); }
+  .scatter-footnote {
+    font-size: 10.5px;
+    color: rgba(10,22,40,0.5);
+    font-style: italic;
+    margin-top: 10px;
+    line-height: 1.55;
+  }
+
   /* ═════════ DISCLAIMER GATE ═════════ */
   body.gate-active { overflow: hidden; }
   .disclaimer-gate {
@@ -1586,6 +1661,34 @@
         </tbody>
       </table>
     </div>
+
+    <!-- TTM Risk / Return Scatter -->
+    <div class="scatter-card">
+      <div class="scatter-card-header">
+        <span class="scatter-card-title">
+          <span data-lang="en">TTM Return vs TTM Volatility</span>
+          <span data-lang="pt">Retorno TTM vs Volatilidade TTM</span>
+        </span>
+        <span class="scatter-card-window">
+          <span data-lang="en">Trailing 12 months · each holding, portfolio, and benchmarks</span>
+          <span data-lang="pt">12 meses rolantes · cada posição, portfólio e benchmarks</span>
+        </span>
+      </div>
+      <div id="scatterTTM"></div>
+      <div class="scatter-legend">
+        <div class="item"><span class="dot bench" style="background:#B8954A;"></span><span data-lang="en">Portfolio</span><span data-lang="pt">Portfólio</span></div>
+        <div class="item"><span class="dot bench" style="background:#5A7A99;"></span>MSCI World</div>
+        <div class="item"><span class="dot bench" style="background:#0A1628;"></span>S&amp;P 500</div>
+        <div class="item"><span class="dot" style="background:#B8954A;"></span><span data-lang="en">Equity holding</span><span data-lang="pt">Posição em ações</span></div>
+        <div class="item"><span class="dot" style="background:#5A7A99;"></span><span data-lang="en">Investment grade</span><span data-lang="pt">Grau de investimento</span></div>
+        <div class="item"><span class="dot" style="background:#C4A32A;"></span><span data-lang="en">High yield</span><span data-lang="pt">High Yield</span></div>
+        <div class="item"><span class="dot" style="background:#8A6B4F;"></span><span data-lang="en">Alternative</span><span data-lang="pt">Alternativo</span></div>
+      </div>
+      <div class="scatter-footnote">
+        <span data-lang="en">Holdings plotted from issuer factsheet 1Y total return and 1Y annualised volatility (justETF, April 2026). Portfolio, MSCI World, and S&amp;P 500 points computed from real Yahoo Finance daily closes — last 252 trading days, same 5-ticker proxy used for the line charts above. Upper-left is the favoured quadrant: higher return per unit of risk.</span>
+        <span data-lang="pt">Posições plotadas a partir do retorno total 1A e da volatilidade anualizada 1A do factsheet do emissor (justETF, abril 2026). Portfólio, MSCI World e S&amp;P 500 calculados a partir de fechamentos diários reais do Yahoo Finance — últimos 252 pregões, mesmo proxy de 5 tickers usado nos gráficos de linha acima. Quadrante superior-esquerdo é o preferido: mais retorno por unidade de risco.</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2092,7 +2195,12 @@
       locale: "en-GB",
       btStart: "3Y ago",
       btEnd: "Today",
-      tt12Start: "12m ago"
+      tt12Start: "12m ago",
+      sxTitleX: "TTM Volatility",
+      sxTitleY: "TTM Return",
+      sxPortfolio: "Portfolio",
+      sxMsci: "MSCI World",
+      sxSp: "S&P 500"
     },
     pt: {
       etfProfile: "Perfil do ETF",
@@ -2126,7 +2234,12 @@
       locale: "pt-BR",
       btStart: "3A atrás",
       btEnd: "Hoje",
-      tt12Start: "12m atrás"
+      tt12Start: "12m atrás",
+      sxTitleX: "Volatilidade TTM",
+      sxTitleY: "Retorno TTM",
+      sxPortfolio: "Portfólio",
+      sxMsci: "MSCI World",
+      sxSp: "S&P 500"
     }
   };
 
@@ -2657,6 +2770,202 @@
     `;
   }
 
+  function annualisedVolFromNav(series, window) {
+    const n = series.length;
+    const start = Math.max(1, n - window);
+    let sum = 0, sumSq = 0, cnt = 0;
+    for (let i = start; i < n; i++) {
+      const r = series[i] / series[i - 1] - 1;
+      sum += r; sumSq += r * r; cnt++;
+    }
+    if (cnt < 2) return 0;
+    const mean = sum / cnt;
+    const variance = (sumSq - cnt * mean * mean) / (cnt - 1);
+    return Math.sqrt(Math.max(variance, 0)) * Math.sqrt(252) * 100;
+  }
+
+  function renderScatterTTM() {
+    const t = I18N[currentLang];
+    const nav = REAL_DATA.nav_3y;
+    const ttm = REAL_DATA.ttm;
+    const W = 1200, H = 720;
+    const P = { l: 132, r: 60, t: 40, b: 110 };
+    const chartW = W - P.l - P.r;
+    const chartH = H - P.t - P.b;
+
+    // Build point set
+    const points = [];
+    ETFS.forEach(e => {
+      if (e.ret1y == null || e.vol1y == null) return;
+      points.push({
+        kind: "etf",
+        cat: e.cat,
+        label: e.ticker,
+        x: e.vol1y,
+        y: e.ret1y
+      });
+    });
+    const ttmP = ttm.portfolio[ttm.portfolio.length - 1];
+    const ttmM = ttm.msci[ttm.msci.length - 1];
+    const ttmS = ttm.sp500[ttm.sp500.length - 1];
+    const volP = annualisedVolFromNav(nav.portfolio, 252);
+    const volM = annualisedVolFromNav(nav.msci, 252);
+    const volS = annualisedVolFromNav(nav.sp500, 252);
+    points.push({ kind: "bench", bench: "portfolio", label: t.sxPortfolio, x: volP, y: ttmP });
+    points.push({ kind: "bench", bench: "msci",      label: t.sxMsci,      x: volM, y: ttmM });
+    points.push({ kind: "bench", bench: "sp",        label: t.sxSp,        x: volS, y: ttmS });
+
+    // Axis extents with small padding
+    let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity;
+    points.forEach(p => {
+      if (p.x < xMin) xMin = p.x; if (p.x > xMax) xMax = p.x;
+      if (p.y < yMin) yMin = p.y; if (p.y > yMax) yMax = p.y;
+    });
+    xMin = Math.max(0, Math.floor((xMin - 1.5) / 5) * 5);
+    xMax = Math.ceil((xMax + 1.5) / 5) * 5;
+    yMin = Math.floor((yMin - 5) / 10) * 10;
+    yMax = Math.ceil((yMax + 5) / 10) * 10;
+
+    const mapX = v => P.l + ((v - xMin) / (xMax - xMin)) * chartW;
+    const mapY = v => P.t + (1 - (v - yMin) / (yMax - yMin)) * chartH;
+
+    // Gridlines
+    let grid = "";
+    const xStep = (xMax - xMin) > 30 ? 10 : 5;
+    for (let v = xMin; v <= xMax; v += xStep) {
+      const x = mapX(v);
+      grid += `<line class="grid-line" x1="${x}" y1="${P.t}" x2="${x}" y2="${H - P.b}"/>`;
+      grid += `<text class="label" x="${x}" y="${H - P.b + 30}" text-anchor="middle">${v}%</text>`;
+    }
+    const yStep = (yMax - yMin) > 60 ? 20 : 10;
+    for (let v = yMin; v <= yMax; v += yStep) {
+      const y = mapY(v);
+      const isZero = v === 0;
+      grid += `<line class="${isZero ? "baseline" : "grid-line"}" x1="${P.l}" y1="${y}" x2="${W - P.r}" y2="${y}"/>`;
+      const prefix = v > 0 ? "+" : "";
+      grid += `<text class="label" x="${P.l - 12}" y="${y + 7}" text-anchor="end">${prefix}${v}%</text>`;
+    }
+
+    // Points · ETFs first, then benchmarks on top
+    let dots = "";
+    let labels = "";
+    const etfs = points.filter(p => p.kind === "etf");
+    const benches = points.filter(p => p.kind === "bench");
+
+    // Label placement with obstacle-aware collision detection
+    const obstacles = [];
+    const rectsOverlap = (a, b, pad = 3) =>
+      !(a.x0 + a.w < b.x0 - pad || a.x0 > b.x0 + b.w + pad ||
+        a.y0 + a.h < b.y0 - pad || a.y0 > b.y0 + b.h + pad);
+
+    // Register every point as an obstacle so labels avoid sitting on neighbours
+    etfs.forEach(p => {
+      const cx = mapX(p.x), cy = mapY(p.y), r = 11;
+      obstacles.push({ x0: cx - r, y0: cy - r, w: r * 2, h: r * 2 });
+    });
+    benches.forEach(p => {
+      const cx = mapX(p.x), cy = mapY(p.y), r = 24; // includes halo
+      obstacles.push({ x0: cx - r, y0: cy - r, w: r * 2, h: r * 2 });
+    });
+
+    function placeLabel(cx, cy, text, bold, pointR) {
+      const fontH = bold ? 17 : 14;
+      const charW = bold ? 8.4 : 6.9;
+      const labelW = Math.max(20, text.length * charW);
+
+      const angles = [
+        { a: -Math.PI / 2,     align: "middle" }, // N
+        { a:  Math.PI / 2,     align: "middle" }, // S
+        { a:  0,               align: "start"  }, // E
+        { a:  Math.PI,         align: "end"    }, // W
+        { a: -Math.PI / 4,     align: "start"  }, // NE
+        { a: -3 * Math.PI / 4, align: "end"    }, // NW
+        { a:  Math.PI / 4,     align: "start"  }, // SE
+        { a:  3 * Math.PI / 4, align: "end"    }  // SW
+      ];
+      const distances = [pointR + 10, pointR + 22, pointR + 38, pointR + 56];
+
+      let best = null;
+      for (const d of distances) {
+        for (const ang of angles) {
+          const lx = cx + Math.cos(ang.a) * d;
+          const ly = cy + Math.sin(ang.a) * d;
+          const x0 = ang.align === "middle" ? lx - labelW / 2
+                  : ang.align === "start"  ? lx - 2
+                  : lx - labelW + 2;
+          const y0 = ly - fontH * 0.55;
+          // Keep inside plot area
+          if (x0 < P.l - 8 || x0 + labelW > W - P.r + 8) continue;
+          if (y0 < P.t - 8 || y0 + fontH > H - P.b + 8) continue;
+          const rect = { x0, y0, w: labelW, h: fontH };
+          let collisions = 0;
+          for (const o of obstacles) if (rectsOverlap(rect, o)) collisions++;
+          if (collisions === 0) { best = { ang, lx, ly, rect, d, collisions }; break; }
+          if (!best || collisions < best.collisions ||
+              (collisions === best.collisions && d < best.d)) {
+            best = { ang, lx, ly, rect, d, collisions };
+          }
+        }
+        if (best && best.collisions === 0) break;
+      }
+
+      if (!best) return "";
+      obstacles.push(best.rect);
+
+      // Leader line when label sits well away from the point
+      let leader = "";
+      if (best.d > pointR + 16) {
+        const nx = cx + Math.cos(best.ang.a) * (pointR + 1);
+        const ny = cy + Math.sin(best.ang.a) * (pointR + 1);
+        const ex = best.lx - Math.cos(best.ang.a) * 4;
+        const ey = best.ly - Math.sin(best.ang.a) * 4;
+        leader = `<line class="leader" x1="${nx.toFixed(1)}" y1="${ny.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}"/>`;
+      }
+
+      const cls = bold ? "point-label point-label-bold" : "point-label";
+      return leader + `<text class="${cls}" x="${best.lx.toFixed(1)}" y="${(best.ly + fontH * 0.35).toFixed(1)}" text-anchor="${best.ang.align}">${text}</text>`;
+    }
+
+    // Place benchmark labels first (priority), then ETFs around them
+    benches.forEach(p => {
+      const cx = mapX(p.x), cy = mapY(p.y);
+      labels += placeLabel(cx, cy, p.label, true, 14);
+    });
+    etfs.forEach(p => {
+      const cx = mapX(p.x), cy = mapY(p.y);
+      labels += placeLabel(cx, cy, p.label, false, 11);
+    });
+
+    etfs.forEach(p => {
+      const cx = mapX(p.x), cy = mapY(p.y);
+      dots += `<circle class="etf-point etf-point-${p.cat}" cx="${cx}" cy="${cy}" r="9"/>`;
+    });
+    benches.forEach(p => {
+      const cx = mapX(p.x), cy = mapY(p.y);
+      const cls = p.bench === "portfolio" ? "bench-portfolio" : (p.bench === "msci" ? "bench-msci" : "bench-sp");
+      const haloColor = p.bench === "portfolio" ? "#B8954A" : (p.bench === "msci" ? "#5A7A99" : "#0A1628");
+      dots += `<circle class="bench-halo" cx="${cx}" cy="${cy}" r="22" stroke="${haloColor}"/>`;
+      dots += `<circle class="${cls}" cx="${cx}" cy="${cy}" r="12"/>`;
+    });
+
+    const xTitleX = P.l + chartW / 2;
+    const xTitleY = H - 26;
+    const yTitleX = 34;
+    const yTitleY = P.t + chartH / 2;
+
+    return `
+      <svg class="scatter-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
+        ${grid}
+        <line class="axis" x1="${P.l}" y1="${P.t}" x2="${P.l}" y2="${H - P.b}"/>
+        <line class="axis" x1="${P.l}" y1="${H - P.b}" x2="${W - P.r}" y2="${H - P.b}"/>
+        <text class="axis-title" x="${xTitleX}" y="${xTitleY}" text-anchor="middle">${t.sxTitleX}</text>
+        <text class="axis-title" x="${yTitleX}" y="${yTitleY}" text-anchor="middle" transform="rotate(-90 ${yTitleX} ${yTitleY})">${t.sxTitleY}</text>
+        ${dots}
+        ${labels}
+      </svg>
+    `;
+  }
+
   // ═════════ MODAL ═════════
   const backdrop = document.getElementById("modalBackdrop");
   const closeBtn = document.getElementById("modalClose");
@@ -3183,6 +3492,7 @@
     renderTable();
     document.getElementById("backtestChart3Y").innerHTML = renderBacktestChart3Y();
     document.getElementById("backtestChart12M").innerHTML = renderBacktestChart12M();
+    document.getElementById("scatterTTM").innerHTML = renderScatterTTM();
     if (currentIdx !== null) renderModal();
     renderPolicy();
   }
