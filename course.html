@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JC Consulting &amp; Advisory — Education · Management Accounting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=Mulish:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* =====================================================================
+     LANDING PAGE — DARK THEME
+     ===================================================================== */
+  body { background: var(--navy); color: var(--offwhite); }
+
+  /* ── Hero ─────────────────────────────────────────────────────────── */
+  .hero {
+    min-height: 92vh;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 36px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .gold-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--gold);
+  }
+  /* Decorative geometric elements scattered in hero */
+  .hero-geo-1 {
+    position: absolute;
+    top: 90px; right: 56px;
+    width: 84px; height: 84px;
+    animation: fadeIn 1.4s ease 0.6s both;
+  }
+  .hero-geo-2 {
+    position: absolute;
+    bottom: 80px; right: 14%;
+    width: 36px; height: 36px;
+    opacity: 0.4;
+    animation: fadeIn 1.6s ease 1s both;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .hero-inner { position: relative; max-width: 1100px; }
+  .hero .eyebrow {
+    color: var(--gold);
+    margin-bottom: 36px;
+    animation: fadeUp .8s ease .1s both;
+  }
+  .hero h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(40px, 8vw, 78px);
+    font-weight: 200;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    margin-bottom: 28px;
+    animation: fadeUp .8s ease .25s both;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero .hero-divider {
+    width: 64px; height: 1px;
+    background: var(--gold);
+    margin: 28px 0 32px;
+    transform-origin: left;
+    animation: drawLine .8s ease .55s both;
+  }
+  .hero .hero-tagline {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(18px, 2.4vw, 24px);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    color: var(--offwhite);
+    max-width: 720px;
+    animation: fadeUp .8s ease .4s both;
+  }
+  .hero .hero-tagline em { color: var(--gold-pale); font-style: italic; }
+  .hero .hero-meta {
+    margin-top: 48px;
+    display: flex; gap: 36px; flex-wrap: wrap;
+    animation: fadeUp .8s ease .55s both;
+  }
+  .hero .hero-meta-item {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .hero .hero-meta-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero .hero-meta-value {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px; font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--offwhite);
+  }
+
+  .hero-scroll-cue {
+    position: absolute;
+    bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    opacity: 0.6;
+    animation: fadeIn 2s ease 1.2s both;
+  }
+  .hero-scroll-cue .cue-text {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .hero-scroll-cue .cue-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold) 0%, transparent 100%);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  /* ── Curriculum band ──────────────────────────────────────────────── */
+  .curriculum-intro {
+    background: var(--slate);
+    padding: 70px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .curriculum-intro .gold-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--gold);
+  }
+  .curriculum-intro .ci-inner { max-width: 900px; position: relative; }
+  .curriculum-intro .ci-eyebrow {
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .curriculum-intro h2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 200;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    color: var(--offwhite);
+    max-width: 800px;
+  }
+  .curriculum-intro h2 em { color: var(--gold); font-style: italic; }
+  .curriculum-intro p {
+    margin-top: 22px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 15px; font-weight: 300;
+    color: var(--steel);
+    line-height: 1.8;
+    max-width: 700px;
+  }
+
+  /* ── Topic cards grid ─────────────────────────────────────────────── */
+  .topics {
+    background: var(--navy);
+    padding: 80px 36px 100px;
+  }
+  .topics-head {
+    max-width: 1200px; margin: 0 auto 48px;
+  }
+  .topics-eyebrow {
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .topics-head h2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 200;
+    letter-spacing: 0.05em;
+    color: var(--offwhite);
+  }
+  .topics-head h2 em { font-style: italic; color: var(--gold); }
+  .topics-head p {
+    margin-top: 16px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px; font-weight: 300;
+    color: var(--steel);
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .topic-card {
+    position: relative;
+    background: var(--slate);
+    border: 0.5px solid var(--line-d);
+    border-radius: 8px;
+    padding: 32px 28px 28px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .35s cubic-bezier(.22,.68,0,1.2), border-color .35s, background .35s;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .topic-card::before {
+    content: ""; position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--gold);
+    transform: scaleY(0); transform-origin: top;
+    transition: transform .4s cubic-bezier(.22,.68,0,1.2);
+  }
+  .topic-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184,149,74,0.32);
+    background: var(--slate-2);
+  }
+  .topic-card:hover::before { transform: scaleY(1); }
+
+  .topic-card .tc-num {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .topic-card .tc-icon {
+    margin-bottom: 22px;
+  }
+  .topic-card .tc-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--offwhite);
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .topic-card .tc-title em { color: var(--gold-pale); font-style: italic; }
+  .topic-card .tc-sub {
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--steel);
+    line-height: 1.7;
+    flex-grow: 1;
+    margin-bottom: 22px;
+  }
+  .topic-card .tc-foot {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 0.5px solid var(--line-d);
+  }
+  .topic-card .tc-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .topic-card .tc-tag {
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .topic-card .tc-arrow {
+    width: 26px; height: 26px;
+    border: 0.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    font-size: 14px; line-height: 1;
+    transition: transform .25s, background .25s, color .25s;
+    flex-shrink: 0;
+  }
+  .topic-card:hover .tc-arrow {
+    transform: translate(2px, -2px);
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  /* ── Author / closing band ────────────────────────────────────────── */
+  .closing {
+    background: var(--slate);
+    padding: 72px 36px;
+    border-top: 0.5px solid var(--line-d);
+  }
+  .closing-inner {
+    max-width: 880px; margin: 0 auto;
+    text-align: center;
+  }
+  .closing .eyebrow { color: var(--gold); }
+  .closing blockquote {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(20px, 2.8vw, 28px);
+    font-weight: 200;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    color: var(--offwhite);
+    margin: 22px auto 26px;
+    max-width: 800px;
+  }
+  .closing blockquote em { color: var(--gold); font-style: italic; }
+  .closing .closing-attr {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .closing .closing-line {
+    width: 36px; height: 1px;
+    background: var(--gold);
+    margin: 22px auto;
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 80px 22px 60px; }
+    .hero-geo-1 { width: 56px; height: 56px; right: 22px; top: 76px; }
+    .topics, .closing { padding: 60px 22px 70px; }
+    .curriculum-intro { padding: 56px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───── NAVBAR ───── -->
+<nav class="nav dark">
+  <a href="course.html" class="nav-brand">
+    <svg class="nb-svg" width="32" height="32" viewBox="0 0 48 48" fill="none">
+      <rect x="3" y="3" width="42" height="42" rx="3" fill="#0D1B2A" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+      <line x1="13" y1="24" x2="35" y2="24" stroke="#B8954A" stroke-width="0.9"/>
+      <line x1="24" y1="13" x2="24" y2="35" stroke="#B8954A" stroke-width="0.9"/>
+      <rect x="18" y="18" width="12" height="12" rx="1" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+      <rect x="22" y="22" width="4" height="4" rx="0.5" fill="#B8954A"/>
+    </svg>
+    <span class="nb-divider"></span>
+    <span>
+      <div class="nb-text">JC Consulting <span class="amp">&amp;</span> Advisory</div>
+      <div class="nb-sub">Education</div>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="#topics" class="nav-link">Curriculum</a>
+    <a href="#closing" class="nav-link">About</a>
+  </div>
+</nav>
+
+<!-- ───── HERO ───── -->
+<section class="hero">
+  <div class="gold-bar"></div>
+
+  <!-- Decorative geometric mark -->
+  <div class="hero-geo-1" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 84 84">
+      <rect x="0.5" y="0.5" width="83" height="83" stroke="#B8954A" stroke-width="0.75" fill="none"/>
+      <rect x="14" y="14" width="56" height="56" stroke="rgba(184,149,74,0.45)" stroke-width="0.5" fill="none"/>
+      <line x1="22" y1="42" x2="62" y2="42" stroke="#B8954A" stroke-width="0.75"/>
+      <line x1="42" y1="22" x2="42" y2="62" stroke="#B8954A" stroke-width="0.75"/>
+      <circle cx="42" cy="42" r="4" fill="#B8954A"/>
+    </svg>
+  </div>
+  <div class="hero-geo-2" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 36 36">
+      <circle cx="18" cy="18" r="17.5" stroke="#B8954A" stroke-width="0.5" fill="none"/>
+      <circle cx="18" cy="18" r="3" fill="#B8954A"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <p class="eyebrow">Education · MBA Programme</p>
+    <h1>Management <em>Accounting</em>,<br>made teachable.</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">
+      A complete companion to the course — from <em>cost behaviour</em> to <em>variance analysis</em>,
+      <em>balanced scorecards</em>, and the integration of <em>ESG</em> into modern management control.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Modules</span>
+        <span class="hero-meta-value">Six topics</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Includes</span>
+        <span class="hero-meta-value">Calculators · Cases · Quizzes</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Format</span>
+        <span class="hero-meta-value">Self-paced · Visual</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-cue">
+    <span class="cue-text">Scroll</span>
+    <div class="cue-line"></div>
+  </div>
+</section>
+
+<!-- ───── CURRICULUM INTRO BAND ───── -->
+<section class="curriculum-intro reveal">
+  <div class="gold-bar"></div>
+  <div class="ci-inner">
+    <p class="ci-eyebrow eyebrow">Curriculum overview</p>
+    <h2>From the <em>cost of a unit</em> to the <em>strategy of a firm</em> —<br>and back again, with rigour.</h2>
+    <p>
+      This site reorganises the lecture material into six self-contained modules. Each module
+      opens with the underlying intuition, layers in the technical formulas, and then puts the
+      ideas to work through interactive calculators and short cases. Read in order, or jump to
+      whichever topic you need next.
+    </p>
+  </div>
+</section>
+
+<!-- ───── TOPIC CARDS ───── -->
+<section class="topics" id="topics">
+  <div class="topics-head reveal">
+    <p class="topics-eyebrow eyebrow">Six modules</p>
+    <h2>The <em>curriculum</em>.</h2>
+    <p>Every module follows the same arc: definitions, diagrams, a worked example, an interactive tool, and a short test. Pick where to start.</p>
+  </div>
+
+  <div class="topic-grid">
+
+    <!-- 01 — Introduction & Foundations -->
+    <a href="01-introduction.html" class="topic-card reveal">
+      <div class="tc-num">01 · Foundations</div>
+      <!-- Icon: open book / compass — open square with central pivot -->
+      <div class="tc-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="0.5" y="0.5" width="55" height="55" stroke="rgba(184,149,74,0.18)" stroke-width="0.5" rx="2"/>
+          <!-- Open book base -->
+          <path d="M12 36 L28 32 L44 36 L44 18 L28 14 L12 18 Z" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+          <line x1="28" y1="14" x2="28" y2="32" stroke="#B8954A" stroke-width="0.9"/>
+          <!-- Page lines -->
+          <line x1="17" y1="22" x2="25" y2="20" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <line x1="17" y1="26" x2="25" y2="24" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <line x1="31" y1="20" x2="39" y2="22" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <line x1="31" y1="24" x2="39" y2="26" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <!-- Pivot dot -->
+          <circle cx="28" cy="14" r="1.6" fill="#B8954A"/>
+        </svg>
+      </div>
+      <div class="tc-title">Introduction <em>&amp;</em><br>Foundations</div>
+      <div class="tc-sub">Managerial vs. financial accounting, the planning–controlling cycle, the performance pyramid, and the four responsibility centres.</div>
+      <div class="tc-foot">
+        <div class="tc-tags"><span class="tc-tag">Definitions</span><span class="tc-tag">Roles</span></div>
+        <div class="tc-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 02 — Cost & CVP -->
+    <a href="02-cost-cvp.html" class="topic-card reveal">
+      <div class="tc-num">02 · Cost behaviour</div>
+      <!-- Icon: CVP graph - axis with intersecting TR and TC lines -->
+      <div class="tc-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="0.5" y="0.5" width="55" height="55" stroke="rgba(184,149,74,0.18)" stroke-width="0.5" rx="2"/>
+          <!-- axes -->
+          <line x1="12" y1="44" x2="46" y2="44" stroke="#B8954A" stroke-width="0.9"/>
+          <line x1="12" y1="44" x2="12" y2="12" stroke="#B8954A" stroke-width="0.9"/>
+          <!-- Fixed cost horizontal -->
+          <line x1="12" y1="34" x2="46" y2="34" stroke="rgba(184,149,74,0.55)" stroke-width="0.7" stroke-dasharray="2 2"/>
+          <!-- Total cost line (FC + VC) -->
+          <line x1="12" y1="34" x2="46" y2="20" stroke="#B8954A" stroke-width="1"/>
+          <!-- Total revenue line -->
+          <line x1="12" y1="44" x2="46" y2="14" stroke="#E5D4A8" stroke-width="1"/>
+          <!-- BEP marker -->
+          <circle cx="29" cy="27" r="2.4" fill="#B8954A"/>
+          <circle cx="29" cy="27" r="4" stroke="#B8954A" stroke-width="0.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="tc-title">Cost &amp; <em>CVP</em><br>Analysis</div>
+      <div class="tc-sub">Fixed vs. variable costs, the contribution margin, break-even point, target income, and operating leverage — with a live calculator.</div>
+      <div class="tc-foot">
+        <div class="tc-tags"><span class="tc-tag">CVP</span><span class="tc-tag">BEP</span><span class="tc-tag">Calculator</span></div>
+        <div class="tc-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 03 — Management Control Framework -->
+    <a href="03-framework.html" class="topic-card reveal">
+      <div class="tc-num">03 · Strategy → measure</div>
+      <!-- Icon: target with concentric rings + crosshair -->
+      <div class="tc-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="0.5" y="0.5" width="55" height="55" stroke="rgba(184,149,74,0.18)" stroke-width="0.5" rx="2"/>
+          <circle cx="28" cy="28" r="16" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+          <circle cx="28" cy="28" r="10" stroke="rgba(184,149,74,0.65)" stroke-width="0.8" fill="none"/>
+          <circle cx="28" cy="28" r="4" stroke="#B8954A" stroke-width="0.9" fill="none"/>
+          <circle cx="28" cy="28" r="1.4" fill="#B8954A"/>
+          <!-- Crosshair -->
+          <line x1="28" y1="8" x2="28" y2="16" stroke="#B8954A" stroke-width="0.7"/>
+          <line x1="28" y1="40" x2="28" y2="48" stroke="#B8954A" stroke-width="0.7"/>
+          <line x1="8" y1="28" x2="16" y2="28" stroke="#B8954A" stroke-width="0.7"/>
+          <line x1="40" y1="28" x2="48" y2="28" stroke="#B8954A" stroke-width="0.7"/>
+        </svg>
+      </div>
+      <div class="tc-title">Management <em>Control</em><br>Framework</div>
+      <div class="tc-sub">Translating strategy into measurement: SMART objectives, the Balanced Scorecard, the OVAR / O-CPV grid, dashboards, and KPIs.</div>
+      <div class="tc-foot">
+        <div class="tc-tags"><span class="tc-tag">Strategy</span><span class="tc-tag">BSC</span><span class="tc-tag">KPIs</span></div>
+        <div class="tc-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 04 — Planning & Budgeting -->
+    <a href="04-budgeting.html" class="topic-card reveal">
+      <div class="tc-num">04 · Plan &amp; allocate</div>
+      <!-- Icon: stacked rows / calendar grid with marker -->
+      <div class="tc-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="0.5" y="0.5" width="55" height="55" stroke="rgba(184,149,74,0.18)" stroke-width="0.5" rx="2"/>
+          <!-- Calendar / budget grid -->
+          <rect x="11" y="14" width="34" height="28" stroke="#B8954A" stroke-width="0.9" fill="none" rx="1"/>
+          <line x1="11" y1="22" x2="45" y2="22" stroke="#B8954A" stroke-width="0.7"/>
+          <line x1="22.3" y1="22" x2="22.3" y2="42" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <line x1="33.7" y1="22" x2="33.7" y2="42" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <line x1="11" y1="32" x2="45" y2="32" stroke="rgba(184,149,74,0.55)" stroke-width="0.6"/>
+          <!-- Cell highlight (current period) -->
+          <rect x="22.7" y="22.4" width="10.6" height="9.2" fill="#B8954A" opacity="0.18"/>
+          <rect x="22.7" y="22.4" width="10.6" height="9.2" stroke="#B8954A" stroke-width="0.6" fill="none"/>
+          <circle cx="28" cy="27" r="1.4" fill="#B8954A"/>
+        </svg>
+      </div>
+      <div class="tc-title">Planning &amp;<br><em>Budgeting</em></div>
+      <div class="tc-sub">The six roles a budget must play, and the seven different control approaches — fixed, flexible, incremental, ZBB, rolling, responsibility, ABB.</div>
+      <div class="tc-foot">
+        <div class="tc-tags"><span class="tc-tag">6 Roles</span><span class="tc-tag">7 Types</span></div>
+        <div class="tc-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 05 — Variance Analysis -->
+    <a href="05-variance.html" class="topic-card reveal">
+      <div class="tc-num">05 · Plan vs. actual</div>
+      <!-- Icon: bar chart with delta arrows -->
+      <div class="tc-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="0.5" y="0.5" width="55" height="55" stroke="rgba(184,149,74,0.18)" stroke-width="0.5" rx="2"/>
+          <!-- Baseline -->
+          <line x1="10" y1="44" x2="46" y2="44" stroke="#B8954A" stroke-width="0.9"/>
+          <!-- Bars: planned vs actual -->
+          <rect x="14" y="26" width="6" height="18" stroke="#B8954A" stroke-width="0.7" fill="none"/>
+          <rect x="22" y="22" width="6" height="22" fill="#B8954A" opacity="0.35"/>
+          <rect x="22" y="22" width="6" height="22" stroke="#B8954A" stroke-width="0.7" fill="none"/>
+          <rect x="30" y="30" width="6" height="14" stroke="#B8954A" stroke-width="0.7" fill="none"/>
+          <rect x="38" y="18" width="6" height="26" fill="#B8954A" opacity="0.35"/>
+          <rect x="38" y="18" width="6" height="26" stroke="#B8954A" stroke-width="0.7" fill="none"/>
+          <!-- Delta arrow up -->
+          <line x1="41" y1="14" x2="41" y2="9" stroke="#B8954A" stroke-width="0.8"/>
+          <polygon points="39,11 41,8 43,11" fill="#B8954A"/>
+        </svg>
+      </div>
+      <div class="tc-title">Variance <em>Analysis</em></div>
+      <div class="tc-sub">The VMYP method — splitting overall variance into Volume, Mix, Yield and Price effects via flexible budgets, plus the role of AI in modern control.</div>
+      <div class="tc-foot">
+        <div class="tc-tags"><span class="tc-tag">VMYP</span><span class="tc-tag">Calculator</span></div>
+        <div class="tc-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 06 — ESG -->
+    <a href="06-esg.html" class="topic-card reveal">
+      <div class="tc-num">06 · Beyond financials</div>
+      <!-- Icon: 3 connected nodes (E, S, G) around a central pivot -->
+      <div class="tc-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="0.5" y="0.5" width="55" height="55" stroke="rgba(184,149,74,0.18)" stroke-width="0.5" rx="2"/>
+          <!-- Outer triangle of connections -->
+          <line x1="28" y1="13" x2="14" y2="38" stroke="rgba(184,149,74,0.55)" stroke-width="0.7"/>
+          <line x1="28" y1="13" x2="42" y2="38" stroke="rgba(184,149,74,0.55)" stroke-width="0.7"/>
+          <line x1="14" y1="38" x2="42" y2="38" stroke="rgba(184,149,74,0.55)" stroke-width="0.7"/>
+          <!-- Center -->
+          <line x1="28" y1="13" x2="28" y2="30" stroke="#B8954A" stroke-width="0.7"/>
+          <line x1="14" y1="38" x2="28" y2="30" stroke="#B8954A" stroke-width="0.7"/>
+          <line x1="42" y1="38" x2="28" y2="30" stroke="#B8954A" stroke-width="0.7"/>
+          <!-- Nodes -->
+          <circle cx="28" cy="13" r="3.2" fill="#0D1B2A" stroke="#B8954A" stroke-width="0.9"/>
+          <text x="28" y="15.6" text-anchor="middle" font-family="Raleway" font-size="5" fill="#B8954A" font-weight="600">E</text>
+          <circle cx="14" cy="38" r="3.2" fill="#0D1B2A" stroke="#B8954A" stroke-width="0.9"/>
+          <text x="14" y="40.6" text-anchor="middle" font-family="Raleway" font-size="5" fill="#B8954A" font-weight="600">S</text>
+          <circle cx="42" cy="38" r="3.2" fill="#0D1B2A" stroke="#B8954A" stroke-width="0.9"/>
+          <text x="42" y="40.6" text-anchor="middle" font-family="Raleway" font-size="5" fill="#B8954A" font-weight="600">G</text>
+          <!-- Center pivot -->
+          <circle cx="28" cy="30" r="1.6" fill="#B8954A"/>
+        </svg>
+      </div>
+      <div class="tc-title"><em>ESG</em> in<br>Management Control</div>
+      <div class="tc-sub">Why ESG belongs in the control system, how it differs from sustainability, what makes a good ESG KPI, and how to build one in six steps.</div>
+      <div class="tc-foot">
+        <div class="tc-tags"><span class="tc-tag">E · S · G</span><span class="tc-tag">KPIs</span></div>
+        <div class="tc-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ───── CLOSING / AUTHOR ───── -->
+<section class="closing reveal" id="closing">
+  <div class="closing-inner">
+    <p class="eyebrow">A note from the author</p>
+    <div class="closing-line"></div>
+    <blockquote>
+      &ldquo;You cannot manage what you do not <em>fully measure</em> — but financials only tell you
+      what happened. Management control is what turns those numbers into <em>better decisions</em>.&rdquo;
+    </blockquote>
+    <p class="closing-attr">JC Consulting <span class="amp">&amp;</span> Advisory · Education</p>
+  </div>
+</section>
+
+<!-- ───── FOOTER ───── -->
+<footer class="footer">
+  <div class="footer-name">JC Consulting <span class="amp">&amp;</span> Advisory</div>
+  <div class="footer-tag">Innovation, taken further.</div>
+  <div class="footer-divider"></div>
+  <div class="footer-meta">Education · Management Accounting · MBA companion</div>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>
