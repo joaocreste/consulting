@@ -18,10 +18,14 @@ index.html                    Public marketing landing (the front door)
   │     ├──► 
   │     └──► 
   │
-  └──►           — single-page course
+  ├──►           — single-page course
+  │     │
+  │     ├──► course/         (Absolut UK MMM deep-dive)
+  │     └──► course/    (D-STAR store clustering report)
+  │
+  └──►       — single-page course
         │
-        ├──► course/         (Absolut UK MMM deep-dive)
-        └──► course/    (D-STAR store clustering report)
+        └──► course/          ( deep-dive)
 
                     Style system used by  + all modules
                      Reveal animations, quizzes, fmt helpers
@@ -31,8 +35,8 @@ index.html                    Public marketing landing (the front door)
 styles and SVG marks and do not depend on `` / ``. The
  course system (`` and its six
 modules) shares the common styles and scripts. The Marketing &amp; Business
-Analytics course is a single self-contained page (with two companion deep-dive
-artefacts under ``).
+Analytics and  courses are single self-contained pages
+(each with one or more companion deep-dive artefacts under ``).
 
 ## Navigation map
 
