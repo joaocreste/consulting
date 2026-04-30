@@ -23,10 +23,11 @@ index.html                    Public marketing landing (the front door)
   │     ├──► course/         (Absolut UK MMM deep-dive)
   │     └──► course/    (D-STAR store clustering report)
   │
-  └──►       — single-page course
+  └──►       — three-pillar course
+        │                                  (Internal · External Corporate · External Brand)
         │
-        ├──► course/        ( deep-dive — foundational, Topic I)
-        └──► course/          ( deep-dive — Topic IV)
+        ├──► course/        ( deep-dive — foundational, all 3 pillars)
+        └──► course/          ( deep-dive — Pillar II case study)
 
                     Style system used by  + all modules
                      Reveal animations, quizzes, fmt helpers
