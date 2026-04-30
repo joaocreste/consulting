@@ -25,7 +25,8 @@ index.html                    Public marketing landing (the front door)
   │
   └──►       — single-page course
         │
-        └──► course/          ( deep-dive)
+        ├──► course/        ( deep-dive — foundational, Topic I)
+        └──► course/          ( deep-dive — Topic IV)
 
                     Style system used by  + all modules
                      Reveal animations, quizzes, fmt helpers
