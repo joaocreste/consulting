@@ -7,43 +7,54 @@ Netlify, GitHub Pages, S3 + CloudFront, plain Apache/Nginx) and serve the root.
 
 ```
 index.html                    Public marketing landing (the front door)
+                Education branch landing (course catalogue)
   │
-  └──► course.html             — course homepage
+  ├──►         — course homepage
+  │     │
+  │     ├──► 
+  │     ├──► 
+  │     ├──► 
+  │     ├──► 
+  │     ├──► 
+  │     └──► 
+  │
+  └──►           — single-page course
         │
-        ├──► 01-introduction.html
-        ├──► 02-cost-cvp.html
-        ├──► 03-framework.html
-        ├──► 04-budgeting.html
-        ├──► 05-variance.html
-        └──► 06-esg.html
+        ├──► course/         (Absolut UK MMM deep-dive)
+        └──► course/    (D-STAR store clustering report)
 
-                    Style system used by course.html + all modules
+                    Style system used by  + all modules
                      Reveal animations, quizzes, fmt helpers
 ```
 
-`index.html` is fully self-contained — it inlines its own styles and SVG marks
-and does not depend on `` / ``. The course system
-(`course.html` and the six modules) shares the styles and scripts.
+`index.html` and `` are fully self-contained — they inline their own
+styles and SVG marks and do not depend on `` / ``. The
+ course system (`` and its six
+modules) shares the common styles and scripts. The Marketing &amp; Business
+Analytics course is a single self-contained page (with two companion deep-dive
+artefacts under ``).
 
 ## Navigation map
 
-| From                     | Where the user goes                                  |
-| ------------------------ | ---------------------------------------------------- |
-| `index.html` · *Access*  | `course.html`                                        |
-| `course.html` · topic    | `0X-…html` (the corresponding module)                |
-| any module · *All modules* / brand mark | `course.html`                         |
-| any module · *Up next*   | next module in sequence (06 returns to `course.html`)|
+| From                                    | Where the user goes                                              |
+| --------------------------------------- | ---------------------------------------------------------------- |
+| `index.html` · *Access*                 | ``                                      |
+| `` · topic     | `…html` (the corresponding module)               |
+| any module · *All modules* / brand mark | ``                                      |
+| any module · *Up next*                  | next module in sequence (06 returns to ``) |
 
 ## Adding new courses later
 
 When the next course (Corporate Finance, Strategy, …) ships:
 
-1. Author it in the same module pattern (own homepage + module pages, sharing
-   the same `` / ``).
-2. Place it under a sibling slug — e.g. `corporate-finance.html` plus
-   `cf-01-…html`, `cf-02-…html`.
-3. Replace the "Coming soon" placeholders in `index.html` with real course cards
-   pointing to the new homepage, mirroring the `` card.
+1. Author it in the same pattern — either a multi-module structure
+   (`` + `` lessons, sharing
+   `` / ``), or a single self-contained page like
+   `` if the course doesn't need separate lessons.
+2. Place it under a sibling slug under ``.
+3. Replace one of the "Coming soon" placeholders in `` with a
+   real course card pointing to the new homepage, mirroring either the
+   `` or `` card.
 
 ## Local preview
 
