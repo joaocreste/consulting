@@ -7,43 +7,54 @@ Netlify, GitHub Pages, S3 + CloudFront, plain Apache/Nginx) and serve the root.
 
 ```
 index.html                    Public marketing landing (the front door)
+education.html                Education branch landing (course catalogue)
   │
-  └──► course.html            Management Accounting — course homepage
+  ├──► managerialaccounting.html       Management Accounting — course homepage
+  │     │
+  │     ├──► managerialacc01-introduction.html
+  │     ├──► managerialacc02-cost-cvp.html
+  │     ├──► managerialacc03-framework.html
+  │     ├──► managerialacc04-budgeting.html
+  │     ├──► managerialacc05-variance.html
+  │     └──► managerialacc06-esg.html
+  │
+  └──► marketinganalytics.html         Marketing & Business Analytics — single-page course
         │
-        ├──► 01-introduction.html
-        ├──► 02-cost-cvp.html
-        ├──► 03-framework.html
-        ├──► 04-budgeting.html
-        ├──► 05-variance.html
-        └──► 06-esg.html
+        ├──► course/marketinganalytics-absolut-mmm.html         (Absolut UK MMM deep-dive)
+        └──► course/marketinganalytics-dstar-clustering.html    (D-STAR store clustering report)
 
-shared.css                    Style system used by course.html + all modules
+shared.css                    Style system used by managerialaccounting.html + all modules
 shared.js                     Reveal animations, quizzes, fmt helpers
 ```
 
-`index.html` is fully self-contained — it inlines its own styles and SVG marks
-and does not depend on `shared.css` / `shared.js`. The course system
-(`course.html` and the six modules) shares the styles and scripts.
+`index.html` and `education.html` are fully self-contained — they inline their own
+styles and SVG marks and do not depend on `shared.css` / `shared.js`. The
+Management Accounting course system (`managerialaccounting.html` and its six
+modules) shares the common styles and scripts. The Marketing &amp; Business
+Analytics course is a single self-contained page (with two companion deep-dive
+artefacts under `education/course/`).
 
 ## Navigation map
 
-| From                     | Where the user goes                                  |
-| ------------------------ | ---------------------------------------------------- |
-| `index.html` · *Access*  | `course.html`                                        |
-| `course.html` · topic    | `0X-…html` (the corresponding module)                |
-| any module · *All modules* / brand mark | `course.html`                         |
-| any module · *Up next*   | next module in sequence (06 returns to `course.html`)|
+| From                                    | Where the user goes                                              |
+| --------------------------------------- | ---------------------------------------------------------------- |
+| `index.html` · *Access*                 | `managerialaccounting.html`                                      |
+| `managerialaccounting.html` · topic     | `managerialacc0X-…html` (the corresponding module)               |
+| any module · *All modules* / brand mark | `managerialaccounting.html`                                      |
+| any module · *Up next*                  | next module in sequence (06 returns to `managerialaccounting.html`) |
 
 ## Adding new courses later
 
 When the next course (Corporate Finance, Strategy, …) ships:
 
-1. Author it in the same module pattern (own homepage + module pages, sharing
-   the same `shared.css` / `shared.js`).
-2. Place it under a sibling slug — e.g. `corporate-finance.html` plus
-   `cf-01-…html`, `cf-02-…html`.
-3. Replace the "Coming soon" placeholders in `index.html` with real course cards
-   pointing to the new homepage, mirroring the `Management Accounting` card.
+1. Author it in the same pattern — either a multi-module structure
+   (`coursename.html` + `course/coursename-NN-slug.html` lessons, sharing
+   `shared.css` / `shared.js`), or a single self-contained page like
+   `marketinganalytics.html` if the course doesn't need separate lessons.
+2. Place it under a sibling slug under `education/`.
+3. Replace one of the "Coming soon" placeholders in `education.html` with a
+   real course card pointing to the new homepage, mirroring either the
+   `Management Accounting` or `Marketing & Business Analytics` card.
 
 ## Local preview
 

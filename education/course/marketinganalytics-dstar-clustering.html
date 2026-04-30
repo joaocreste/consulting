@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSTAR Store Clustering · Pernod Ricard UK · JC Consulting & Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* ═══════════════════════════════════════════════
+     JC GROUP — DESIGN TOKENS
+     ═══════════════════════════════════════════════ */
+  :root {
+    --obsidian: #0A1420;
+    --navy:     #0D1B2A;
+    --slate:    #1E2D3D;
+    --gold:     #B8954A;
+    --gold-glow:#D4AF5F;
+    --gold-pale:#E5D4A8;
+    --steel:    #7A8FA6;
+    --parchment:#F9F7F4;
+    --ivory:    #F0EDE6;
+    --consulting:#B8954A;
+    --investing: #4A8FB8;
+    --ops:       #6BAA7E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--obsidian);
+    color: var(--ivory);
+    font-family: 'Mulish', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Hexagonal background motif */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184,149,74,0.04), transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(74,143,184,0.03), transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+  section { position: relative; z-index: 1; }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 48px;
+  }
+  @media (max-width: 720px) { .container { padding: 64px 24px; } }
+
+  /* ─── Section backgrounds ─── */
+  .s-obsidian { background: var(--obsidian); }
+  .s-navy { background: var(--navy); }
+  .s-slate { background: var(--slate); }
+
+  /* ─── Gold rule (between sections) ─── */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+    opacity: 0.4;
+  }
+
+  /* ─── Section headers ─── */
+  .s-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+  .s-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ivory);
+    margin-bottom: 24px;
+  }
+  .s-title .gold {
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 400;
+  }
+  @media (max-width: 720px) { .s-title { font-size: 38px; } }
+  .gold-accent {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    margin: 24px 0 32px;
+  }
+  .s-lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ivory);
+    opacity: 0.85;
+    line-height: 1.55;
+    max-width: 760px;
+    margin-bottom: 16px;
+  }
+  .s-lede strong { color: var(--gold); font-weight: 500; font-style: normal; }
+  .s-lede em { color: var(--gold-pale); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 92vh;
+    background: radial-gradient(ellipse at 30% 20%, var(--slate) 0%, var(--navy) 50%, var(--obsidian) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-mast {
+    display: flex; align-items: center; gap: 16px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 96px;
+    max-width: 1200px;
+    margin-left: auto; margin-right: auto;
+    width: 100%;
+  }
+  .hero-mast-mark {
+    width: 28px; height: 28px;
+    border: 1px solid var(--gold);
+    transform: rotate(45deg);
+    position: relative;
+  }
+  .hero-mast-mark::after {
+    content: ''; position: absolute; inset: 5px;
+    background: var(--gold); opacity: 0.5;
+  }
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ivory);
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+  .hero-title .accent {
+    color: var(--gold);
+    font-style: italic;
+  }
+  @media (max-width: 720px) { .hero-title { font-size: 56px; } }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-style: italic;
+    color: var(--gold-pale);
+    margin-bottom: 56px;
+    max-width: 720px;
+    line-height: 1.45;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap;
+    gap: 64px;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 0.5px solid rgba(184,149,74,0.2);
+  }
+  .hero-meta-item .meta-label {
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px; letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 8px;
+  }
+  .hero-meta-item .meta-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ivory);
+  }
+  .hero-meta-item .meta-value .gold { color: var(--gold); }
+
+  /* ─── KPI strip ─── */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(184,149,74,0.15);
+    border: 0.5px solid rgba(184,149,74,0.15);
+    margin-top: 56px;
+  }
+  .kpi {
+    background: var(--navy);
+    padding: 36px 32px;
+  }
+  .kpi-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 12px;
+  }
+  .kpi-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--ivory);
+    line-height: 1;
+  }
+  .kpi-value .unit {
+    font-size: 18px;
+    color: var(--gold);
+    margin-left: 4px;
+    font-style: italic;
+  }
+  @media (max-width: 720px) {
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .kpi-value { font-size: 36px; }
+  }
+
+  /* ─── Findings cards ─── */
+  .findings {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  @media (max-width: 720px) { .findings { grid-template-columns: 1fr; } }
+  .finding-card {
+    background: linear-gradient(160deg, var(--slate), var(--navy));
+    border: 0.5px solid rgba(184,149,74,0.18);
+    padding: 36px 32px;
+    border-radius: 4px;
+    position: relative;
+  }
+  .finding-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--gold), transparent 80%);
+  }
+  .finding-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+  .finding-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--ivory);
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+  .finding-body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+    color: var(--ivory);
+    opacity: 0.78;
+    line-height: 1.7;
+  }
+  .finding-body strong { color: var(--gold-pale); font-weight: 600; }
+
+  /* ─── Chart card ─── */
+  .chart-card {
+    background: linear-gradient(145deg, var(--navy), var(--slate));
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-radius: 6px;
+    padding: 32px;
+  }
+  .chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 0.5px solid rgba(184,149,74,0.12);
+  }
+  .chart-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ivory);
+  }
+  .chart-meta {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .chart-wrap { position: relative; height: 480px; }
+  .chart-wrap.tall { height: 540px; }
+  .chart-wrap.short { height: 220px; }
+  .mt-16 { margin-top: 16px; } .mt-24 { margin-top: 24px; }
+  .mt-32 { margin-top: 32px; } .mt-48 { margin-top: 48px; }
+
+  /* ─── Cluster legend ─── */
+  .cluster-legend {
+    display: flex; flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .cl-leg {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    color: var(--steel);
+  }
+  .cl-leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ─── Cluster cards grid ─── */
+  .cluster-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  @media (max-width: 720px) { .cluster-grid { grid-template-columns: 1fr; } }
+  .cluster-card {
+    background: linear-gradient(160deg, var(--slate), var(--navy));
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-top: 2px solid var(--c, var(--gold));
+    padding: 32px;
+    border-radius: 4px;
+  }
+  .cluster-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .cluster-id {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 8px;
+  }
+  .cluster-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--ivory);
+    line-height: 1.1;
+  }
+  .cluster-swatch {
+    width: 32px; height: 32px;
+    background: var(--c, var(--gold));
+    opacity: 0.7;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .cluster-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+    padding: 20px 0;
+    border-top: 0.5px solid rgba(184,149,74,0.10);
+    border-bottom: 0.5px solid rgba(184,149,74,0.10);
+  }
+  .cluster-stats > div {
+    display: flex; flex-direction: column;
+    gap: 4px;
+  }
+  .cs-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .cs-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--ivory);
+  }
+  .cluster-section {
+    margin-top: 18px;
+  }
+  .cluster-sublabel {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    opacity: 0.85;
+  }
+  .chan-chip-row {
+    display: flex; flex-wrap: wrap;
+    gap: 6px;
+  }
+  .chan-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    color: var(--ivory);
+    background: rgba(10,20,32,0.4);
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 0.5px solid rgba(184,149,74,0.15);
+  }
+  .chan-chip em {
+    color: var(--steel); font-style: normal; font-weight: 600;
+  }
+  .chan-dot {
+    width: 6px; height: 6px;
+    background: var(--c, var(--gold));
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .cluster-members {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-pale);
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+    word-break: break-all;
+  }
+
+  /* ─── Heatmap ─── */
+  .heatmap-wrap { overflow-x: auto; margin-top: 32px; }
+  table.heatmap {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+  }
+  table.heatmap th, table.heatmap td {
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .hm-col-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--steel);
+    font-weight: 400;
+    border-bottom: 1px solid rgba(184,149,74,0.20);
+    padding-bottom: 14px;
+    line-height: 1.3;
+    max-width: 90px;
+  }
+  .hm-row-label {
+    text-align: left;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    color: var(--ivory);
+    font-weight: 500;
+    padding-right: 16px;
+    white-space: nowrap;
+  }
+  .hm-row-label .hm-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 8px;
+    vertical-align: middle;
+  }
+  .hm-cell {
+    color: var(--ivory);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid var(--obsidian);
+    min-width: 70px;
+  }
+
+  /* ─── PR Score weights ─── */
+  .weights-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 32px;
+  }
+  @media (max-width: 720px) { .weights-grid { grid-template-columns: repeat(2, 1fr); } }
+  .weight-tile {
+    background: rgba(10,20,32,0.5);
+    border-top: 2px solid var(--c, var(--gold));
+    padding: 20px 18px;
+    border-radius: 2px;
+  }
+  .w-pct {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    color: var(--ivory);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .w-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 12px 0 6px;
+  }
+  .w-desc {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    color: var(--steel);
+    line-height: 1.6;
+  }
+
+  /* ─── Top 10 Table ─── */
+  .top10-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+    margin-top: 32px;
+  }
+  .top10-table thead th {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--steel);
+    font-weight: 400;
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(184,149,74,0.25);
+  }
+  .top10-table thead th.num { text-align: right; }
+  .top10-table tbody td {
+    padding: 18px 12px;
+    color: var(--ivory);
+    border-bottom: 0.5px solid rgba(184,149,74,0.08);
+    vertical-align: middle;
+  }
+  .top10-table tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .top10-table tbody tr:last-child td { border-bottom: none; }
+  .top10-table tbody tr:hover { background: rgba(184,149,74,0.04); }
+  .rank {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold);
+    font-style: italic;
+    width: 50px;
+  }
+  .store-id {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold-pale);
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    width: 60px;
+  }
+  .ch-pill {
+    display: inline-block;
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: rgba(10,20,32,0.5);
+    color: var(--ivory);
+    border: 0.5px solid var(--c, var(--gold));
+    box-shadow: inset 0 0 0 0px var(--c);
+    letter-spacing: 0.06em;
+  }
+  .cl-tag {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c, var(--gold));
+    font-weight: 500;
+  }
+  .score-cell { min-width: 220px; }
+
+  /* ─── Sellin/Sellout ratio cell (top 10 table) ─── */
+  .ratio-cell {
+    display: inline-flex; align-items: center; gap: 8px;
+    justify-content: flex-end;
+  }
+  .ratio-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .ratio-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--ivory);
+  }
+  .ratio-val .ratio-x {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    color: var(--steel);
+    margin-left: 1px;
+  }
+
+  /* ─── Health band tiles ─── */
+  .health-bands {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 720px) { .health-bands { grid-template-columns: repeat(2, 1fr); } }
+  .band-tile {
+    background: rgba(10,20,32,0.5);
+    border-left: 3px solid var(--c, var(--gold));
+    padding: 20px 22px;
+    border-radius: 2px;
+  }
+  .band-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c, var(--gold));
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .band-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--ivory);
+    margin-bottom: 4px;
+  }
+  .band-count {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    color: var(--steel);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── Ratio table (all 40 stores) ─── */
+  .ratio-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+  }
+  .ratio-table thead th {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--steel);
+    font-weight: 400;
+    text-align: left;
+    padding: 12px 12px;
+    border-bottom: 1px solid rgba(184,149,74,0.20);
+  }
+  .ratio-table thead th.num { text-align: right; }
+  .ratio-table thead th.bar-col { width: 34%; }
+  .ratio-table tbody td {
+    padding: 10px 12px;
+    color: var(--ivory);
+    border-bottom: 0.5px solid rgba(184,149,74,0.06);
+    vertical-align: middle;
+  }
+  .ratio-table tbody td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-pale);
+  }
+  .ratio-table tbody tr:hover { background: rgba(184,149,74,0.04); }
+  .ratio-table tbody tr:last-child td { border-bottom: none; }
+  .ratio-table .store-id {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold-pale);
+    letter-spacing: 0.08em;
+    font-size: 11px;
+    width: auto;
+  }
+  .ratio-table .ratio-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ivory);
+  }
+  .ratio-table .health-tag {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c, var(--gold));
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  /* Deviation bar — neutral (1.0) at the centre */
+  .dev-bar {
+    position: relative;
+    height: 10px;
+    background: rgba(184,149,74,0.04);
+    border-radius: 1px;
+  }
+  .dev-bar::before {
+    content: ''; position: absolute;
+    left: 50%; top: -2px; bottom: -2px;
+    width: 1px; background: rgba(184,149,74,0.3);
+  }
+  .dev-bar .dev-fill {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: var(--c, var(--gold));
+    opacity: 0.65;
+    border-radius: 1px;
+  }
+  .dev-bar .dev-marker {
+    position: absolute;
+    top: -3px; bottom: -3px;
+    width: 2px;
+    background: var(--c, var(--gold));
+  }
+  .score-bar {
+    display: flex;
+    height: 8px;
+    background: rgba(184,149,74,0.05);
+    border-radius: 1px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .score-bar .seg { height: 100%; }
+  .score-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold-glow);
+    font-weight: 500;
+  }
+
+  /* Reasoning blocks */
+  .reasoning-block {
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: rgba(10,20,32,0.4);
+    border-left: 2px solid var(--c, var(--gold));
+    border-radius: 2px;
+  }
+  .reasoning-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .reasoning-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--ivory);
+  }
+  .reasoning-tag {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--c, var(--gold));
+    background: rgba(0,0,0,0.3);
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 0.5px solid var(--c);
+  }
+  .reasoning-stores {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold-pale);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    margin: 8px 0 12px;
+  }
+  .reasoning-body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+    color: var(--ivory);
+    opacity: 0.82;
+    line-height: 1.7;
+  }
+
+  /* Method steps */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  @media (max-width: 720px) { .method-grid { grid-template-columns: 1fr; } }
+  .method-step {
+    background: rgba(10,20,32,0.4);
+    padding: 24px;
+    border-left: 1px solid var(--gold);
+  }
+  .method-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.16em;
+    margin-bottom: 8px;
+  }
+  .method-step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--ivory);
+    margin-bottom: 8px;
+  }
+  .method-step-body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+    color: var(--steel);
+    line-height: 1.7;
+  }
+  .method-step-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-pale);
+    background: rgba(184,149,74,0.08);
+    padding: 1px 6px;
+    border-radius: 2px;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--obsidian);
+    padding: 64px 48px 32px;
+    border-top: 0.5px solid rgba(184,149,74,0.15);
+  }
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .footer-left {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ivory);
+  }
+  .footer-left .accent { color: var(--gold); font-style: normal; }
+  .footer-right {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--steel);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-mast">
+    <div class="hero-mast-mark"></div>
+    <span>JC Consulting &amp; Advisory</span>
+    <span style="opacity:0.4">·</span>
+    <span style="color:var(--gold-pale)">DSTAR Diagnostic</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Store Segmentation &amp; Priority Ranking</div>
+    <h1 class="hero-title">DSTAR. <span class="accent">Forty stores.</span><br>Four signatures.</h1>
+    <p class="hero-sub">
+      A clustering view of the UK store estate, scored against the four
+      DSTAR pillars — Distribution, Sell-through, Activation, Reach.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="meta-label">Stores Analysed</span>
+        <span class="meta-value">40</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Clusters</span>
+        <span class="meta-value">4</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Priority Tier</span>
+        <span class="meta-value">Top <span class="gold">10</span></span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Top-10 Revenue Share</span>
+        <span class="meta-value">49<span style="color:var(--gold)">%</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     01 · SYNOPSIS
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">01 · Synopsis</div>
+    <h2 class="s-title">Sixty percent of revenue, <span class="gold">a quarter of the doors.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      K-means on the full DSTAR feature set surfaces four natural store archetypes.
+      The top decile by composite score concentrates in <strong>premium on-trade</strong>
+      — six bars, hotels and restaurants accounting for <strong>49%</strong>
+      of monthly sellout across the estate.
+    </p>
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-label">Stores</div><div class="kpi-value">40</div></div>
+      <div class="kpi"><div class="kpi-label">Clusters</div><div class="kpi-value">4</div></div>
+      <div class="kpi"><div class="kpi-label">Variables Used</div><div class="kpi-value">10<span class="unit">+ channel</span></div></div>
+      <div class="kpi"><div class="kpi-label">Top-10 Revenue</div><div class="kpi-value">£12.5<span class="unit">k/mo</span></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     02 · FINDINGS
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">02 · Findings</div>
+    <h2 class="s-title">Four archetypes. <span class="gold">One priority list.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The estate splits cleanly along two axes: commercial throughput
+      (PC1, 44% of variance) and distribution depth (PC2, 14%). What follows
+      maps every store, names each cluster, and ranks the ten that earn
+      premium rep attention.
+    </p>
+    <div class="findings">
+      <div class="finding-card">
+        <div class="finding-num">F · 01</div>
+        <div class="finding-title">Premium on-trade is a small, high-leverage tier.</div>
+        <div class="finding-body">
+          Six stores form Cluster 1 — bars, hotel bars and restaurants with sellout values
+          <strong>2 standard deviations above the mean</strong>. Five of the six earn a
+          top-10 ranking on composite score. Concentrated rep attention here protects
+          the bulk of revenue.
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">F · 02</div>
+        <div class="finding-title">Distribution depth lives elsewhere.</div>
+        <div class="finding-body">
+          The deepest PR shelf footprints (10 brands, 25+ SKUs) are not in Premium On-Trade
+          but in <strong>specialist off-licences and convenience stores</strong> — S39, S10,
+          S32. These stores are commercial mid-tier but strategic upper-tier for
+          range protection.
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">F · 03</div>
+        <div class="finding-title">Mid-tier on-trade is the obvious upgrade pool.</div>
+        <div class="finding-body">
+          Cluster 2 (n=9) sits one notch below the premium tier on revenue but matches
+          it on distribution depth. With targeted activation investment — cocktail menu
+          listings, premium pour visibility — these are the candidates most likely
+          to migrate into the top tier next cycle.
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">F · 04</div>
+        <div class="finding-title">The long tail is the rep-visit efficiency question.</div>
+        <div class="finding-body">
+          Fifteen stores cluster in the low-velocity tail (Cluster 3) — half of the estate.
+          They average <strong>£200/mo sellout</strong> against current rep visit
+          schedules. Worth a service-model review: less frequent visits, distributor-led
+          replenishment, or tier-down decisions.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     03 · PCA MAP
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">03 · Cluster Map</div>
+    <h2 class="s-title">All forty stores, <span class="gold">in two dimensions.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      A PCA projection of the full feature space onto two principal components.
+      PC1 (horizontal, 44% of variance) reads as <em>commercial throughput</em>;
+      PC2 (vertical, 14%) reads as <em>distribution depth</em>. Cluster colors
+      are stable across every chart in this report.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head">
+        <span class="chart-title">PCA Projection · 40 Stores · 4 Clusters</span>
+        <span class="chart-meta">PC1 + PC2 = 58% of variance</span>
+      </div>
+      <div class="chart-wrap tall">
+        <canvas id="pcaChart"></canvas>
+      </div>
+      <div class="cluster-legend" id="pcaLegend"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     04 · CLUSTER PROFILES
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">04 · Cluster Profiles</div>
+    <h2 class="s-title">Four archetypes, <span class="gold">named.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Each cluster has been named from its dominant signature — channel mix and
+      raw averages on the metrics PR's commercial team uses most.
+    </p>
+
+    <div class="cluster-grid">
+    <div class="cluster-card" style="--c:#B8954A">
+      <div class="cluster-head">
+        <div>
+          <div class="cluster-id">Cluster 0  ·  n = 10</div>
+          <div class="cluster-name">Mass Off-Trade Coverage</div>
+        </div>
+        <div class="cluster-swatch"></div>
+      </div>
+      <div class="cluster-stats">
+        <div><span class="cs-label">Sellout</span><span class="cs-value">£630/mo</span></div>
+        <div><span class="cs-label">Volume</span><span class="cs-value">114 u/mo</span></div>
+        <div><span class="cs-label">PR Brands</span><span class="cs-value">3.6</span></div>
+        <div><span class="cs-label">SKUs</span><span class="cs-value">9.4</span></div>
+        <div><span class="cs-label">Rep Visits</span><span class="cs-value">6.1</span></div>
+        <div><span class="cs-label">Cocktail Bars Nearby</span><span class="cs-value">3.3</span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Channel Mix</div>
+        <div class="chan-chip-row"><span class="chan-chip" style="--c:#4A8FB8"><span class="chan-dot"></span>Supermarket <em>×5</em></span><span class="chan-chip" style="--c:#6BAA7E"><span class="chan-dot"></span>Convenience <em>×2</em></span><span class="chan-chip" style="--c:#7A8FA6"><span class="chan-dot"></span>Off-Licence <em>×1</em></span><span class="chan-chip" style="--c:#C16E8C"><span class="chan-dot"></span>Restaurant <em>×1</em></span><span class="chan-chip" style="--c:#8A7FA6"><span class="chan-dot"></span>Night Club <em>×1</em></span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Members</div>
+        <div class="cluster-members">S04, S06, S07, S09, S13, S21, S24, S29, S32, S33</div>
+      </div>
+    </div>
+    <div class="cluster-card" style="--c:#4A8FB8">
+      <div class="cluster-head">
+        <div>
+          <div class="cluster-id">Cluster 1  ·  n = 6</div>
+          <div class="cluster-name">Premium On-Trade Anchors</div>
+        </div>
+        <div class="cluster-swatch"></div>
+      </div>
+      <div class="cluster-stats">
+        <div><span class="cs-label">Sellout</span><span class="cs-value">£1565/mo</span></div>
+        <div><span class="cs-label">Volume</span><span class="cs-value">184 u/mo</span></div>
+        <div><span class="cs-label">PR Brands</span><span class="cs-value">6.8</span></div>
+        <div><span class="cs-label">SKUs</span><span class="cs-value">19.3</span></div>
+        <div><span class="cs-label">Rep Visits</span><span class="cs-value">25.3</span></div>
+        <div><span class="cs-label">Cocktail Bars Nearby</span><span class="cs-value">6.8</span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Channel Mix</div>
+        <div class="chan-chip-row"><span class="chan-chip" style="--c:#C16E8C"><span class="chan-dot"></span>Restaurant <em>×2</em></span><span class="chan-chip" style="--c:#D4AF5F"><span class="chan-dot"></span>Hotel Bar <em>×2</em></span><span class="chan-chip" style="--c:#8A7FA6"><span class="chan-dot"></span>Night Club <em>×1</em></span><span class="chan-chip" style="--c:#B8954A"><span class="chan-dot"></span>Bar <em>×1</em></span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Members</div>
+        <div class="cluster-members">S08, S17, S25, S27, S37, S40</div>
+      </div>
+    </div>
+    <div class="cluster-card" style="--c:#6BAA7E">
+      <div class="cluster-head">
+        <div>
+          <div class="cluster-id">Cluster 2  ·  n = 9</div>
+          <div class="cluster-name">Mid-Tier On-Trade</div>
+        </div>
+        <div class="cluster-swatch"></div>
+      </div>
+      <div class="cluster-stats">
+        <div><span class="cs-label">Sellout</span><span class="cs-value">£572/mo</span></div>
+        <div><span class="cs-label">Volume</span><span class="cs-value">86 u/mo</span></div>
+        <div><span class="cs-label">PR Brands</span><span class="cs-value">7.3</span></div>
+        <div><span class="cs-label">SKUs</span><span class="cs-value">18.1</span></div>
+        <div><span class="cs-label">Rep Visits</span><span class="cs-value">15.7</span></div>
+        <div><span class="cs-label">Cocktail Bars Nearby</span><span class="cs-value">5.0</span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Channel Mix</div>
+        <div class="chan-chip-row"><span class="chan-chip" style="--c:#B8954A"><span class="chan-dot"></span>Bar <em>×4</em></span><span class="chan-chip" style="--c:#C16E8C"><span class="chan-dot"></span>Restaurant <em>×2</em></span><span class="chan-chip" style="--c:#D4AF5F"><span class="chan-dot"></span>Hotel Bar <em>×1</em></span><span class="chan-chip" style="--c:#8A7FA6"><span class="chan-dot"></span>Night Club <em>×1</em></span><span class="chan-chip" style="--c:#7A8FA6"><span class="chan-dot"></span>Off-Licence <em>×1</em></span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Members</div>
+        <div class="cluster-members">S10, S16, S18, S19, S20, S22, S31, S36, S39</div>
+      </div>
+    </div>
+    <div class="cluster-card" style="--c:#C16E8C">
+      <div class="cluster-head">
+        <div>
+          <div class="cluster-id">Cluster 3  ·  n = 15</div>
+          <div class="cluster-name">Low-Velocity Long Tail</div>
+        </div>
+        <div class="cluster-swatch"></div>
+      </div>
+      <div class="cluster-stats">
+        <div><span class="cs-label">Sellout</span><span class="cs-value">£323/mo</span></div>
+        <div><span class="cs-label">Volume</span><span class="cs-value">59 u/mo</span></div>
+        <div><span class="cs-label">PR Brands</span><span class="cs-value">5.3</span></div>
+        <div><span class="cs-label">SKUs</span><span class="cs-value">11.5</span></div>
+        <div><span class="cs-label">Rep Visits</span><span class="cs-value">4.9</span></div>
+        <div><span class="cs-label">Cocktail Bars Nearby</span><span class="cs-value">2.7</span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Channel Mix</div>
+        <div class="chan-chip-row"><span class="chan-chip" style="--c:#7A8FA6"><span class="chan-dot"></span>Off-Licence <em>×4</em></span><span class="chan-chip" style="--c:#6BAA7E"><span class="chan-dot"></span>Convenience <em>×4</em></span><span class="chan-chip" style="--c:#4A8FB8"><span class="chan-dot"></span>Supermarket <em>×3</em></span><span class="chan-chip" style="--c:#B8954A"><span class="chan-dot"></span>Bar <em>×3</em></span><span class="chan-chip" style="--c:#C16E8C"><span class="chan-dot"></span>Restaurant <em>×1</em></span></div>
+      </div>
+      <div class="cluster-section">
+        <div class="cluster-sublabel">Members</div>
+        <div class="cluster-members">S01, S02, S03, S05, S11, S12, S14, S15, S23, S26, S28, S30, S34, S35, S38</div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     05 · CLUSTER SIGNATURES (heatmap)
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">05 · Signatures</div>
+    <h2 class="s-title">How each cluster <span class="gold">deviates from the mean.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Standard-score heatmap. Each cell shows how far the cluster average sits
+      from the estate average for that variable, in standard deviations. Gold = above
+      mean; steel-blue = below. Reads as a fingerprint.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head">
+        <span class="chart-title">Cluster × Variable Heatmap · z-scores</span>
+        <span class="chart-meta">Estate mean = 0  ·  scale ±2.5σ</span>
+      </div>
+      <div class="heatmap-wrap">
+        <table class="heatmap">
+          <thead><tr><th></th><th class="hm-col-label">PR Brands Carried</th><th class="hm-col-label">Total SKUs</th><th class="hm-col-label">Sellout Volume (units/mo)</th><th class="hm-col-label">Sellout Value (£/mo)</th><th class="hm-col-label">Sellin Value (£/mo)</th><th class="hm-col-label">Rep Visits (12mo)</th><th class="hm-col-label">Nearby Cocktail Bars</th><th class="hm-col-label">Nearby Restaurants</th><th class="hm-col-label">Nearby Leisure POI</th><th class="hm-col-label">Competitor Brands</th></tr></thead>
+          <tbody>
+    <tr>
+      <th class="hm-row-label">
+        <span class="hm-dot" style="background:#B8954A"></span>
+        <span>Mass Off-Trade Coverage</span>
+      </th><td class="hm-cell" style="background:rgb(52,79,101)" title="PR_Brands_Carried: z=-1.04">-1.0</td><td class="hm-cell" style="background:rgb(45,68,88)" title="Total_SKUs: z=-0.71">-0.7</td><td class="hm-cell" style="background:rgb(54,61,63)" title="Monthly_Sellout_Volume: z=+0.32">+0.3</td><td class="hm-cell" style="background:rgb(30,45,62)" title="Monthly_Sellout_Value_GBP: z=-0.03">-0.0</td><td class="hm-cell" style="background:rgb(33,50,67)" title="Monthly_Sellin_Value_GBP: z=-0.17">-0.2</td><td class="hm-cell" style="background:rgb(41,62,81)" title="Rep_Visits_12M: z=-0.53">-0.5</td><td class="hm-cell" style="background:rgb(37,55,73)" title="Nearby_Cocktail_Bars: z=-0.33">-0.3</td><td class="hm-cell" style="background:rgb(56,62,63)" title="Nearby_Restaurants: z=+0.34">+0.3</td><td class="hm-cell" style="background:rgb(48,57,62)" title="Nearby_Leisure_POI: z=+0.24">+0.2</td><td class="hm-cell" style="background:rgb(63,67,63)" title="Competitor_Brands_Visible: z=+0.43">+0.4</td>
+    </tr>
+    <tr>
+      <th class="hm-row-label">
+        <span class="hm-dot" style="background:#4A8FB8"></span>
+        <span>Premium On-Trade Anchors</span>
+      </th><td class="hm-cell" style="background:rgb(82,80,65)" title="PR_Brands_Carried: z=+0.68">+0.7</td><td class="hm-cell" style="background:rgb(104,95,67)" title="Total_SKUs: z=+0.96">+1.0</td><td class="hm-cell" style="background:rgb(163,135,72)" title="Monthly_Sellout_Volume: z=+1.74">+1.7</td><td class="hm-cell" style="background:rgb(184,149,74)" title="Monthly_Sellout_Value_GBP: z=+2.03">+2.0</td><td class="hm-cell" style="background:rgb(184,149,74)" title="Monthly_Sellin_Value_GBP: z=+2.02">+2.0</td><td class="hm-cell" style="background:rgb(159,132,71)" title="Rep_Visits_12M: z=+1.69">+1.7</td><td class="hm-cell" style="background:rgb(132,114,69)" title="Nearby_Cocktail_Bars: z=+1.34">+1.3</td><td class="hm-cell" style="background:rgb(110,99,67)" title="Nearby_Restaurants: z=+1.04">+1.0</td><td class="hm-cell" style="background:rgb(83,80,65)" title="Nearby_Leisure_POI: z=+0.69">+0.7</td><td class="hm-cell" style="background:rgb(66,69,64)" title="Competitor_Brands_Visible: z=+0.47">+0.5</td>
+    </tr>
+    <tr>
+      <th class="hm-row-label">
+        <span class="hm-dot" style="background:#6BAA7E"></span>
+        <span>Mid-Tier On-Trade</span>
+      </th><td class="hm-cell" style="background:rgb(102,94,67)" title="PR_Brands_Carried: z=+0.95">+0.9</td><td class="hm-cell" style="background:rgb(88,84,65)" title="Total_SKUs: z=+0.76">+0.8</td><td class="hm-cell" style="background:rgb(35,52,69)" title="Monthly_Sellout_Volume: z=-0.23">-0.2</td><td class="hm-cell" style="background:rgb(33,50,66)" title="Monthly_Sellout_Value_GBP: z=-0.15">-0.2</td><td class="hm-cell" style="background:rgb(37,49,61)" title="Monthly_Sellin_Value_GBP: z=+0.10">+0.1</td><td class="hm-cell" style="background:rgb(74,74,64)" title="Rep_Visits_12M: z=+0.57">+0.6</td><td class="hm-cell" style="background:rgb(66,69,64)" title="Nearby_Cocktail_Bars: z=+0.47">+0.5</td><td class="hm-cell" style="background:rgb(46,56,62)" title="Nearby_Restaurants: z=+0.22">+0.2</td><td class="hm-cell" style="background:rgb(72,73,64)" title="Nearby_Leisure_POI: z=+0.55">+0.6</td><td class="hm-cell" style="background:rgb(30,45,61)" title="Competitor_Brands_Visible: z=-0.00">-0.0</td>
+    </tr>
+    <tr>
+      <th class="hm-row-label">
+        <span class="hm-dot" style="background:#C16E8C"></span>
+        <span>Low-Velocity Long Tail</span>
+      </th><td class="hm-cell" style="background:rgb(33,49,66)" title="PR_Brands_Carried: z=-0.15">-0.2</td><td class="hm-cell" style="background:rgb(38,57,75)" title="Total_SKUs: z=-0.36">-0.4</td><td class="hm-cell" style="background:rgb(47,70,91)" title="Monthly_Sellout_Volume: z=-0.77">-0.8</td><td class="hm-cell" style="background:rgb(45,68,88)" title="Monthly_Sellout_Value_GBP: z=-0.70">-0.7</td><td class="hm-cell" style="background:rgb(46,69,90)" title="Monthly_Sellin_Value_GBP: z=-0.75">-0.8</td><td class="hm-cell" style="background:rgb(44,66,86)" title="Rep_Visits_12M: z=-0.66">-0.7</td><td class="hm-cell" style="background:rgb(43,64,84)" title="Nearby_Cocktail_Bars: z=-0.60">-0.6</td><td class="hm-cell" style="background:rgb(47,70,91)" title="Nearby_Restaurants: z=-0.78">-0.8</td><td class="hm-cell" style="background:rgb(46,70,91)" title="Nearby_Leisure_POI: z=-0.77">-0.8</td><td class="hm-cell" style="background:rgb(40,60,79)" title="Competitor_Brands_Visible: z=-0.47">-0.5</td>
+    </tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     06 · PR PRIORITY SCORE
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">06 · Composite Score</div>
+    <h2 class="s-title">A score that mirrors <span class="gold">how PR thinks.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The ranking that follows weights five strategic dimensions, each min-max
+      normalised to 0–100 across the estate, then summed. Heaviest weight on
+      revenue, modest weight on shelf depth and surrounding context.
+    </p>
+
+    <div class="weights-grid">
+      <div class="weight-tile" style="--c:#B8954A">
+        <div class="w-pct">35<span style="font-size:18px;color:var(--gold)">%</span></div>
+        <div class="w-name">Commercial</div>
+        <div class="w-desc">70% sellout value · 30% sellout volume. Cash and case proxies of throughput.</div>
+      </div>
+      <div class="weight-tile" style="--c:#4A8FB8">
+        <div class="w-pct">25<span style="font-size:18px;color:var(--gold)">%</span></div>
+        <div class="w-name">Distribution</div>
+        <div class="w-desc">PR brands carried + total SKUs. Strategic shelf depth, not just velocity.</div>
+      </div>
+      <div class="weight-tile" style="--c:#6BAA7E">
+        <div class="w-pct">20<span style="font-size:18px;color:var(--gold)">%</span></div>
+        <div class="w-name">Context</div>
+        <div class="w-desc">Cocktail bars, restaurants, leisure POIs nearby. Activation potential.</div>
+      </div>
+      <div class="weight-tile" style="--c:#D4AF5F">
+        <div class="w-pct">10<span style="font-size:18px;color:var(--gold)">%</span></div>
+        <div class="w-name">Velocity</div>
+        <div class="w-desc">Sellout-to-sellin ratio. Inventory efficiency, no overstock.</div>
+      </div>
+      <div class="weight-tile" style="--c:#C16E8C">
+        <div class="w-pct">10<span style="font-size:18px;color:var(--gold)">%</span></div>
+        <div class="w-name">Competitive</div>
+        <div class="w-desc">Competitor brands visible. Proxy for foot traffic and category demand.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     07 · TOP 10
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">07 · Top 10</div>
+    <h2 class="s-title">Where the next pound of <span class="gold">rep attention earns most.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Sorted by composite score. The bar on each row decomposes the score into
+      its five weighted ingredients — hover or read across to see <em>why</em>
+      each store earned its rank, not just <em>that</em> it did.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head">
+        <span class="chart-title">Priority Ranking · Composite Score Breakdown</span>
+        <span class="chart-meta">Min-max normalised · weighted sum</span>
+      </div>
+      <table class="top10-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Store</th>
+            <th>Channel</th>
+            <th>Cluster</th>
+            <th class="num">Sellout £/mo</th>
+            <th class="num">PR / SKU</th>
+            <th class="num">Sellin : Sellout</th>
+            <th class="num">Score (Σ = 100)</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td class="rank">01</td>
+      <td class="store-id">S40</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">£2,063</td>
+      <td class="num">7 / 20</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#6BAA7E"></span><span class="ratio-val">1.03<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:33.0188679245283%;background:#B8954A" title="Commercial: 94/100 × 35% = 33.0"></div><div class="seg" style="width:16.8125%;background:#4A8FB8" title="Distribution: 67/100 × 25% = 16.8"></div><div class="seg" style="width:15.391483516483516%;background:#6BAA7E" title="Context: 77/100 × 20% = 15.4"></div><div class="seg" style="width:8.258182405288546%;background:#D4AF5F" title="Velocity: 83/100 × 10% = 8.3"></div><div class="seg" style="width:5.454545454545454%;background:#C16E8C" title="Competitive: 55/100 × 10% = 5.5"></div></div>
+        <span class="score-val">78.9</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">02</td>
+      <td class="store-id">S08</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">£1,537</td>
+      <td class="num">6 / 18</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#B8954A"></span><span class="ratio-val">1.24<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:28.59811227024342%;background:#B8954A" title="Commercial: 82/100 × 35% = 28.6"></div><div class="seg" style="width:14.25%;background:#4A8FB8" title="Distribution: 57/100 × 25% = 14.2"></div><div class="seg" style="width:15.138736263736263%;background:#6BAA7E" title="Context: 76/100 × 20% = 15.1"></div><div class="seg" style="width:6.057896385023774%;background:#D4AF5F" title="Velocity: 61/100 × 10% = 6.1"></div><div class="seg" style="width:6.363636363636363%;background:#C16E8C" title="Competitive: 64/100 × 10% = 6.4"></div></div>
+        <span class="score-val">70.4</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">03</td>
+      <td class="store-id">S37</td>
+      <td><span class="ch-pill" style="--c:#8A7FA6">Night Club</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">£1,286</td>
+      <td class="num">7 / 25</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#B8954A"></span><span class="ratio-val">1.21<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:22.521992660911618%;background:#B8954A" title="Commercial: 64/100 × 35% = 22.5"></div><div class="seg" style="width:19.3125%;background:#4A8FB8" title="Distribution: 77/100 × 25% = 19.3"></div><div class="seg" style="width:16.732142857142858%;background:#6BAA7E" title="Context: 84/100 × 20% = 16.7"></div><div class="seg" style="width:6.320224893803605%;background:#D4AF5F" title="Velocity: 63/100 × 10% = 6.3"></div><div class="seg" style="width:3.6363636363636367%;background:#C16E8C" title="Competitive: 36/100 × 10% = 3.6"></div></div>
+        <span class="score-val">68.5</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">04</td>
+      <td class="store-id">S17</td>
+      <td><span class="ch-pill" style="--c:#D4AF5F">Hotel Bar</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">£1,213</td>
+      <td class="num">10 / 27</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#B8954A"></span><span class="ratio-val">1.22<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:21.38587623841258%;background:#B8954A" title="Commercial: 61/100 × 35% = 21.4"></div><div class="seg" style="width:25.0%;background:#4A8FB8" title="Distribution: 100/100 × 25% = 25.0"></div><div class="seg" style="width:11.251373626373628%;background:#6BAA7E" title="Context: 56/100 × 20% = 11.3"></div><div class="seg" style="width:6.263649900833051%;background:#D4AF5F" title="Velocity: 63/100 × 10% = 6.3"></div><div class="seg" style="width:3.6363636363636367%;background:#C16E8C" title="Competitive: 36/100 × 10% = 3.6"></div></div>
+        <span class="score-val">67.5</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">05</td>
+      <td class="store-id">S25</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">£1,371</td>
+      <td class="num">6 / 12</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#6BAA7E"></span><span class="ratio-val">1.07<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:25.190952206881683%;background:#B8954A" title="Commercial: 72/100 × 35% = 25.2"></div><div class="seg" style="width:11.25%;background:#4A8FB8" title="Distribution: 45/100 × 25% = 11.2"></div><div class="seg" style="width:16.934065934065934%;background:#6BAA7E" title="Context: 85/100 × 20% = 16.9"></div><div class="seg" style="width:7.829686295161899%;background:#D4AF5F" title="Velocity: 78/100 × 10% = 7.8"></div><div class="seg" style="width:5.454545454545454%;background:#C16E8C" title="Competitive: 55/100 × 10% = 5.5"></div></div>
+        <span class="score-val">66.7</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">06</td>
+      <td class="store-id">S27</td>
+      <td><span class="ch-pill" style="--c:#D4AF5F">Hotel Bar</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">£1,919</td>
+      <td class="num">5 / 14</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#B8954A"></span><span class="ratio-val">1.23<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:30.870033461743944%;background:#B8954A" title="Commercial: 88/100 × 35% = 30.9"></div><div class="seg" style="width:10.6875%;background:#4A8FB8" title="Distribution: 43/100 × 25% = 10.7"></div><div class="seg" style="width:13.248626373626374%;background:#6BAA7E" title="Context: 66/100 × 20% = 13.2"></div><div class="seg" style="width:6.1421422944030155%;background:#D4AF5F" title="Velocity: 61/100 × 10% = 6.1"></div><div class="seg" style="width:5.454545454545454%;background:#C16E8C" title="Competitive: 55/100 × 10% = 5.5"></div></div>
+        <span class="score-val">66.4</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">07</td>
+      <td class="store-id">S36</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">£870</td>
+      <td class="num">7 / 22</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#B8954A"></span><span class="ratio-val">1.31<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:16.31975180196646%;background:#B8954A" title="Commercial: 47/100 × 35% = 16.3"></div><div class="seg" style="width:17.8125%;background:#4A8FB8" title="Distribution: 71/100 × 25% = 17.8"></div><div class="seg" style="width:14.980769230769234%;background:#6BAA7E" title="Context: 75/100 × 20% = 15.0"></div><div class="seg" style="width:5.443872617723176%;background:#D4AF5F" title="Velocity: 54/100 × 10% = 5.4"></div><div class="seg" style="width:4.545454545454546%;background:#C16E8C" title="Competitive: 45/100 × 10% = 4.5"></div></div>
+        <span class="score-val">59.1</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">08</td>
+      <td class="store-id">S10</td>
+      <td><span class="ch-pill" style="--c:#D4AF5F">Hotel Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">£842</td>
+      <td class="num">10 / 19</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#6BAA7E"></span><span class="ratio-val">1.10<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:14.0968914321064%;background:#B8954A" title="Commercial: 40/100 × 35% = 14.1"></div><div class="seg" style="width:21.0%;background:#4A8FB8" title="Distribution: 84/100 × 25% = 21.0"></div><div class="seg" style="width:10.372252747252748%;background:#6BAA7E" title="Context: 52/100 × 20% = 10.4"></div><div class="seg" style="width:7.5024364694437295%;background:#D4AF5F" title="Velocity: 75/100 × 10% = 7.5"></div><div class="seg" style="width:3.6363636363636367%;background:#C16E8C" title="Competitive: 36/100 × 10% = 3.6"></div></div>
+        <span class="score-val">56.6</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">09</td>
+      <td class="store-id">S39</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">£729</td>
+      <td class="num">8 / 26</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#6BAA7E"></span><span class="ratio-val">1.02<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:13.959788497408356%;background:#B8954A" title="Commercial: 40/100 × 35% = 14.0"></div><div class="seg" style="width:21.375%;background:#4A8FB8" title="Distribution: 86/100 × 25% = 21.4"></div><div class="seg" style="width:12.17445054945055%;background:#6BAA7E" title="Context: 61/100 × 20% = 12.2"></div><div class="seg" style="width:8.458308199798442%;background:#D4AF5F" title="Velocity: 85/100 × 10% = 8.5"></div></div>
+        <span class="score-val">56.0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">10</td>
+      <td class="store-id">S32</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">£712</td>
+      <td class="num">5 / 17</td>
+      <td class="num"><span class="ratio-cell"><span class="ratio-dot" style="background:#B8954A"></span><span class="ratio-val">1.17<span class="ratio-x">×</span></span></span></td>
+      <td class="num score-cell">
+        <div class="score-bar"><div class="seg" style="width:13.604298475006793%;background:#B8954A" title="Commercial: 39/100 × 35% = 13.6"></div><div class="seg" style="width:12.1875%;background:#4A8FB8" title="Distribution: 49/100 × 25% = 12.2"></div><div class="seg" style="width:9.506868131868131%;background:#6BAA7E" title="Context: 48/100 × 20% = 9.5"></div><div class="seg" style="width:6.676484181446803%;background:#D4AF5F" title="Velocity: 67/100 × 10% = 6.7"></div><div class="seg" style="width:6.363636363636363%;background:#C16E8C" title="Competitive: 64/100 × 10% = 6.4"></div></div>
+        <span class="score-val">48.3</span>
+      </td>
+    </tr></tbody>
+      </table>
+      <div class="cluster-legend" style="margin-top:24px">
+        <span class="cl-leg"><span class="cl-leg-dot" style="background:#B8954A"></span>Commercial</span>
+        <span class="cl-leg"><span class="cl-leg-dot" style="background:#4A8FB8"></span>Distribution</span>
+        <span class="cl-leg"><span class="cl-leg-dot" style="background:#6BAA7E"></span>Context</span>
+        <span class="cl-leg"><span class="cl-leg-dot" style="background:#D4AF5F"></span>Velocity</span>
+        <span class="cl-leg"><span class="cl-leg-dot" style="background:#C16E8C"></span>Competitive</span>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Cormorant Garamond';font-size:32px;color:var(--ivory);margin-top:64px;margin-bottom:8px;font-weight:400;">
+      Why these ten, <span style="color:var(--gold);font-style:italic">in their own words.</span>
+    </h3>
+    <div class="gold-accent"></div>
+
+    <div class="reasoning-block" style="--c:#4A8FB8">
+      <div class="reasoning-head">
+        <span class="reasoning-name">Premium On-Trade Anchors</span>
+        <span class="reasoning-tag">6 of top 10</span>
+      </div>
+      <div class="reasoning-stores">S40 · S08 · S37 · S17 · S25 · S27</div>
+      <div class="reasoning-body">These are the high-volume bars, hotel bars and restaurants where Pernod Ricard earns the bulk of its UK on-trade pour. Sellout values sit two standard deviations above the estate mean and PR depth is healthy (5–10 brands, 14–27 SKUs). Five of the six stores in this cluster also rank top-six on the composite score. The strategic imperative is <strong>defence</strong>: protect listings, guarantee menu placement, and ring-fence rep time.</div>
+    </div>
+    <div class="reasoning-block" style="--c:#6BAA7E">
+      <div class="reasoning-head">
+        <span class="reasoning-name">Mid-Tier On-Trade</span>
+        <span class="reasoning-tag">3 of top 10</span>
+      </div>
+      <div class="reasoning-stores">S36 · S10 · S39</div>
+      <div class="reasoning-body">On-trade venues sitting one notch below the premium anchors on revenue but matching them on shelf depth — particularly S36 and S10, both carrying 7–10 PR brands. The headline here is <strong>upside</strong>: these are the stores most likely to migrate into the premium tier with targeted activation — cocktail menu listings, premium pour visibility, training events. The composite score earns them top-10 entry on potential rather than current throughput.</div>
+    </div>
+    <div class="reasoning-block" style="--c:#B8954A">
+      <div class="reasoning-head">
+        <span class="reasoning-name">Mass Off-Trade Coverage</span>
+        <span class="reasoning-tag">1 of top 10</span>
+      </div>
+      <div class="reasoning-stores">S32</div>
+      <div class="reasoning-body">Supermarkets and convenience stores delivering steady mid-velocity sellout. Only S32 (convenience, £712/mo, 17 SKUs) breaks into the top 10 — a strong distribution-depth and context score lifts an otherwise mid-tier commercial profile into the priority list. Flag for trade-up testing: deeper SKU range, premium-tier promotional support, or partnership on multi-brand activations.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     08 · INVENTORY HEALTH
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">08 · Inventory Health</div>
+    <h2 class="s-title">Sell-in versus sell-out, <span class="gold">store by store.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      For every store: <strong>monthly sell-in value ÷ monthly sell-out value</strong>.
+      A reading near <em>1.00×</em> says inventory is turning at the rate it's being
+      shipped in. Higher numbers mean stock is accumulating on the shelf — a leading
+      indicator of overstock, future returns, or distributor over-ordering.
+    </p>
+
+    <div class="health-bands mt-32">
+      <div class="band-tile" style="--c:#6BAA7E">
+        <div class="band-name">Healthy</div>
+        <div class="band-range">≤ 1.10×</div>
+        <div class="band-count">19 stores</div>
+      </div>
+      <div class="band-tile" style="--c:#B8954A">
+        <div class="band-name">Building</div>
+        <div class="band-range">1.10 – 1.50×</div>
+        <div class="band-count">16 stores</div>
+      </div>
+      <div class="band-tile" style="--c:#C16E8C">
+        <div class="band-name">Overstocked</div>
+        <div class="band-range">1.50 – 2.00×</div>
+        <div class="band-count">0 stores</div>
+      </div>
+      <div class="band-tile" style="--c:#A04060">
+        <div class="band-name">Inventory Risk</div>
+        <div class="band-range">> 2.00×</div>
+        <div class="band-count">5 stores</div>
+      </div>
+    </div>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head">
+        <span class="chart-title">All Forty Stores · Sell-in : Sell-out Ratio</span>
+        <span class="chart-meta">Sorted descending · neutral = 1.00×</span>
+      </div>
+      <table class="ratio-table mt-24">
+        <thead>
+          <tr>
+            <th>Store</th>
+            <th>Channel</th>
+            <th>Cluster</th>
+            <th class="num">Sell-in £/mo</th>
+            <th class="num">Sell-out £/mo</th>
+            <th class="num">Ratio</th>
+            <th class="bar-col">Distance from neutral · log scale</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td class="store-id">S31</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">684</td>
+      <td class="num">254</td>
+      <td class="num"><span class="ratio-num">2.69×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#A04060">
+          <div class="dev-fill" style="left:50%;width:47.63892760379107%"></div>
+          <div class="dev-marker" style="left:97.6%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#A04060">● Inventory Risk</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S16</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">710</td>
+      <td class="num">265</td>
+      <td class="num"><span class="ratio-num">2.68×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#A04060">
+          <div class="dev-fill" style="left:50%;width:47.39422216471609%"></div>
+          <div class="dev-marker" style="left:97.4%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#A04060">● Inventory Risk</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S38</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">591</td>
+      <td class="num">248</td>
+      <td class="num"><span class="ratio-num">2.38×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#A04060">
+          <div class="dev-fill" style="left:50%;width:41.760600326355245%"></div>
+          <div class="dev-marker" style="left:91.8%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#A04060">● Inventory Risk</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S18</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">981</td>
+      <td class="num">445</td>
+      <td class="num"><span class="ratio-num">2.20×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#A04060">
+          <div class="dev-fill" style="left:50%;width:38.014926678849285%"></div>
+          <div class="dev-marker" style="left:88.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#A04060">● Inventory Risk</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S01</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">104</td>
+      <td class="num">50</td>
+      <td class="num"><span class="ratio-num">2.08×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#A04060">
+          <div class="dev-fill" style="left:50%;width:35.21945094554559%"></div>
+          <div class="dev-marker" style="left:85.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#A04060">● Inventory Risk</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S26</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">888</td>
+      <td class="num">639</td>
+      <td class="num"><span class="ratio-num">1.39×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:15.824791513437052%"></div>
+          <div class="dev-marker" style="left:65.8%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S20</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">641</td>
+      <td class="num">489</td>
+      <td class="num"><span class="ratio-num">1.31×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:13.016329722216907%"></div>
+          <div class="dev-marker" style="left:63.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S36</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">1,139</td>
+      <td class="num">870</td>
+      <td class="num"><span class="ratio-num">1.31×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:12.956014699067373%"></div>
+          <div class="dev-marker" style="left:63.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S05</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">225</td>
+      <td class="num">179</td>
+      <td class="num"><span class="ratio-num">1.26×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:10.998847131759359%"></div>
+          <div class="dev-marker" style="left:61.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S19</td>
+      <td><span class="ch-pill" style="--c:#8A7FA6">Night Club</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">719</td>
+      <td class="num">578</td>
+      <td class="num"><span class="ratio-num">1.24×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:10.497409264620638%"></div>
+          <div class="dev-marker" style="left:60.5%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S08</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">1,902</td>
+      <td class="num">1,537</td>
+      <td class="num"><span class="ratio-num">1.24×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:10.2466693723264%"></div>
+          <div class="dev-marker" style="left:60.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S11</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">203</td>
+      <td class="num">165</td>
+      <td class="num"><span class="ratio-num">1.23×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:9.967123431312013%"></div>
+          <div class="dev-marker" style="left:60.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S27</td>
+      <td><span class="ch-pill" style="--c:#D4AF5F">Hotel Bar</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">2,357</td>
+      <td class="num">1,919</td>
+      <td class="num"><span class="ratio-num">1.23×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:9.886568235159578%"></div>
+          <div class="dev-marker" style="left:59.9%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S17</td>
+      <td><span class="ch-pill" style="--c:#D4AF5F">Hotel Bar</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">1,474</td>
+      <td class="num">1,213</td>
+      <td class="num"><span class="ratio-num">1.22×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:9.371899132485312%"></div>
+          <div class="dev-marker" style="left:59.4%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S37</td>
+      <td><span class="ch-pill" style="--c:#8A7FA6">Night Club</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">1,555</td>
+      <td class="num">1,286</td>
+      <td class="num"><span class="ratio-num">1.21×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:9.134131256333923%"></div>
+          <div class="dev-marker" style="left:59.1%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S22</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">794</td>
+      <td class="num">676</td>
+      <td class="num"><span class="ratio-num">1.17×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:7.737192028692445%"></div>
+          <div class="dev-marker" style="left:57.7%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S32</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">835</td>
+      <td class="num">712</td>
+      <td class="num"><span class="ratio-num">1.17×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:7.663298546500559%"></div>
+          <div class="dev-marker" style="left:57.7%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S21</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">578</td>
+      <td class="num">498</td>
+      <td class="num"><span class="ratio-num">1.16×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:7.1641250144199295%"></div>
+          <div class="dev-marker" style="left:57.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S34</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">462</td>
+      <td class="num">407</td>
+      <td class="num"><span class="ratio-num">1.14×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:6.095468571660348%"></div>
+          <div class="dev-marker" style="left:56.1%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S07</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">854</td>
+      <td class="num">755</td>
+      <td class="num"><span class="ratio-num">1.13×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:5.925314180268302%"></div>
+          <div class="dev-marker" style="left:55.9%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S14</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">323</td>
+      <td class="num">290</td>
+      <td class="num"><span class="ratio-num">1.11×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#B8954A">
+          <div class="dev-fill" style="left:50%;width:5.18270882263301%"></div>
+          <div class="dev-marker" style="left:55.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#B8954A">● Building</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S10</td>
+      <td><span class="ch-pill" style="--c:#D4AF5F">Hotel Bar</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">923</td>
+      <td class="num">842</td>
+      <td class="num"><span class="ratio-num">1.10×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:4.417013819312604%"></div>
+          <div class="dev-marker" style="left:54.4%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S02</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">206</td>
+      <td class="num">188</td>
+      <td class="num"><span class="ratio-num">1.10×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:4.397055850186033%"></div>
+          <div class="dev-marker" style="left:54.4%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S24</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">639</td>
+      <td class="num">592</td>
+      <td class="num"><span class="ratio-num">1.08×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:3.6739585106014876%"></div>
+          <div class="dev-marker" style="left:53.7%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S29</td>
+      <td><span class="ch-pill" style="--c:#8A7FA6">Night Club</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">922</td>
+      <td class="num">862</td>
+      <td class="num"><span class="ratio-num">1.07×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:3.2359627113413314%"></div>
+          <div class="dev-marker" style="left:53.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S25</td>
+      <td><span class="ch-pill" style="--c:#C16E8C">Restaurant</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">1,465</td>
+      <td class="num">1,371</td>
+      <td class="num"><span class="ratio-num">1.07×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:3.1890697843461413%"></div>
+          <div class="dev-marker" style="left:53.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S33</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">528</td>
+      <td class="num">504</td>
+      <td class="num"><span class="ratio-num">1.05×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:2.2371398619512344%"></div>
+          <div class="dev-marker" style="left:52.2%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S28</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">320</td>
+      <td class="num">308</td>
+      <td class="num"><span class="ratio-num">1.04×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:1.8380518064153615%"></div>
+          <div class="dev-marker" style="left:51.8%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S09</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">703</td>
+      <td class="num">678</td>
+      <td class="num"><span class="ratio-num">1.04×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:1.7413138645397137%"></div>
+          <div class="dev-marker" style="left:51.7%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S40</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#4A8FB8">Premium On-Trade Anchors</span></td>
+      <td class="num">2,134</td>
+      <td class="num">2,063</td>
+      <td class="num"><span class="ratio-num">1.03×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:1.6272118312646748%"></div>
+          <div class="dev-marker" style="left:51.6%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S03</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">660</td>
+      <td class="num">646</td>
+      <td class="num"><span class="ratio-num">1.02×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:1.0310619850630307%"></div>
+          <div class="dev-marker" style="left:51.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S39</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#6BAA7E">Mid-Tier On-Trade</span></td>
+      <td class="num">743</td>
+      <td class="num">729</td>
+      <td class="num"><span class="ratio-num">1.02×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:0.9147798737219742%"></div>
+          <div class="dev-marker" style="left:50.9%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S04</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">586</td>
+      <td class="num">576</td>
+      <td class="num"><span class="ratio-num">1.02×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:0.8277284326645195%"></div>
+          <div class="dev-marker" style="left:50.8%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S30</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">367</td>
+      <td class="num">362</td>
+      <td class="num"><span class="ratio-num">1.01×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:0.6596788586669093%"></div>
+          <div class="dev-marker" style="left:50.7%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S13</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">466</td>
+      <td class="num">462</td>
+      <td class="num"><span class="ratio-num">1.01×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:50%;width:0.414570107940753%"></div>
+          <div class="dev-marker" style="left:50.4%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S15</td>
+      <td><span class="ch-pill" style="--c:#4A8FB8">Supermarket</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">175</td>
+      <td class="num">177</td>
+      <td class="num"><span class="ratio-num">0.99×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:49.45351872497771%;width:0.5464812750222883%"></div>
+          <div class="dev-marker" style="left:49.5%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S06</td>
+      <td><span class="ch-pill" style="--c:#6BAA7E">Convenience</span></td>
+      <td><span class="cl-tag" style="--c:#B8954A">Mass Off-Trade Coverage</span></td>
+      <td class="num">643</td>
+      <td class="num">657</td>
+      <td class="num"><span class="ratio-num">0.98×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:48.96417890018726%;width:1.0358210998127424%"></div>
+          <div class="dev-marker" style="left:49.0%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S35</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">307</td>
+      <td class="num">315</td>
+      <td class="num"><span class="ratio-num">0.97×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:48.76289423276335%;width:1.2371057672366486%"></div>
+          <div class="dev-marker" style="left:48.8%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S23</td>
+      <td><span class="ch-pill" style="--c:#B8954A">Bar</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">554</td>
+      <td class="num">581</td>
+      <td class="num"><span class="ratio-num">0.95×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:47.71159375482198%;width:2.2884062451780154%"></div>
+          <div class="dev-marker" style="left:47.7%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr>
+    <tr>
+      <td class="store-id">S12</td>
+      <td><span class="ch-pill" style="--c:#7A8FA6">Off-Licence</span></td>
+      <td><span class="cl-tag" style="--c:#C16E8C">Low-Velocity Long Tail</span></td>
+      <td class="num">260</td>
+      <td class="num">284</td>
+      <td class="num"><span class="ratio-num">0.92×</span></td>
+      <td>
+        <div class="dev-bar" style="--c:#6BAA7E">
+          <div class="dev-fill" style="left:45.754023117459084%;width:4.245976882540918%"></div>
+          <div class="dev-marker" style="left:45.8%"></div>
+        </div>
+      </td>
+      <td><span class="health-tag" style="--c:#6BAA7E">● Healthy</span></td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     09 · METHODOLOGY
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">09 · Methodology</div>
+    <h2 class="s-title">How the model <span class="gold">was built.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Standard practice, deliberately conservative. Decisions are documented
+      so the analysis can be reproduced or contested.
+    </p>
+
+    <div class="method-grid">
+      <div class="method-step">
+        <div class="method-step-num">STEP · 01</div>
+        <div class="method-step-title">Feature preparation</div>
+        <div class="method-step-body">
+          Ten numeric variables z-scored (zero mean, unit variance) so no single
+          metric dominates by scale. Channel type one-hot encoded and
+          <code>×0.5</code> downweighted — informative but not dominant.
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">STEP · 02</div>
+        <div class="method-step-title">k selection</div>
+        <div class="method-step-body">
+          K-means tested at <code>k = 3, 4, 5</code>. Silhouette scores were close
+          (0.15 / 0.16 / 0.17). <code>k = 4</code> chosen for interpretability — three
+          collapses the on-trade tiers; five fragments the long tail without
+          actionable separation.
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">STEP · 03</div>
+        <div class="method-step-title">PCA projection</div>
+        <div class="method-step-body">
+          Two-component PCA for visualisation only. PC1 captures throughput
+          (sellout, rep visits, density); PC2 captures distribution depth
+          (PR brands carried, SKUs). 58% of variance explained in 2D — adequate
+          for cluster validation.
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">STEP · 04</div>
+        <div class="method-step-title">Composite score</div>
+        <div class="method-step-body">
+          Five strategic dimensions, min-max scaled to 0–100 across the estate,
+          weighted at <code>35/25/20/10/10</code>. Weights are advisory not
+          algorithmic — a commercial director can shift them and re-rank. Score
+          is a decision aid, not a verdict.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-left">
+      JC Consulting &amp; Advisory  ·  <span class="accent">Vekter</span>
+    </div>
+    <div class="footer-right">
+      DSTAR Diagnostic  ·  Generated automatically  ·  London
+    </div>
+  </div>
+</footer>
+
+
+<script id="dstar-data" type="application/json">{"meta": {"n_stores": 40, "n_features": 17, "k": 4, "silhouette_scores": {"3": 0.15030744662865483, "4": 0.16216651258622797, "5": 0.17152308240225606}, "selected_silhouette": 0.16216651258622797, "pca_explained": [0.4370214194862499, 0.141913414898619], "method": "K-means on standardized numerics + half-weighted channel dummies; PCA for 2D projection; composite score = 0.35\u00b7commercial + 0.25\u00b7distribution + 0.20\u00b7context + 0.10\u00b7velocity + 0.10\u00b7competitive"}, "variables": ["PR_Brands_Carried", "Total_SKUs", "Monthly_Sellout_Volume", "Monthly_Sellout_Value_GBP", "Monthly_Sellin_Value_GBP", "Rep_Visits_12M", "Nearby_Cocktail_Bars", "Nearby_Restaurants", "Nearby_Leisure_POI", "Competitor_Brands_Visible"], "variables_pretty": {"PR_Brands_Carried": "PR Brands Carried", "Total_SKUs": "Total SKUs", "Monthly_Sellout_Volume": "Sellout Volume (units/mo)", "Monthly_Sellout_Value_GBP": "Sellout Value (\u00a3/mo)", "Monthly_Sellin_Value_GBP": "Sellin Value (\u00a3/mo)", "Rep_Visits_12M": "Rep Visits (12mo)", "Nearby_Cocktail_Bars": "Nearby Cocktail Bars", "Nearby_Restaurants": "Nearby Restaurants", "Nearby_Leisure_POI": "Nearby Leisure POI", "Competitor_Brands_Visible": "Competitor Brands"}, "weights": {"commercial": 0.35, "distribution": 0.25, "context": 0.2, "velocity": 0.1, "competitive": 0.1}, "clusters": [{"id": 0, "n": 10, "members": ["S04", "S06", "S07", "S09", "S13", "S21", "S24", "S29", "S32", "S33"], "z_means": {"PR_Brands_Carried": -1.0353171527437026, "Total_SKUs": -0.7132960862583062, "Monthly_Sellout_Volume": 0.3236725080535665, "Monthly_Sellout_Value_GBP": -0.026770554037894346, "Monthly_Sellin_Value_GBP": -0.17374370612681378, "Rep_Visits_12M": -0.5300679036429645, "Nearby_Cocktail_Bars": -0.32998316455372223, "Nearby_Restaurants": 0.34465952983473513, "Nearby_Leisure_POI": 0.24298269569231462, "Competitor_Brands_Visible": 0.42927577697833963}, "raw_means": {"PR_Brands_Carried": 3.6, "Total_SKUs": 9.4, "Monthly_Sellout_Volume": 113.6, "Monthly_Sellout_Value_GBP": 629.6, "Monthly_Sellin_Value_GBP": 675.4, "Rep_Visits_12M": 6.1, "Nearby_Cocktail_Bars": 3.3, "Nearby_Restaurants": 6.6, "Nearby_Leisure_POI": 3.6, "Competitor_Brands_Visible": 7.4}, "channel_mix": {"Supermarket": 5, "Convenience": 2, "Off-Licence": 1, "Restaurant": 1, "Night Club": 1}, "name": "Mass Off-Trade Coverage", "color": "#B8954A"}, {"id": 1, "n": 6, "members": ["S08", "S17", "S25", "S27", "S37", "S40"], "z_means": {"PR_Brands_Carried": 0.6813625706091037, "Total_SKUs": 0.9637235090472185, "Monthly_Sellout_Volume": 1.7377167776125848, "Monthly_Sellout_Value_GBP": 2.0254191580965437, "Monthly_Sellin_Value_GBP": 2.0228318282688975, "Rep_Visits_12M": 1.6862305050671125, "Nearby_Cocktail_Bars": 1.3356461422412567, "Nearby_Restaurants": 1.039582809501518, "Nearby_Leisure_POI": 0.6884509711282251, "Competitor_Brands_Visible": 0.4744627008707965}, "raw_means": {"PR_Brands_Carried": 6.833333333333333, "Total_SKUs": 19.333333333333332, "Monthly_Sellout_Volume": 183.5, "Monthly_Sellout_Value_GBP": 1564.8333333333333, "Monthly_Sellin_Value_GBP": 1814.5, "Rep_Visits_12M": 25.333333333333332, "Nearby_Cocktail_Bars": 6.833333333333333, "Nearby_Restaurants": 8.666666666666666, "Nearby_Leisure_POI": 4.333333333333333, "Competitor_Brands_Visible": 7.5}, "channel_mix": {"Restaurant": 2, "Hotel Bar": 2, "Night Club": 1, "Bar": 1}, "name": "Premium On-Trade Anchors", "color": "#4A8FB8"}, {"id": 2, "n": 9, "members": ["S10", "S16", "S18", "S19", "S20", "S22", "S31", "S36", "S39"], "z_means": {"PR_Brands_Carried": 0.9468285072100531, "Total_SKUs": 0.7573788161125342, "Monthly_Sellout_Volume": -0.22791939108771964, "Monthly_Sellout_Value_GBP": -0.15316267802008451, "Monthly_Sellin_Value_GBP": 0.09523871916804628, "Rep_Visits_12M": 0.5723196930637807, "Nearby_Cocktail_Bars": 0.47140452079103173, "Nearby_Restaurants": 0.21763054322897904, "Nearby_Leisure_POI": 0.5534605846324947, "Competitor_Brands_Visible": -0.002510384660692175}, "raw_means": {"PR_Brands_Carried": 7.333333333333333, "Total_SKUs": 18.11111111111111, "Monthly_Sellout_Volume": 86.33333333333333, "Monthly_Sellout_Value_GBP": 572.0, "Monthly_Sellin_Value_GBP": 814.8888888888889, "Rep_Visits_12M": 15.666666666666666, "Nearby_Cocktail_Bars": 5.0, "Nearby_Restaurants": 6.222222222222222, "Nearby_Leisure_POI": 4.111111111111111, "Competitor_Brands_Visible": 6.444444444444445}, "channel_mix": {"Bar": 4, "Restaurant": 2, "Hotel Bar": 1, "Night Club": 1, "Off-Licence": 1}, "name": "Mid-Tier On-Trade", "color": "#6BAA7E"}, {"id": 3, "n": 15, "members": ["S01", "S02", "S03", "S05", "S11", "S12", "S14", "S15", "S23", "S26", "S28", "S30", "S34", "S35", "S38"], "z_means": {"PR_Brands_Carried": -0.1504306974072046, "Total_SKUs": -0.3643859691142037, "Monthly_Sellout_Volume": -0.7741167484281125, "Monthly_Sellout_Value_GBP": -0.7004230204013038, "Monthly_Sellin_Value_GBP": -0.7504468253905109, "Rep_Visits_12M": -0.66450541543647, "Nearby_Cocktail_Bars": -0.5971123930019735, "Nearby_Restaurants": -0.7761844696278182, "Nearby_Leisure_POI": -0.7694452030256635, "Competitor_Brands_Visible": -0.47446270087079667}, "raw_means": {"PR_Brands_Carried": 5.266666666666667, "Total_SKUs": 11.466666666666667, "Monthly_Sellout_Volume": 59.333333333333336, "Monthly_Sellout_Value_GBP": 322.6, "Monthly_Sellin_Value_GBP": 376.3333333333333, "Rep_Visits_12M": 4.933333333333334, "Nearby_Cocktail_Bars": 2.7333333333333334, "Nearby_Restaurants": 3.2666666666666666, "Nearby_Leisure_POI": 1.9333333333333333, "Competitor_Brands_Visible": 5.4}, "channel_mix": {"Off-Licence": 4, "Convenience": 4, "Supermarket": 3, "Bar": 3, "Restaurant": 1}, "name": "Low-Velocity Long Tail", "color": "#C16E8C"}], "points": [{"store_id": "S01", "channel": "Supermarket", "cluster": 3, "score": 17.93189964633856, "x": -3.318345385187199, "y": 1.5507716505045812}, {"store_id": "S02", "channel": "Off-Licence", "cluster": 3, "score": 26.203857505585137, "x": -3.029240500663038, "y": 0.7988818006582721}, {"store_id": "S03", "channel": "Convenience", "cluster": 3, "score": 41.46364710832927, "x": -1.1219209115784703, "y": 0.5094775549654229}, {"store_id": "S04", "channel": "Supermarket", "cluster": 0, "score": 45.477794272794895, "x": -0.4944119283184067, "y": -0.6345826347754725}, {"store_id": "S05", "channel": "Convenience", "cluster": 3, "score": 24.41285244360578, "x": -2.849111074137121, "y": 0.6753184861916274}, {"store_id": "S06", "channel": "Convenience", "cluster": 0, "score": 41.69814336072854, "x": -0.3486030109827142, "y": -1.8923896654959256}, {"store_id": "S07", "channel": "Supermarket", "cluster": 0, "score": 41.87955683929255, "x": 0.12289623461382804, "y": -2.42132650023069}, {"store_id": "S08", "channel": "Restaurant", "cluster": 1, "score": 70.40838128263981, "x": 4.641895859994631, "y": -1.1285687768803467}, {"store_id": "S09", "channel": "Supermarket", "cluster": 0, "score": 31.98700954962452, "x": -1.2524447864431163, "y": -2.2988728639359346}, {"store_id": "S10", "channel": "Hotel Bar", "cluster": 2, "score": 56.60794428516651, "x": 1.398989679843121, "y": 2.567827188952643}, {"store_id": "S11", "channel": "Supermarket", "cluster": 3, "score": 22.214189530172295, "x": -3.040739178899813, "y": -0.604948081974471}, {"store_id": "S12", "channel": "Off-Licence", "cluster": 3, "score": 32.856559694558456, "x": -1.9236629002479972, "y": 0.01543444964352662}, {"store_id": "S13", "channel": "Off-Licence", "cluster": 0, "score": 40.915037166885455, "x": -0.9359702279207173, "y": -0.19681250019504135}, {"store_id": "S14", "channel": "Off-Licence", "cluster": 3, "score": 39.563236842978554, "x": -1.6700412388207335, "y": 2.044516645946612}, {"store_id": "S15", "channel": "Supermarket", "cluster": 3, "score": 31.093280715759686, "x": -2.7417445682542323, "y": 0.6140632205068502}, {"store_id": "S16", "channel": "Restaurant", "cluster": 2, "score": 35.74595324307761, "x": 0.3222719390074385, "y": 0.8466601287639018}, {"store_id": "S17", "channel": "Hotel Bar", "cluster": 1, "score": 67.5372634019829, "x": 3.4670301963755588, "y": 2.461490378396813}, {"store_id": "S18", "channel": "Bar", "cluster": 2, "score": 39.3328173486541, "x": 0.9875411249330929, "y": 1.2159201336764014}, {"store_id": "S19", "channel": "Night Club", "cluster": 2, "score": 47.8022891259333, "x": 0.26070362055799606, "y": 0.9933694193152588}, {"store_id": "S20", "channel": "Restaurant", "cluster": 2, "score": 44.05328072375627, "x": 0.5610079521302664, "y": -0.020844978333113183}, {"store_id": "S21", "channel": "Restaurant", "cluster": 0, "score": 39.602373015233454, "x": -0.37193034693993127, "y": -1.9944692484848492}, {"store_id": "S22", "channel": "Bar", "cluster": 2, "score": 46.233839063056806, "x": 0.7059167911286361, "y": -0.20462390336767333}, {"store_id": "S23", "channel": "Bar", "cluster": 3, "score": 42.050253081925206, "x": -0.8076696650228117, "y": -0.07658254347750212}, {"store_id": "S24", "channel": "Supermarket", "cluster": 0, "score": 41.65591630567062, "x": -0.06893006779278793, "y": -1.0123985533362148}, {"store_id": "S25", "channel": "Restaurant", "cluster": 1, "score": 66.65924989065498, "x": 3.658346340502299, "y": -1.543988129382485}, {"store_id": "S26", "channel": "Bar", "cluster": 3, "score": 33.07055899765658, "x": -0.5002098117872182, "y": 0.2525208763099035}, {"store_id": "S27", "channel": "Hotel Bar", "cluster": 1, "score": 66.40284758431879, "x": 4.528550477089186, "y": -1.282269711232994}, {"store_id": "S28", "channel": "Convenience", "cluster": 3, "score": 38.96628259856665, "x": -1.2678775293046698, "y": 0.5032436582448848}, {"store_id": "S29", "channel": "Night Club", "cluster": 0, "score": 41.0352000145794, "x": -0.2215860412732144, "y": -1.1567940807181476}, {"store_id": "S30", "channel": "Convenience", "cluster": 3, "score": 40.977477204007194, "x": -0.8988847978386817, "y": 0.20339510791431015}, {"store_id": "S31", "channel": "Bar", "cluster": 2, "score": 32.891197168899765, "x": 0.05467530503527177, "y": 1.5638645040813846}, {"store_id": "S32", "channel": "Convenience", "cluster": 0, "score": 48.33878715195809, "x": 0.4589794631688031, "y": -0.27190814911124245}, {"store_id": "S33", "channel": "Supermarket", "cluster": 0, "score": 31.19057801927006, "x": -1.7448396343629946, "y": -2.366740918505222}, {"store_id": "S34", "channel": "Off-Licence", "cluster": 3, "score": 25.642730910814947, "x": -2.7362164865950978, "y": -0.46191355620397356}, {"store_id": "S35", "channel": "Bar", "cluster": 3, "score": 31.51087966313444, "x": -1.9185601790577664, "y": -0.33566204525032034}, {"store_id": "S36", "channel": "Bar", "cluster": 2, "score": 59.10234819591342, "x": 2.8535034222270803, "y": 0.885615436444611}, {"store_id": "S37", "channel": "Night Club", "cluster": 1, "score": 68.52322404822173, "x": 4.356495855190135, "y": 0.4639208763479518}, {"store_id": "S38", "channel": "Restaurant", "cluster": 3, "score": 23.769212242283473, "x": -1.5390928993663986, "y": -0.40195117655420565}, {"store_id": "S39", "channel": "Off-Licence", "cluster": 2, "score": 55.96754724665735, "x": 0.9393599927025006, "y": 2.3080174477228734}, {"store_id": "S40", "channel": "Bar", "cluster": 1, "score": 78.93557930084582, "x": 5.48386891629529, "y": -0.16666094714200277}], "all_stores": [{"store_id": "S01", "channel": "Supermarket", "cluster": 3, "score": 17.93189964633856, "commercial": 0.0, "distribution": 47.25, "context": 23.00824175824176, "velocity": 15.177512946902105, "competitive": 0.0, "sellout_value": 50.0, "sellin_value": 104.0, "sellin_sellout_ratio": 2.08, "sellout_volume": 12.0, "pr_brands": 7, "skus": 10, "rep_visits": 1, "sellthrough": 0.4807692307692308}, {"store_id": "S02", "channel": "Off-Licence", "cluster": 3, "score": 26.203857505585137, "commercial": 8.053524730759497, "distribution": 38.75, "context": 12.767857142857142, "velocity": 75.07688784884247, "competitive": 36.36363636363637, "sellout_value": 188.0, "sellin_value": 206.0, "sellin_sellout_ratio": 1.0957446808510638, "sellout_volume": 35.0, "pr_brands": 5, "skus": 12, "rep_visits": 3, "sellthrough": 0.912621359223301}, {"store_id": "S03", "channel": "Convenience", "cluster": 3, "score": 41.46364710832927, "commercial": 35.86679507728069, "distribution": 55.25, "context": 19.725274725274723, "velocity": 84.25441158953359, "competitive": 27.27272727272727, "sellout_value": 646.0, "sellin_value": 660.0, "sellin_sellout_ratio": 1.021671826625387, "sellout_volume": 119.0, "pr_brands": 7, "skus": 14, "rep_visits": 3, "sellthrough": 0.9787878787878788}, {"store_id": "S04", "channel": "Supermarket", "cluster": 0, "score": 45.477794272794895, "commercial": 31.87601345968188, "distribution": 44.75, "context": 41.43543956043956, "velocity": 84.82965286181958, "competitive": 63.63636363636363, "sellout_value": 576.0, "sellin_value": 586.0, "sellin_sellout_ratio": 1.0173611111111112, "sellout_volume": 108.0, "pr_brands": 5, "skus": 15, "rep_visits": 4, "sellthrough": 0.9829351535836177}, {"store_id": "S05", "channel": "Convenience", "cluster": 3, "score": 24.41285244360578, "commercial": 8.023577875882237, "distribution": 37.0, "context": 23.262362637362635, "velocity": 58.83945841392651, "competitive": 18.181818181818183, "sellout_value": 179.0, "sellin_value": 225.0, "sellin_sellout_ratio": 1.2569832402234637, "sellout_volume": 37.0, "pr_brands": 6, "skus": 8, "rep_visits": 1, "sellthrough": 0.7955555555555556}, {"store_id": "S06", "channel": "Convenience", "cluster": 0, "score": 41.69814336072854, "commercial": 37.66440307810552, "distribution": 18.25, "context": 51.92994505494505, "velocity": 90.21658726948043, "competitive": 45.45454545454545, "sellout_value": 657.0, "sellin_value": 643.0, "sellin_sellout_ratio": 0.9786910197869102, "sellout_volume": 129.0, "pr_brands": 3, "skus": 8, "rep_visits": 5, "sellthrough": 1.0217729393468118}, {"store_id": "S07", "channel": "Supermarket", "cluster": 0, "score": 41.87955683929255, "commercial": 41.49678036161178, "distribution": 12.25, "context": 63.17994505494505, "velocity": 71.11740156284864, "competitive": 45.45454545454545, "sellout_value": 755.0, "sellin_value": 854.0, "sellin_sellout_ratio": 1.1311258278145695, "sellout_volume": 132.0, "pr_brands": 3, "skus": 5, "rep_visits": 6, "sellthrough": 0.8840749414519906}, {"store_id": "S08", "channel": "Restaurant", "cluster": 1, "score": 70.40838128263981, "commercial": 81.70889220069549, "distribution": 57.0, "context": 75.69368131868131, "velocity": 60.57896385023774, "competitive": 63.63636363636363, "sellout_value": 1537.0, "sellin_value": 1902.0, "sellin_sellout_ratio": 1.2374756018217306, "sellout_volume": 224.0, "pr_brands": 6, "skus": 18, "rep_visits": 24, "sellthrough": 0.8080967402733964}, {"store_id": "S09", "channel": "Supermarket", "cluster": 0, "score": 31.98700954962452, "commercial": 38.25314699734743, "distribution": 0.0, "context": 47.31456043956044, "velocity": 82.26405103549924, "competitive": 9.090909090909092, "sellout_value": 678.0, "sellin_value": 703.0, "sellin_sellout_ratio": 1.036873156342183, "sellout_volume": 128.0, "pr_brands": 2, "skus": 2, "rep_visits": 2, "sellthrough": 0.9644381223328592}, {"store_id": "S10", "channel": "Hotel Bar", "cluster": 2, "score": 56.60794428516651, "commercial": 40.276832663161144, "distribution": 84.0, "context": 51.86126373626374, "velocity": 75.0243646944373, "competitive": 36.36363636363637, "sellout_value": 842.0, "sellin_value": 923.0, "sellin_sellout_ratio": 1.0961995249406176, "sellout_volume": 102.0, "pr_brands": 10, "skus": 19, "rep_visits": 12, "sellthrough": 0.9122426868905742}, {"store_id": "S11", "channel": "Supermarket", "cluster": 3, "score": 22.214189530172295, "commercial": 10.225421552362473, "distribution": 24.25, "context": 14.065934065934066, "velocity": 61.23241537294978, "competitive": 36.36363636363637, "sellout_value": 165.0, "sellin_value": 203.0, "sellin_sellout_ratio": 1.2303030303030302, "sellout_volume": 56.0, "pr_brands": 3, "skus": 11, "rep_visits": 3, "sellthrough": 0.812807881773399}, {"store_id": "S12", "channel": "Off-Licence", "cluster": 3, "score": 32.856559694558456, "commercial": 14.646542755110648, "distribution": 30.5, "context": 41.43543956043956, "velocity": 100.0, "competitive": 18.181818181818183, "sellout_value": 284.0, "sellin_value": 260.0, "sellin_sellout_ratio": 0.9154929577464789, "sellout_volume": 58.0, "pr_brands": 4, "skus": 11, "rep_visits": 5, "sellthrough": 1.0923076923076922}, {"store_id": "S13", "channel": "Off-Licence", "cluster": 0, "score": 40.915037166885455, "commercial": 28.902347008595072, "distribution": 40.75, "context": 37.3282967032967, "velocity": 86.00601827763292, "competitive": 45.45454545454545, "sellout_value": 462.0, "sellin_value": 466.0, "sellin_sellout_ratio": 1.0086580086580086, "sellout_volume": 115.0, "pr_brands": 5, "skus": 13, "rep_visits": 2, "sellthrough": 0.9914163090128756}, {"store_id": "S14", "channel": "Off-Licence", "cluster": 3, "score": 39.563236842978554, "commercial": 17.543865815594856, "distribution": 75.25, "context": 13.811813186813186, "velocity": 73.02566624703168, "competitive": 45.45454545454545, "sellout_value": 290.0, "sellin_value": 323.0, "sellin_sellout_ratio": 1.1137931034482758, "sellout_volume": 77.0, "pr_brands": 7, "skus": 24, "rep_visits": 5, "sellthrough": 0.8978328173374613}, {"store_id": "S15", "channel": "Supermarket", "cluster": 3, "score": 31.093280715759686, "commercial": 9.08610540917995, "distribution": 47.0, "context": 22.78846153846154, "velocity": 88.7817878758167, "competitive": 27.27272727272727, "sellout_value": 177.0, "sellin_value": 175.0, "sellin_sellout_ratio": 0.9887005649717514, "sellout_volume": 45.0, "pr_brands": 6, "skus": 13, "rep_visits": 1, "sellthrough": 1.0114285714285713}, {"store_id": "S16", "channel": "Restaurant", "cluster": 2, "score": 35.74595324307761, "commercial": 11.297158095023853, "distribution": 61.25, "context": 54.99313186813187, "velocity": 0.26276081647431165, "competitive": 54.54545454545454, "sellout_value": 265.0, "sellin_value": 710.0, "sellin_sellout_ratio": 2.6792452830188678, "sellout_volume": 39.0, "pr_brands": 7, "skus": 17, "rep_visits": 20, "sellthrough": 0.3732394366197183}, {"store_id": "S17", "channel": "Hotel Bar", "cluster": 1, "score": 67.5372634019829, "commercial": 61.102503538321656, "distribution": 100.0, "context": 56.25686813186813, "velocity": 62.6364990083305, "competitive": 36.36363636363637, "sellout_value": 1213.0, "sellin_value": 1474.0, "sellin_sellout_ratio": 1.215169002473207, "sellout_volume": 158.0, "pr_brands": 10, "skus": 27, "rep_visits": 22, "sellthrough": 0.8229308005427408}, {"store_id": "S18", "channel": "Bar", "cluster": 2, "score": 39.3328173486541, "commercial": 19.25458575860679, "distribution": 61.5, "context": 66.75137362637362, "velocity": 11.411648805942722, "competitive": 27.27272727272727, "sellout_value": 445.0, "sellin_value": 981.0, "sellin_sellout_ratio": 2.204494382022472, "sellout_volume": 51.0, "pr_brands": 8, "skus": 14, "rep_visits": 19, "sellthrough": 0.4536187563710499}, {"store_id": "S19", "channel": "Night Club", "cluster": 2, "score": 47.8022891259333, "commercial": 32.93612743581812, "distribution": 69.25, "context": 32.994505494505496, "velocity": 59.99607060859488, "competitive": 63.63636363636363, "sellout_value": 578.0, "sellin_value": 719.0, "sellin_sellout_ratio": 1.2439446366782008, "sellout_volume": 115.0, "pr_brands": 7, "skus": 21, "rep_visits": 13, "sellthrough": 0.803894297635605}, {"store_id": "S20", "channel": "Restaurant", "cluster": 2, "score": 44.05328072375627, "commercial": 25.73747059209478, "distribution": 53.25, "context": 54.237637362637365, "velocity": 54.30593089450165, "competitive": 54.54545454545454, "sellout_value": 489.0, "sellin_value": 641.0, "sellin_sellout_ratio": 1.3108384458077709, "sellout_volume": 86.0, "pr_brands": 7, "skus": 13, "rep_visits": 16, "sellthrough": 0.7628705148205929}, {"store_id": "S21", "channel": "Restaurant", "cluster": 0, "score": 39.602373015233454, "commercial": 26.191945748858828, "distribution": 24.25, "context": 37.86401098901099, "velocity": 67.99889805330668, "competitive": 100.0, "sellout_value": 498.0, "sellin_value": 578.0, "sellin_sellout_ratio": 1.1606425702811245, "sellout_volume": 87.0, "pr_brands": 3, "skus": 11, "rep_visits": 14, "sellthrough": 0.8615916955017301}, {"store_id": "S22", "channel": "Bar", "cluster": 2, "score": 46.233839063056806, "commercial": 32.09869339856967, "distribution": 44.75, "context": 53.949175824175825, "velocity": 66.58324845085883, "competitive": 63.63636363636363, "sellout_value": 676.0, "sellin_value": 794.0, "sellin_sellout_ratio": 1.1745562130177514, "sellout_volume": 85.0, "pr_brands": 5, "skus": 15, "rep_visits": 17, "sellthrough": 0.8513853904282116}, {"store_id": "S23", "channel": "Bar", "cluster": 3, "score": 42.050253081925206, "commercial": 24.12535500379608, "distribution": 34.75, "context": 50.34340659340659, "velocity": 93.95652057369797, "competitive": 54.54545454545454, "sellout_value": 581.0, "sellin_value": 554.0, "sellin_sellout_ratio": 0.9535283993115319, "sellout_volume": 52.0, "pr_brands": 5, "skus": 10, "rep_visits": 5, "sellthrough": 1.0487364620938628}, {"store_id": "S24", "channel": "Supermarket", "cluster": 0, "score": 41.65591630567062, "commercial": 32.149378098960526, "distribution": 28.5, "context": 68.80494505494505, "velocity": 76.99463141863599, "competitive": 18.181818181818183, "sellout_value": 592.0, "sellin_value": 639.0, "sellin_sellout_ratio": 1.0793918918918919, "sellout_volume": 106.0, "pr_brands": 4, "skus": 10, "rep_visits": 7, "sellthrough": 0.9264475743348983}, {"store_id": "S25", "channel": "Restaurant", "cluster": 1, "score": 66.65924989065498, "commercial": 71.9741491625191, "distribution": 45.0, "context": 84.67032967032966, "velocity": 78.29686295161899, "competitive": 54.54545454545454, "sellout_value": 1371.0, "sellin_value": 1465.0, "sellin_sellout_ratio": 1.0685630926331144, "sellout_volume": 196.0, "pr_brands": 6, "skus": 12, "rep_visits": 19, "sellthrough": 0.9358361774744027}, {"store_id": "S26", "channel": "Bar", "cluster": 3, "score": 33.07055899765658, "commercial": 30.38752823627553, "distribution": 36.75, "context": 32.994505494505496, "velocity": 48.30341197877232, "competitive": 18.181818181818183, "sellout_value": 639.0, "sellin_value": 888.0, "sellin_sellout_ratio": 1.3896713615023475, "sellout_volume": 82.0, "pr_brands": 5, "skus": 11, "rep_visits": 19, "sellthrough": 0.7195945945945946}, {"store_id": "S27", "channel": "Hotel Bar", "cluster": 1, "score": 66.40284758431879, "commercial": 88.2000956049827, "distribution": 42.75, "context": 66.24313186813187, "velocity": 61.421422944030155, "competitive": 54.54545454545454, "sellout_value": 1919.0, "sellin_value": 2357.0, "sellin_sellout_ratio": 1.228243877019281, "sellout_volume": 176.0, "pr_brands": 5, "skus": 14, "rep_visits": 28, "sellthrough": 0.8141705557912601}, {"store_id": "S28", "channel": "Convenience", "cluster": 3, "score": 38.96628259856665, "commercial": 16.330174619689004, "distribution": 47.0, "context": 48.324175824175825, "velocity": 81.99522680476697, "competitive": 36.36363636363637, "sellout_value": 308.0, "sellin_value": 320.0, "sellin_sellout_ratio": 1.0389610389610389, "sellout_volume": 64.0, "pr_brands": 6, "skus": 13, "rep_visits": 2, "sellthrough": 0.9625}, {"store_id": "S29", "channel": "Night Club", "cluster": 0, "score": 41.0352000145794, "commercial": 41.39684034905192, "distribution": 26.5, "context": 33.24862637362637, "velocity": 78.1703516314051, "competitive": 54.54545454545454, "sellout_value": 862.0, "sellin_value": 922.0, "sellin_sellout_ratio": 1.0696055684454757, "sellout_volume": 105.0, "pr_brands": 4, "skus": 9, "rep_visits": 12, "sellthrough": 0.9349240780911063}, {"store_id": "S30", "channel": "Convenience", "cluster": 3, "score": 40.977477204007194, "commercial": 21.745704805556336, "distribution": 43.0, "context": 56.792582417582416, "velocity": 85.30691311273263, "competitive": 27.27272727272727, "sellout_value": 362.0, "sellin_value": 367.0, "sellin_sellout_ratio": 1.0138121546961325, "sellout_volume": 89.0, "pr_brands": 6, "skus": 11, "rep_visits": 6, "sellthrough": 0.9863760217983651}, {"store_id": "S31", "channel": "Bar", "cluster": 2, "score": 32.891197168899765, "commercial": 9.924078396085818, "distribution": 59.25, "context": 63.93543956043956, "velocity": 0.0, "competitive": 18.181818181818183, "sellout_value": 254.0, "sellin_value": 684.0, "sellin_sellout_ratio": 2.6929133858267718, "sellout_volume": 32.0, "pr_brands": 7, "skus": 16, "rep_visits": 18, "sellthrough": 0.3713450292397661}, {"store_id": "S32", "channel": "Convenience", "cluster": 0, "score": 48.33878715195809, "commercial": 38.86942421430513, "distribution": 48.75, "context": 47.53434065934066, "velocity": 66.76484181446803, "competitive": 63.63636363636363, "sellout_value": 712.0, "sellin_value": 835.0, "sellin_sellout_ratio": 1.172752808988764, "sellout_volume": 124.0, "pr_brands": 5, "skus": 17, "rep_visits": 6, "sellthrough": 0.8526946107784431}, {"store_id": "S33", "channel": "Supermarket", "cluster": 0, "score": 31.19057801927006, "commercial": 28.523231073493985, "distribution": 4.0, "context": 37.86401098901099, "velocity": 80.8919040029042, "competitive": 45.45454545454545, "sellout_value": 504.0, "sellin_value": 528.0, "sellin_sellout_ratio": 1.0476190476190477, "sellout_volume": 102.0, "pr_brands": 2, "skus": 4, "rep_visits": 3, "sellthrough": 0.9545454545454546}, {"store_id": "S34", "channel": "Off-Licence", "cluster": 3, "score": 25.642730910814947, "commercial": 23.593552287489807, "distribution": 18.5, "context": 14.821428571428571, "velocity": 70.68429168635072, "competitive": 27.27272727272727, "sellout_value": 407.0, "sellin_value": 462.0, "sellin_sellout_ratio": 1.135135135135135, "sellout_volume": 91.0, "pr_brands": 4, "skus": 5, "rep_visits": 2, "sellthrough": 0.8809523809523809}, {"store_id": "S35", "channel": "Bar", "cluster": 3, "score": 31.51087966313444, "commercial": 12.752837687109261, "distribution": 22.5, "context": 48.07005494505494, "velocity": 90.81102756362483, "competitive": 27.27272727272727, "sellout_value": 315.0, "sellin_value": 307.0, "sellin_sellout_ratio": 0.9746031746031746, "sellout_volume": 37.0, "pr_brands": 4, "skus": 7, "rep_visits": 3, "sellthrough": 1.0260586319218241}, {"store_id": "S36", "channel": "Bar", "cluster": 2, "score": 59.10234819591342, "commercial": 46.62786229133275, "distribution": 71.25, "context": 74.90384615384616, "velocity": 54.438726177231764, "competitive": 45.45454545454545, "sellout_value": 870.0, "sellin_value": 1139.0, "sellin_sellout_ratio": 1.3091954022988506, "sellout_volume": 140.0, "pr_brands": 7, "skus": 22, "rep_visits": 20, "sellthrough": 0.7638279192273925}, {"store_id": "S37", "channel": "Night Club", "cluster": 1, "score": 68.52322404822173, "commercial": 64.34855045974749, "distribution": 77.25, "context": 83.66071428571428, "velocity": 63.20224893803604, "competitive": 36.36363636363637, "sellout_value": 1286.0, "sellin_value": 1555.0, "sellin_sellout_ratio": 1.209175738724728, "sellout_volume": 163.0, "pr_brands": 7, "skus": 25, "rep_visits": 28, "sellthrough": 0.8270096463022508}, {"store_id": "S38", "channel": "Restaurant", "cluster": 3, "score": 23.769212242283473, "commercial": 10.281472316733684, "distribution": 32.5, "context": 25.061813186813183, "velocity": 6.6969793042768275, "competitive": 63.63636363636363, "sellout_value": 248.0, "sellin_value": 591.0, "sellin_sellout_ratio": 2.3830645161290325, "sellout_volume": 36.0, "pr_brands": 4, "skus": 12, "rep_visits": 15, "sellthrough": 0.4196277495769882}, {"store_id": "S39", "channel": "Off-Licence", "cluster": 2, "score": 55.96754724665735, "commercial": 39.885109992595304, "distribution": 85.5, "context": 60.872252747252745, "velocity": 84.58308199798441, "competitive": 0.0, "sellout_value": 729.0, "sellin_value": 743.0, "sellin_sellout_ratio": 1.01920438957476, "sellout_volume": 127.0, "pr_brands": 8, "skus": 26, "rep_visits": 6, "sellthrough": 0.9811574697173621}, {"store_id": "S40", "channel": "Bar", "cluster": 1, "score": 78.93557930084582, "commercial": 94.33962264150944, "distribution": 67.25, "context": 76.95741758241758, "velocity": 82.58182405288545, "competitive": 54.54545454545454, "sellout_value": 2063.0, "sellin_value": 2134.0, "sellin_sellout_ratio": 1.0344158991759573, "sellout_volume": 184.0, "pr_brands": 7, "skus": 20, "rep_visits": 31, "sellthrough": 0.9667291471415183}], "top10": [{"store_id": "S40", "channel": "Bar", "cluster": 1, "score": 78.93557930084582, "commercial": 94.33962264150944, "distribution": 67.25, "context": 76.95741758241758, "velocity": 82.58182405288545, "competitive": 54.54545454545454, "sellout_value": 2063.0, "sellin_value": 2134.0, "sellin_sellout_ratio": 1.0344158991759573, "sellout_volume": 184.0, "pr_brands": 7, "skus": 20, "rep_visits": 31, "sellthrough": 0.9667291471415183}, {"store_id": "S08", "channel": "Restaurant", "cluster": 1, "score": 70.40838128263981, "commercial": 81.70889220069549, "distribution": 57.0, "context": 75.69368131868131, "velocity": 60.57896385023774, "competitive": 63.63636363636363, "sellout_value": 1537.0, "sellin_value": 1902.0, "sellin_sellout_ratio": 1.2374756018217306, "sellout_volume": 224.0, "pr_brands": 6, "skus": 18, "rep_visits": 24, "sellthrough": 0.8080967402733964}, {"store_id": "S37", "channel": "Night Club", "cluster": 1, "score": 68.52322404822173, "commercial": 64.34855045974749, "distribution": 77.25, "context": 83.66071428571428, "velocity": 63.20224893803604, "competitive": 36.36363636363637, "sellout_value": 1286.0, "sellin_value": 1555.0, "sellin_sellout_ratio": 1.209175738724728, "sellout_volume": 163.0, "pr_brands": 7, "skus": 25, "rep_visits": 28, "sellthrough": 0.8270096463022508}, {"store_id": "S17", "channel": "Hotel Bar", "cluster": 1, "score": 67.5372634019829, "commercial": 61.102503538321656, "distribution": 100.0, "context": 56.25686813186813, "velocity": 62.6364990083305, "competitive": 36.36363636363637, "sellout_value": 1213.0, "sellin_value": 1474.0, "sellin_sellout_ratio": 1.215169002473207, "sellout_volume": 158.0, "pr_brands": 10, "skus": 27, "rep_visits": 22, "sellthrough": 0.8229308005427408}, {"store_id": "S25", "channel": "Restaurant", "cluster": 1, "score": 66.65924989065498, "commercial": 71.9741491625191, "distribution": 45.0, "context": 84.67032967032966, "velocity": 78.29686295161899, "competitive": 54.54545454545454, "sellout_value": 1371.0, "sellin_value": 1465.0, "sellin_sellout_ratio": 1.0685630926331144, "sellout_volume": 196.0, "pr_brands": 6, "skus": 12, "rep_visits": 19, "sellthrough": 0.9358361774744027}, {"store_id": "S27", "channel": "Hotel Bar", "cluster": 1, "score": 66.40284758431879, "commercial": 88.2000956049827, "distribution": 42.75, "context": 66.24313186813187, "velocity": 61.421422944030155, "competitive": 54.54545454545454, "sellout_value": 1919.0, "sellin_value": 2357.0, "sellin_sellout_ratio": 1.228243877019281, "sellout_volume": 176.0, "pr_brands": 5, "skus": 14, "rep_visits": 28, "sellthrough": 0.8141705557912601}, {"store_id": "S36", "channel": "Bar", "cluster": 2, "score": 59.10234819591342, "commercial": 46.62786229133275, "distribution": 71.25, "context": 74.90384615384616, "velocity": 54.438726177231764, "competitive": 45.45454545454545, "sellout_value": 870.0, "sellin_value": 1139.0, "sellin_sellout_ratio": 1.3091954022988506, "sellout_volume": 140.0, "pr_brands": 7, "skus": 22, "rep_visits": 20, "sellthrough": 0.7638279192273925}, {"store_id": "S10", "channel": "Hotel Bar", "cluster": 2, "score": 56.60794428516651, "commercial": 40.276832663161144, "distribution": 84.0, "context": 51.86126373626374, "velocity": 75.0243646944373, "competitive": 36.36363636363637, "sellout_value": 842.0, "sellin_value": 923.0, "sellin_sellout_ratio": 1.0961995249406176, "sellout_volume": 102.0, "pr_brands": 10, "skus": 19, "rep_visits": 12, "sellthrough": 0.9122426868905742}, {"store_id": "S39", "channel": "Off-Licence", "cluster": 2, "score": 55.96754724665735, "commercial": 39.885109992595304, "distribution": 85.5, "context": 60.872252747252745, "velocity": 84.58308199798441, "competitive": 0.0, "sellout_value": 729.0, "sellin_value": 743.0, "sellin_sellout_ratio": 1.01920438957476, "sellout_volume": 127.0, "pr_brands": 8, "skus": 26, "rep_visits": 6, "sellthrough": 0.9811574697173621}, {"store_id": "S32", "channel": "Convenience", "cluster": 0, "score": 48.33878715195809, "commercial": 38.86942421430513, "distribution": 48.75, "context": 47.53434065934066, "velocity": 66.76484181446803, "competitive": 63.63636363636363, "sellout_value": 712.0, "sellin_value": 835.0, "sellin_sellout_ratio": 1.172752808988764, "sellout_volume": 124.0, "pr_brands": 5, "skus": 17, "rep_visits": 6, "sellthrough": 0.8526946107784431}], "loadings": [{"variable": "PR_Brands_Carried", "pc1": 0.18325291229446167, "pc2": 0.6651414904929425}, {"variable": "Total_SKUs", "pc1": 0.2517291101726612, "pc2": 0.5294976959898761}, {"variable": "Monthly_Sellout_Volume", "pc1": 0.3558334250617774, "pc2": -0.23423009630883485}, {"variable": "Monthly_Sellout_Value_GBP", "pc1": 0.4004384459546958, "pc2": -0.15451607961854066}, {"variable": "Monthly_Sellin_Value_GBP", "pc1": 0.4170926695045619, "pc2": -0.09603633414503047}, {"variable": "Rep_Visits_12M", "pc1": 0.3835053631599456, "pc2": 0.05891603894619621}, {"variable": "Nearby_Cocktail_Bars", "pc1": 0.3343559859470396, "pc2": -0.022262203765694547}, {"variable": "Nearby_Restaurants", "pc1": 0.2584703444466712, "pc2": -0.22493269045868772}, {"variable": "Nearby_Leisure_POI", "pc1": 0.26396627536567374, "pc2": 0.01483811362678553}, {"variable": "Competitor_Brands_Visible", "pc1": 0.1476219901216365, "pc2": -0.2908217107464268}], "channel_colors": {"Bar": "#B8954A", "Hotel Bar": "#D4AF5F", "Night Club": "#8A7FA6", "Restaurant": "#C16E8C", "Supermarket": "#4A8FB8", "Convenience": "#6BAA7E", "Off-Licence": "#7A8FA6"}, "score_colors": {"commercial": "#B8954A", "distribution": "#4A8FB8", "context": "#6BAA7E", "velocity": "#D4AF5F", "competitive": "#C16E8C"}}</script>
+<script>
+(function() {
+  const D = JSON.parse(document.getElementById('dstar-data').textContent);
+  const C = D.channel_colors;
+
+  const COLORS = {
+    obsidian: '#0A1420', navy: '#0D1B2A', slate: '#1E2D3D',
+    gold: '#B8954A', goldGlow: '#D4AF5F', goldPale: '#E5D4A8',
+    steel: '#7A8FA6', ivory: '#F0EDE6',
+    grid: 'rgba(184,149,74,0.08)',
+    text: '#C8C2B5',
+  };
+  Chart.defaults.font.family = "'Mulish', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = COLORS.steel;
+
+  /* ─── PCA scatter ─── */
+  const clusterColors = D.clusters.map(c => c.color);
+  const clusterNames = D.clusters.map(c => c.name);
+
+  const datasets = D.clusters.map((cl, idx) => ({
+    label: `${cl.name} (n=${cl.n})`,
+    data: D.points.filter(p => p.cluster === cl.id).map(p => ({
+      x: p.x, y: p.y, store: p.store_id, channel: p.channel, score: p.score,
+    })),
+    backgroundColor: cl.color + 'AA',
+    borderColor: cl.color,
+    borderWidth: 1,
+    pointRadius: 7,
+    pointHoverRadius: 10,
+  }));
+
+  const pcaCtx = document.getElementById('pcaChart');
+  if (pcaCtx) {
+    new Chart(pcaCtx, {
+      type: 'scatter',
+      data: { datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(10,20,32,0.95)',
+            borderColor: 'rgba(184,149,74,0.4)',
+            borderWidth: 0.5,
+            titleColor: COLORS.gold,
+            titleFont: { family: "'Mulish'", weight: 500, size: 11 },
+            bodyColor: COLORS.ivory,
+            bodyFont: { family: "'Mulish'", size: 11 },
+            padding: 12,
+            callbacks: {
+              title: (items) => items[0].raw.store + ' · ' + items[0].raw.channel,
+              label: (item) => 'Score: ' + item.raw.score.toFixed(1) + '   PC1: ' + item.parsed.x.toFixed(2) + '   PC2: ' + item.parsed.y.toFixed(2),
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: { color: COLORS.grid, drawBorder: false },
+            ticks: { color: COLORS.steel, font: { size: 9 } },
+            title: { display: true, text: 'PC1  ·  Commercial throughput  →', color: COLORS.steel, font: { size: 10 } },
+          },
+          y: {
+            grid: { color: COLORS.grid, drawBorder: false },
+            ticks: { color: COLORS.steel, font: { size: 9 } },
+            title: { display: true, text: 'PC2  ·  Distribution depth  →', color: COLORS.steel, font: { size: 10 } },
+          },
+        },
+      },
+      plugins: [{
+        id: 'storeLabels',
+        afterDatasetsDraw(chart) {
+          const { ctx } = chart;
+          chart.data.datasets.forEach((ds, i) => {
+            const meta = chart.getDatasetMeta(i);
+            meta.data.forEach((pt, j) => {
+              const raw = ds.data[j];
+              ctx.save();
+              ctx.font = "9px 'JetBrains Mono'";
+              ctx.fillStyle = COLORS.text;
+              ctx.textAlign = 'left';
+              ctx.fillText(raw.store, pt.x + 9, pt.y + 3);
+              ctx.restore();
+            });
+          });
+        }
+      }]
+    });
+  }
+
+  /* Build PCA legend */
+  const pcaLegend = document.getElementById('pcaLegend');
+  if (pcaLegend) {
+    D.clusters.forEach(cl => {
+      const span = document.createElement('span');
+      span.className = 'cl-leg';
+      span.innerHTML = `<span class="cl-leg-dot" style="background:${cl.color}"></span>${cl.name} <span style="color:var(--gold-pale);margin-left:4px">·  n = ${cl.n}</span>`;
+      pcaLegend.appendChild(span);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

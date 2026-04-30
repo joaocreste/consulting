@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Marketing &amp; Business Analytics · A Five-Module Master Course · JC Consulting &amp; Advisory</title>
+<meta name="description" content="A five-module course on decision-driven marketing analytics, taught through four worked business cases: Freemark Abbey, Artea, MasRetail, and Absolut UK.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* ═══════════════════════════════════════════════
+     JC GROUP — DESIGN TOKENS
+     ═══════════════════════════════════════════════ */
+  :root {
+    --obsidian:    #0A1420;
+    --navy:        #0D1B2A;
+    --slate:       #1E2D3D;
+    --slate-2:     #243549;
+    --gold:        #B8954A;
+    --gold-glow:   #D4AF5F;
+    --gold-pale:   #E5D4A8;
+    --gold-deep:   #8E7038;
+    --steel:       #7A8FA6;
+    --steel-soft:  #5C6F84;
+    --parchment:   #F9F7F4;
+    --ivory:       #F0EDE6;
+    --ivory-dim:   #C8C2B5;
+    --white:       #FFFFFF;
+    --rose:        #C16E8C;
+    --ops:         #6BAA7E;
+    --investing:   #4A8FB8;
+    --heritage:    #8A7FA6;
+
+    --rule-gold: linear-gradient(90deg, transparent 0%, rgba(184,149,74,0.35) 50%, transparent 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--obsidian);
+    color: var(--ivory);
+    line-height: 1.65;
+    overflow-x: hidden;
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  ::selection { background: rgba(184,149,74,0.35); color: var(--ivory); }
+
+  /* ═══════════════════════════════════════════════
+     ANIMATIONS
+     ═══════════════════════════════════════════════ */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes drawLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes hexRotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+  @keyframes pulseGlow { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
+
+  /* ═══════════════════════════════════════════════
+     LAYOUT PRIMITIVES
+     ═══════════════════════════════════════════════ */
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 56px; }
+  @media (max-width: 768px) { .container { padding: 0 24px; } }
+
+  .hex-bg {
+    position: absolute; inset: 0; opacity: 0.04; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Cpolygon points='60,2 114,28 114,76 60,102 6,76 6,28' fill='none' stroke='%23B8954A' stroke-width='0.5'/%3E%3C/svg%3E");
+    background-size: 120px 104px;
+  }
+
+  .gold-rule {
+    position: absolute; top: 0; left: 56px; right: 56px; height: 0.5px;
+    background: var(--rule-gold);
+  }
+  @media (max-width: 768px) { .gold-rule { left: 24px; right: 24px; } }
+
+  .gold-accent {
+    width: 40px; height: 1px; background: var(--gold);
+    margin: 24px 0; transform-origin: left center;
+    animation: drawLine 0.8s ease both;
+  }
+
+  /* ═══════════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════════ */
+  .topnav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10,20,32,0.86); backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid rgba(184,149,74,0.14);
+  }
+  .topnav-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 14px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+  }
+  @media (max-width: 768px) { .topnav-inner { padding: 12px 24px; } }
+  .topnav-mark { display: flex; align-items: center; gap: 12px; }
+  .topnav-mark svg { width: 22px; height: 22px; }
+  .topnav-mark-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; color: var(--ivory); letter-spacing: 0.05em;
+  }
+  .topnav-mark-text .gold { color: var(--gold); font-style: italic; }
+  .topnav-links { display: flex; gap: 28px; }
+  .topnav-links a {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--steel);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .topnav-links a:hover { color: var(--gold-glow); }
+  @media (max-width: 768px) { .topnav-links { display: none; } }
+
+  /* ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ */
+  .hero {
+    min-height: 100vh; min-height: 100svh;
+    background: var(--obsidian);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden; padding: 80px 56px;
+  }
+  @media (max-width: 768px) { .hero { padding: 80px 24px; } }
+  .hero-glow {
+    position: absolute; width: 800px; height: 800px;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(184,149,74,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-orbit {
+    position: absolute; top: 50%; left: 50%;
+    width: 540px; height: 540px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: hexRotate 240s linear infinite;
+    opacity: 0.5;
+  }
+  .hero-orbit svg { width: 100%; height: 100%; }
+  .hero-content { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; width: 100%; }
+  .hero-mast { display: flex; align-items: center; gap: 14px; margin-bottom: 52px; flex-wrap: wrap;
+               animation: fadeUp 0.8s ease both; }
+  .hero-mast-mark { width: 32px; height: 32px; }
+  .hero-mast-text {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+  }
+  .hero-mast-sep { width: 1px; height: 18px; background: var(--gold); opacity: 0.3; }
+  .hero-mast-secondary {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 400;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--steel);
+  }
+  .hero-eyebrow {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 28px; animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 8vw, 96px); font-weight: 300;
+    letter-spacing: 0.01em; line-height: 0.98;
+    color: var(--ivory); margin-bottom: 24px;
+    animation: fadeUp 0.9s ease 0.18s both;
+  }
+  .hero-title .gold { color: var(--gold); font-style: italic; font-weight: 400; }
+  .hero-divider {
+    width: 84px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 36px 0; transform-origin: left center;
+    animation: drawLine 1.2s ease 0.3s both;
+  }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(20px, 3vw, 28px); font-weight: 300;
+    color: var(--gold-pale); max-width: 760px;
+    line-height: 1.45; letter-spacing: 0.01em;
+    animation: fadeUp 0.9s ease 0.4s both;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 56px; margin-top: 72px;
+    animation: fadeUp 0.9s ease 0.55s both;
+  }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 6px; }
+  .hero-meta-label {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--steel);
+  }
+  .hero-meta-value {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.02em;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+    opacity: 0.5;
+    animation: fadeIn 1s ease 1.5s both, pulseGlow 3s ease infinite 1.5s;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SECTIONS
+     ═══════════════════════════════════════════════ */
+  section { position: relative; padding: 96px 0; }
+  @media (max-width: 768px) { section { padding: 72px 0; } }
+  section.s-obsidian { background: var(--obsidian); }
+  section.s-navy     { background: var(--navy); }
+  section.s-slate    { background: var(--slate); }
+
+  .s-eyebrow {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .s-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 56px); font-weight: 300;
+    letter-spacing: 0.02em; line-height: 1.08;
+    color: var(--ivory); max-width: 880px; margin-bottom: 24px;
+  }
+  .s-title .gold { color: var(--gold); font-style: italic; font-weight: 400; }
+  .s-lede {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 19px; font-weight: 300; color: var(--gold-pale);
+    line-height: 1.55; max-width: 760px; margin-bottom: 56px;
+    letter-spacing: 0.01em;
+  }
+  .s-body {
+    font-size: 14px; line-height: 1.85; color: var(--steel); max-width: 760px;
+  }
+  .s-body strong { color: var(--gold-pale); font-weight: 500; }
+  .s-body em { color: var(--ivory); font-style: italic; }
+  .s-body p + p { margin-top: 18px; }
+
+  /* ═══════════════════════════════════════════════
+     COURSE MAP
+     ═══════════════════════════════════════════════ */
+  .map-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px;
+    background: rgba(184,149,74,0.15);
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-radius: 4px; overflow: hidden;
+    margin-top: 48px;
+  }
+  @media (max-width: 1100px) { .map-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .map-grid { grid-template-columns: 1fr; } }
+  .map-mod {
+    background: var(--obsidian); padding: 32px 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: background 0.3s;
+    text-decoration: none;
+  }
+  .map-mod:hover { background: var(--navy); }
+  .map-mod-num {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 32px; font-weight: 300; color: var(--gold); line-height: 1;
+  }
+  .map-mod-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 400; color: var(--ivory); line-height: 1.2;
+    letter-spacing: 0.01em;
+  }
+  .map-mod-case {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--steel);
+  }
+  .map-mod-case strong { color: var(--gold-glow); font-weight: 500; }
+  .map-mod-sub {
+    font-family: 'Mulish', sans-serif; font-size: 12px; font-weight: 300;
+    color: var(--steel-soft); line-height: 1.55; margin-top: 8px;
+  }
+
+  /* Cases ribbon */
+  .cases-ribbon {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 900px) { .cases-ribbon { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .cases-ribbon { grid-template-columns: 1fr; } }
+  .case-pill {
+    border: 0.5px solid rgba(184,149,74,0.25); border-radius: 4px;
+    padding: 22px 22px 20px; background: rgba(255,255,255,0.02);
+    display: flex; flex-direction: column; gap: 8px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .case-pill:hover { border-color: rgba(184,149,74,0.55); transform: translateY(-2px); }
+  .case-pill-num {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--gold);
+  }
+  .case-pill-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.01em;
+  }
+  .case-pill-name .gold { color: var(--gold); font-style: italic; }
+  .case-pill-sub {
+    font-family: 'Mulish', sans-serif; font-size: 11px; color: var(--steel);
+    line-height: 1.6;
+  }
+
+  /* ═══════════════════════════════════════════════
+     CONCEPT CARDS — frameworks/formulas
+     ═══════════════════════════════════════════════ */
+  .concept-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin-top: 40px;
+  }
+  @media (max-width: 1000px) { .concept-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .concept-grid { grid-template-columns: 1fr; } }
+  .concept {
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-top: 1px solid var(--gold);
+    border-radius: 4px; padding: 24px;
+  }
+  .concept-tag {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--gold); margin-bottom: 12px;
+  }
+  .concept-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 400; color: var(--ivory); margin-bottom: 10px;
+    letter-spacing: 0.01em; line-height: 1.25;
+  }
+  .concept-body { font-size: 13px; color: var(--steel); line-height: 1.7; }
+  .concept-body strong { color: var(--gold-pale); font-weight: 500; }
+  .formula {
+    margin-top: 14px; padding: 12px 14px;
+    background: rgba(10,20,32,0.6);
+    border-left: 2px solid var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--ivory-dim);
+    letter-spacing: 0.02em; line-height: 1.6;
+  }
+
+  /* Numbered process steps */
+  .process-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) { .process-grid { grid-template-columns: repeat(2, 1fr); } }
+  .process-step {
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 4px; padding: 22px;
+    border-top: 1px solid var(--gold);
+  }
+  .process-step-num {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 28px; font-weight: 300; color: var(--gold); line-height: 1;
+    margin-bottom: 10px;
+  }
+  .process-step-name {
+    font-family: 'Raleway', sans-serif; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.06em; color: var(--ivory); margin-bottom: 8px;
+  }
+  .process-step-desc { font-size: 12px; color: var(--steel); line-height: 1.65; }
+
+  /* ═══════════════════════════════════════════════
+     CASE BANNER — case study lead-in
+     ═══════════════════════════════════════════════ */
+  .case-banner {
+    background: linear-gradient(145deg, var(--navy), var(--slate));
+    border: 0.5px solid rgba(184,149,74,0.18);
+    border-radius: 6px; padding: 36px 36px 32px;
+    margin-top: 56px; position: relative;
+  }
+  .case-banner::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+  }
+  .case-banner-tag {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .case-banner-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 36px;
+    font-weight: 300; color: var(--ivory); letter-spacing: 0.01em;
+    line-height: 1.15;
+  }
+  .case-banner-title .gold { color: var(--gold); font-style: italic; }
+  .case-banner-meta {
+    display: flex; flex-wrap: wrap; gap: 36px; margin-top: 20px;
+    border-top: 0.5px solid rgba(184,149,74,0.18); padding-top: 20px;
+  }
+  .case-banner-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .cbm-label {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--steel);
+  }
+  .cbm-value {
+    font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 400;
+    color: var(--ivory); letter-spacing: 0.02em;
+  }
+
+  /* Case content blocks */
+  .case-block { margin-top: 40px; }
+  .case-block-eyebrow {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .case-block-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 28px;
+    font-weight: 300; color: var(--ivory); letter-spacing: 0.01em;
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .case-block-title .gold { color: var(--gold); font-style: italic; }
+  .case-block-body { font-size: 14px; color: var(--ivory-dim); line-height: 1.85; max-width: 880px; }
+  .case-block-body strong { color: var(--gold-pale); font-weight: 500; }
+  .case-block-body em { color: var(--ivory); font-style: italic; }
+  .case-block-body p + p { margin-top: 16px; }
+
+  /* Data tables */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    font-family: 'Mulish', sans-serif; font-size: 13px;
+    margin-top: 20px;
+  }
+  .data-table thead th {
+    text-align: left; font-weight: 500; font-size: 9px;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--gold); padding: 0 16px 14px;
+    border-bottom: 0.5px solid rgba(184,149,74,0.25);
+  }
+  .data-table thead th.num { text-align: right; }
+  .data-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    color: var(--ivory);
+  }
+  .data-table tbody td.num {
+    text-align: right; font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--ivory-dim);
+  }
+  .data-table tbody td.num.hi { color: var(--gold-glow); font-weight: 500; }
+  .data-table tbody td.num.lo { color: var(--rose); }
+  .data-table tbody tr:hover { background: rgba(184,149,74,0.04); }
+  .data-table tbody tr.total td {
+    border-top: 0.5px solid rgba(184,149,74,0.4);
+    border-bottom: none; color: var(--ivory);
+    font-weight: 500;
+  }
+
+  /* KPI strip */
+  .kpi-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: rgba(184,149,74,0.15);
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-radius: 4px; overflow: hidden;
+  }
+  @media (max-width: 900px) { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { background: var(--obsidian); padding: 30px 28px; }
+  .kpi-label {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .kpi-value {
+    font-family: 'Cormorant Garamond', serif; font-size: 44px;
+    font-weight: 300; letter-spacing: 0.01em; line-height: 1;
+    color: var(--ivory); margin-bottom: 8px;
+  }
+  .kpi-value .unit {
+    font-size: 16px; color: var(--gold); font-style: italic; margin-left: 2px;
+  }
+  .kpi-sub {
+    font-family: 'Mulish', sans-serif; font-size: 11px;
+    font-weight: 300; color: var(--steel); letter-spacing: 0.04em;
+  }
+
+  /* Decision tree visual */
+  .tree-wrap { margin-top: 32px; }
+  .tree {
+    display: grid; grid-template-columns: minmax(160px, 200px) 1fr;
+    gap: 0;
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 6px; padding: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+    color: var(--ivory-dim);
+    overflow-x: auto;
+  }
+  .tree pre {
+    font-family: inherit; white-space: pre;
+    color: var(--steel);
+  }
+  .tree .branch { color: var(--gold); }
+  .tree .prob   { color: var(--gold-glow); }
+  .tree .pay    { color: var(--ivory); }
+  .tree .ev     { color: var(--gold-pale); font-weight: 500; }
+
+  /* Findings list */
+  .find-list { display: grid; gap: 24px; margin-top: 32px; }
+  .find {
+    border-left: 1px solid rgba(184,149,74,0.25);
+    padding: 8px 0 8px 24px;
+  }
+  .find-num {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--gold); margin-bottom: 8px;
+  }
+  .find-headline {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 400; color: var(--ivory); line-height: 1.3;
+    margin-bottom: 8px; letter-spacing: 0.01em;
+  }
+  .find-detail { font-size: 13px; color: var(--steel); line-height: 1.7; }
+  .find-detail strong { color: var(--gold-pale); font-weight: 500; }
+
+  /* Quote block */
+  .quote {
+    margin: 32px 0 0;
+    padding: 20px 28px;
+    background: rgba(10,20,32,0.5);
+    border-left: 2px solid var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px;
+    color: var(--gold-pale); line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+  .quote-author {
+    margin-top: 10px; font-family: 'Mulish', sans-serif;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--steel);
+    font-style: normal;
+  }
+
+  /* Recommendation box */
+  .reco {
+    margin-top: 32px;
+    background: linear-gradient(145deg, rgba(184,149,74,0.07), rgba(184,149,74,0.02));
+    border: 0.5px solid rgba(184,149,74,0.3);
+    border-radius: 6px; padding: 28px 32px;
+    position: relative;
+  }
+  .reco-tag {
+    font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .reco-headline {
+    font-family: 'Cormorant Garamond', serif; font-size: 26px;
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.01em;
+    line-height: 1.25; margin-bottom: 12px;
+  }
+  .reco-headline .gold { color: var(--gold); font-style: italic; }
+  .reco-detail {
+    font-size: 14px; color: var(--ivory-dim); line-height: 1.75;
+  }
+  .reco-detail strong { color: var(--gold-pale); font-weight: 500; }
+
+  /* CTA / link button */
+  .cta-row {
+    margin-top: 40px; display: flex; flex-wrap: wrap;
+    gap: 14px; align-items: center;
+  }
+  .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 22px;
+    background: var(--gold); color: var(--obsidian);
+    border: none; border-radius: 2px;
+    font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .cta:hover { background: var(--gold-glow); transform: translateY(-2px); }
+  .cta.ghost {
+    background: transparent; color: var(--gold);
+    border: 0.5px solid rgba(184,149,74,0.4);
+  }
+  .cta.ghost:hover { background: rgba(184,149,74,0.08); }
+
+  /* Two-column row */
+  .row { display: grid; gap: 32px; }
+  .row-2 { grid-template-columns: 1fr 1fr; }
+  .row-3 { grid-template-columns: repeat(3, 1fr); }
+  .row-12 { grid-template-columns: 1fr 2fr; }
+  .row-21 { grid-template-columns: 2fr 1fr; }
+  @media (max-width: 900px) {
+    .row-2, .row-3, .row-12, .row-21 { grid-template-columns: 1fr; }
+  }
+
+  /* Channel name + dot */
+  .ch-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block; flex-shrink: 0; margin-right: 8px;
+    vertical-align: middle;
+  }
+  .ch-name {
+    font-family: 'Raleway', sans-serif; font-weight: 500;
+    font-size: 13px; letter-spacing: 0.04em;
+    display: inline-flex; align-items: center;
+  }
+
+  /* Reflection / exam cards */
+  .reflect-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    margin-top: 32px;
+  }
+  @media (max-width: 900px) { .reflect-grid { grid-template-columns: 1fr; } }
+  .reflect {
+    background: rgba(10,20,32,0.5);
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-radius: 4px; padding: 22px;
+  }
+  .reflect-q {
+    font-family: 'Cormorant Garamond', serif; font-size: 17px;
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.01em;
+    line-height: 1.4; font-style: italic;
+  }
+  .reflect-a {
+    font-size: 12px; color: var(--steel); line-height: 1.7; margin-top: 12px;
+  }
+  .reflect-a strong { color: var(--gold-pale); font-weight: 500; }
+
+  /* Vignette table */
+  .vignette-table {
+    width: 100%; border-collapse: collapse; margin-top: 32px;
+    font-family: 'Mulish', sans-serif; font-size: 13px;
+  }
+  .vignette-table thead th {
+    text-align: left; padding: 0 16px 14px;
+    font-size: 9px; font-weight: 500; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--gold);
+    border-bottom: 0.5px solid rgba(184,149,74,0.25);
+  }
+  .vignette-table tbody td {
+    padding: 18px 16px; vertical-align: top;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    color: var(--ivory-dim); line-height: 1.55;
+  }
+  .vignette-table tbody td:first-child {
+    color: var(--ivory); font-weight: 500;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: 0.02em;
+  }
+  .vignette-table tbody td.miss { color: var(--rose); }
+
+  /* Footer */
+  footer {
+    background: var(--obsidian);
+    padding: 64px 56px 48px;
+    border-top: 0.5px solid rgba(184,149,74,0.18);
+    position: relative;
+  }
+  @media (max-width: 768px) { footer { padding: 48px 24px 36px; } }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 40px; flex-wrap: wrap;
+  }
+  .footer-mark { display: flex; align-items: center; gap: 14px; }
+  .footer-mark svg { width: 28px; height: 28px; }
+  .footer-mark-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 18px;
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.04em;
+  }
+  .footer-mark-text .gold { color: var(--gold); font-style: italic; }
+  .footer-tagline {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+    margin-top: 12px;
+  }
+  .footer-meta {
+    font-family: 'Mulish', sans-serif; font-size: 10px; color: var(--steel);
+    letter-spacing: 0.08em; line-height: 1.8; text-align: right;
+  }
+
+  /* Helpers */
+  .mt-32 { margin-top: 32px; }
+  .mt-48 { margin-top: 48px; }
+  .mt-64 { margin-top: 64px; }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Chart wrapper */
+  .chart-card {
+    background: linear-gradient(145deg, var(--navy), var(--slate));
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-radius: 6px; padding: 28px;
+    position: relative;
+  }
+  .chart-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 24px; padding-bottom: 14px;
+    border-bottom: 0.5px solid rgba(184,149,74,0.12);
+  }
+  .chart-title {
+    font-family: 'Raleway', sans-serif; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ivory);
+  }
+  .chart-meta {
+    font-family: 'Mulish', sans-serif; font-size: 10px;
+    font-weight: 400; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--steel);
+  }
+  .chart-wrap { position: relative; height: 320px; }
+
+  /* Cluster cards (D-STAR) */
+  .cluster-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+  @media (max-width: 800px) { .cluster-grid { grid-template-columns: 1fr; } }
+  .cluster {
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 4px; padding: 20px 22px;
+    border-left: 2px solid var(--cluster-color, var(--gold));
+  }
+  .cluster-tag {
+    font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.22em; color: var(--cluster-color, var(--gold));
+    margin-bottom: 6px;
+  }
+  .cluster-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 20px;
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.01em;
+    margin-bottom: 8px;
+  }
+  .cluster-stats {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ivory-dim); margin-top: 10px;
+  }
+  .cluster-stats span strong { color: var(--gold-glow); font-weight: 500; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SVG SYMBOLS
+     ═══════════════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="hex-gold" viewBox="0 0 64 64">
+      <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="none" stroke="#B8954A" stroke-width="1.2"/>
+      <polygon points="32,16 44,23 44,41 32,48 20,41 20,23" fill="none" stroke="#B8954A" stroke-width="0.8"/>
+      <circle cx="32" cy="32" r="3" fill="#B8954A"/>
+    </symbol>
+    <symbol id="hex-line" viewBox="0 0 64 64">
+      <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="none" stroke="#B8954A" stroke-width="0.6" opacity="0.8"/>
+      <polygon points="32,12 49,21 49,43 32,52 15,43 15,21" fill="none" stroke="#B8954A" stroke-width="0.4" opacity="0.5"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ═══════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════ -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="topnav-mark" style="text-decoration:none;">
+      <svg><use href="#hex-gold"/></svg>
+      <span class="topnav-mark-text">JC Consulting <span class="gold">&amp;</span> Advisory</span>
+    </a>
+    <div class="topnav-links">
+      <a href="#map">Map</a>
+      <a href="#m1">Module I</a>
+      <a href="#m2">Module II</a>
+      <a href="#m3">Module III</a>
+      <a href="#m4">Module IV</a>
+      <a href="#m5">Module V</a>
+      <a href="#cases">Cases</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hex-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-orbit">
+    <svg viewBox="0 0 540 540">
+      <polygon points="270,30 450,140 450,400 270,510 90,400 90,140"
+               fill="none" stroke="rgba(184,149,74,0.18)" stroke-width="0.5"
+               stroke-dasharray="4 8"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-mast">
+      <svg class="hero-mast-mark"><use href="#hex-gold"/></svg>
+      <span class="hero-mast-text">JC Consulting &amp; Advisory</span>
+      <span class="hero-mast-sep"></span>
+      <span class="hero-mast-secondary">Education · Strategy · Decision Science</span>
+    </div>
+
+    <div class="hero-eyebrow">A Five-Module Master Course</div>
+
+    <h1 class="hero-title">
+      Marketing &amp;<br>
+      Business <span class="gold">Analytics.</span>
+    </h1>
+
+    <div class="hero-divider"></div>
+
+    <p class="hero-tagline">
+      From decision trees in Napa to marketing-mix models in London —
+      five modules, four cases, one discipline: choosing the right question
+      before reaching for the algorithm.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Modules</span>
+        <span class="hero-meta-value">Five</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Worked Cases</span>
+        <span class="hero-meta-value">Four</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Methods Covered</span>
+        <span class="hero-meta-value">Decision Trees · CLV · Uplift · Attribution · MMM</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Audience</span>
+        <span class="hero-meta-value">MBA · Senior Marketers · Strategy</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">↓ Scroll · Course Map</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     COURSE MAP
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy reveal" id="map">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">00 · Course Map</div>
+    <h2 class="s-title">Five lenses on the same <span class="gold">commercial question.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Every module pairs a method with a decision. Every case pairs a dataset with
+      a conversation a marketer would actually have. The methods scale from a one-shot
+      harvest decision in 1976 Napa Valley to a five-year media model for a global
+      vodka brand. The discipline is the same.
+    </p>
+
+    <div class="map-grid">
+      <a class="map-mod" href="#m1">
+        <div class="map-mod-num">I</div>
+        <div class="map-mod-title">Decision-Driven Thinking</div>
+        <div class="map-mod-case">Case · <strong>Freemark Abbey</strong></div>
+        <div class="map-mod-sub">Decision trees, expected value, and the value of waiting under uncertainty.</div>
+      </a>
+      <a class="map-mod" href="#m2">
+        <div class="map-mod-num">II</div>
+        <div class="map-mod-title">The Analytics Spectrum</div>
+        <div class="map-mod-case">Companion · <strong>Flashion</strong></div>
+        <div class="map-mod-sub">Descriptive, diagnostic, predictive, prescriptive — and which one your problem actually needs.</div>
+      </a>
+      <a class="map-mod" href="#m3">
+        <div class="map-mod-num">III</div>
+        <div class="map-mod-title">Customer Value &amp; Targeting</div>
+        <div class="map-mod-case">Case · <strong>Artea</strong></div>
+        <div class="map-mod-sub">CLV, three ways to measure it, and uplift modeling when the average treatment effect lies.</div>
+      </a>
+      <a class="map-mod" href="#m4">
+        <div class="map-mod-num">IV</div>
+        <div class="map-mod-title">Digital Analytics</div>
+        <div class="map-mod-case">Case · <strong>MasRetail</strong></div>
+        <div class="map-mod-sub">Attribution vs. incrementality, marginal vs. average ROI, and why a 7:1 ROAS can be a fiction.</div>
+      </a>
+      <a class="map-mod" href="#m5">
+        <div class="map-mod-num">V</div>
+        <div class="map-mod-title">ML, MMM &amp; the Accountability Gap</div>
+        <div class="map-mod-case">Case · <strong>Absolut UK</strong></div>
+        <div class="map-mod-sub">Marketing-mix modelling, store clustering, and the human politics of putting an algorithm into a P&amp;L.</div>
+      </a>
+    </div>
+
+    <div class="cases-ribbon" id="cases">
+      <div class="case-pill">
+        <div class="case-pill-num">Case I</div>
+        <div class="case-pill-name">Freemark Abbey <span class="gold">Winery</span></div>
+        <div class="case-pill-sub">Napa Valley, September 1976. A storm is coming. Harvest now or roll the dice on botrytis.</div>
+      </div>
+      <div class="case-pill">
+        <div class="case-pill-num">Case II</div>
+        <div class="case-pill-name"><span class="gold">Artea</span></div>
+        <div class="case-pill-sub">87% of visitors don't transact. Should every non-buyer get a 20% coupon? An A/B test says: it's complicated.</div>
+      </div>
+      <div class="case-pill">
+        <div class="case-pill-num">Case III</div>
+        <div class="case-pill-name"><span class="gold">MasRetail</span></div>
+        <div class="case-pill-sub">Branded paid-search reports a 7:1 ROAS. A matched-market test reveals the truth.</div>
+      </div>
+      <div class="case-pill">
+        <div class="case-pill-num">Case IV</div>
+        <div class="case-pill-name">Absolut <span class="gold">UK</span></div>
+        <div class="case-pill-sub">Five years of weekly media spend, six channels, one vodka brand. Where is the next pound best spent?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MODULE I
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian reveal" id="m1">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">Module I · Decision-Driven Thinking</div>
+    <h2 class="s-title">Information &rarr; insight &rarr; <span class="gold">decision.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Analytics that does not change a decision is journalism. Module I introduces the
+      logic that runs through the entire course: name the decision, lay out the choices,
+      attach probabilities and payoffs, and choose the action with the highest expected
+      value — adjusted for what the data does not tell you.
+    </p>
+
+    <div class="s-body">
+      <p>
+        Most managers reach for analysis the way a tourist reaches for a phrasebook —
+        urgently, after the conversation has already started. <strong>Decision-driven
+        thinking inverts the order.</strong> You start with the decision you face,
+        sketch the choices you have, and only then ask: what would I need to know to
+        choose between them?
+      </p>
+      <p>
+        The discipline borrows three tools from operations research: <em>decision trees</em>
+        (a graphical map of choices and chance), <em>expected value</em> (the probability-weighted
+        average of outcomes), and the <em>value of perfect information</em> (how much you'd
+        pay to remove an uncertainty). Together they let you reason about ambiguous
+        commercial decisions the same way an underwriter reasons about risk.
+      </p>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-tag">Concept I</div>
+        <div class="concept-name">Decision Trees</div>
+        <div class="concept-body">
+          A tree alternates <strong>decision nodes</strong> (squares — you choose) with
+          <strong>chance nodes</strong> (circles — nature chooses). Each terminal leaf
+          carries a payoff. Roll back from right to left, taking expected values at
+          chance nodes and maximums at decision nodes.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept II</div>
+        <div class="concept-name">Expected Value</div>
+        <div class="concept-body">
+          A weighted average of payoffs over states of the world. Honest only when
+          probabilities are honest.
+          <div class="formula">EV = &Sigma;<sub>i</sub> p<sub>i</sub> &middot; v<sub>i</sub>
+&nbsp;&nbsp;&nbsp;&nbsp;where &Sigma;p<sub>i</sub> = 1</div>
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept III</div>
+        <div class="concept-name">Value of Information</div>
+        <div class="concept-body">
+          The difference between the expected value if you knew the truth in advance
+          and the expected value of acting under uncertainty. <strong>It is the most
+          you should pay for a study, a forecast, or a delay.</strong>
+          <div class="formula">EVPI = EV(perfect info) &minus; EV(best action now)</div>
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept IV</div>
+        <div class="concept-name">Risk Preference</div>
+        <div class="concept-body">
+          EV is a guide, not a verdict. A risk-averse owner may prefer a smaller
+          certain payoff to a larger expected one. Apply utility weights, or simply
+          ask: <em>could the company survive the worst branch?</em>
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept V</div>
+        <div class="concept-name">Sensitivity Testing</div>
+        <div class="concept-body">
+          Vary each input across a plausible range. The decision is robust if the
+          recommended action does not flip. The decision is fragile if a small
+          probability change reverses the answer — flag fragility, do not hide it.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept VI</div>
+        <div class="concept-name">Option Value</div>
+        <div class="concept-body">
+          Some decisions can be deferred. Waiting itself has value — you preserve
+          optionality and learn from new information. The harvest decision in
+          Freemark Abbey is, structurally, an option to wait.
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CASE I: FREEMARK ABBEY ─────────────────── -->
+    <div class="case-banner" id="case-freemark">
+      <div class="case-banner-tag">Case I · Worked Solution</div>
+      <div class="case-banner-title">Freemark Abbey <span class="gold">Winery</span></div>
+      <div class="case-banner-meta">
+        <div class="case-banner-meta-item"><span class="cbm-label">Setting</span><span class="cbm-value">Napa Valley · September 1976</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Protagonist</span><span class="cbm-value">William Jaeger, Partner</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Production</span><span class="cbm-value">~1,000 cases Riesling · 12,000 bottles</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Decision</span><span class="cbm-value">Harvest now, or wait through the storm</span></div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Setup</div>
+      <div class="case-block-title">A premium winery, a forecast storm, and a fork in the vineyard.</div>
+      <div class="case-block-body">
+        <p>
+          William Jaeger's Riesling grapes are nearly ready. A weather report puts the
+          probability of a rainstorm reaching Napa at <strong>50%</strong>. If the storm
+          hits and the weather is warm, <em>Botrytis cinerea</em> — the noble rot — can
+          form, concentrating sugars and producing a luscious sweet wine that wholesales
+          at <strong>$8.00/bottle</strong>. The mold reduces juice yield by 30%. If the
+          storm hits but the rot does not form, the rainwater simply dilutes the berries
+          and the wine sells for a thin <strong>$2.00/bottle</strong>.
+        </p>
+        <p>
+          If Jaeger harvests <em>now</em>, he sidesteps the storm entirely and bottles a
+          dry Riesling that wholesales at <strong>$2.85/bottle</strong> — modest, but
+          certain. If he waits and the storm misses, three sub-states are possible: a
+          rich vintage at $3.50, a lighter one at $3.00, or a low-acid year at $2.50.
+        </p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Branch</th>
+            <th>Conditional probability</th>
+            <th class="num">Joint probability</th>
+            <th class="num">Bottles</th>
+            <th class="num">Wholesale £/bottle</th>
+            <th class="num">Branch revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Harvest now (no storm exposure)</td>
+            <td>1.00</td>
+            <td class="num">1.00</td>
+            <td class="num">12,000</td>
+            <td class="num">$2.85</td>
+            <td class="num hi">$34,200</td>
+          </tr>
+          <tr>
+            <td>Wait · Storm · Botrytis forms</td>
+            <td>0.50 &times; 0.40</td>
+            <td class="num">0.20</td>
+            <td class="num">8,400</td>
+            <td class="num">$8.00</td>
+            <td class="num hi">$67,200</td>
+          </tr>
+          <tr>
+            <td>Wait · Storm · No botrytis (thin)</td>
+            <td>0.50 &times; 0.60</td>
+            <td class="num">0.30</td>
+            <td class="num">12,000</td>
+            <td class="num">$2.00</td>
+            <td class="num">$24,000</td>
+          </tr>
+          <tr>
+            <td>Wait · No storm · Good vintage</td>
+            <td>0.50 &times; 0.40</td>
+            <td class="num">0.20</td>
+            <td class="num">12,000</td>
+            <td class="num">$3.50</td>
+            <td class="num">$42,000</td>
+          </tr>
+          <tr>
+            <td>Wait · No storm · Light vintage</td>
+            <td>0.50 &times; 0.40</td>
+            <td class="num">0.20</td>
+            <td class="num">12,000</td>
+            <td class="num">$3.00</td>
+            <td class="num">$36,000</td>
+          </tr>
+          <tr>
+            <td>Wait · No storm · Low-acid year</td>
+            <td>0.50 &times; 0.20</td>
+            <td class="num">0.10</td>
+            <td class="num">12,000</td>
+            <td class="num">$2.50</td>
+            <td class="num">$30,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Decision Tree · Roll-Back</div>
+      <div class="case-block-title">Two branches, six leaves, one expected value.</div>
+      <div class="case-block-body">
+        <p>
+          Compute the expected value of <em>waiting</em> by weighting each leaf by its
+          joint probability:
+        </p>
+      </div>
+
+      <div class="tree-wrap">
+        <div class="tree">
+<pre><span class="branch">Harvest now</span> ────────────────────────────── <span class="pay">$34,200</span>      ← certain
+
+<span class="branch">Wait</span>
+ ├─ <span class="prob">0.50 storm</span>
+ │   ├─ <span class="prob">0.40</span> botrytis  ──── <span class="pay">$67,200</span>   joint <span class="prob">0.20</span>
+ │   └─ <span class="prob">0.60</span> thin      ──── <span class="pay">$24,000</span>   joint <span class="prob">0.30</span>
+ └─ <span class="prob">0.50 no storm</span>
+     ├─ <span class="prob">0.40</span> good     ──── <span class="pay">$42,000</span>   joint <span class="prob">0.20</span>
+     ├─ <span class="prob">0.40</span> light    ──── <span class="pay">$36,000</span>   joint <span class="prob">0.20</span>
+     └─ <span class="prob">0.20</span> low-acid ──── <span class="pay">$30,000</span>   joint <span class="prob">0.10</span>
+
+<span class="ev">EV(Wait) = 0.20·67,200 + 0.30·24,000 + 0.20·42,000 + 0.20·36,000 + 0.10·30,000
+         = 13,440  +  7,200    +  8,400    +  7,200    +  3,000
+         = $39,240</span>
+</pre>
+        </div>
+      </div>
+
+      <div class="kpi-strip mt-32">
+        <div class="kpi">
+          <div class="kpi-label">EV · Harvest now</div>
+          <div class="kpi-value">$34.2<span class="unit">K</span></div>
+          <div class="kpi-sub">Certain revenue</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">EV · Wait</div>
+          <div class="kpi-value">$39.2<span class="unit">K</span></div>
+          <div class="kpi-sub">Probability-weighted</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Expected gain · Wait</div>
+          <div class="kpi-value">+$5,040</div>
+          <div class="kpi-sub">14.7% uplift over harvest</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Worst case · Wait</div>
+          <div class="kpi-value">$24.0<span class="unit">K</span></div>
+          <div class="kpi-sub">30% chance · thin wine</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Sensitivity</div>
+      <div class="case-block-title">When does the recommendation flip?</div>
+      <div class="case-block-body">
+        <p>
+          Vary the inputs that matter most: the storm probability and the botrytis
+          probability conditional on the storm.
+        </p>
+        <ul style="margin:14px 0 0 22px; line-height:1.85;">
+          <li>If <strong>P(botrytis | storm)</strong> falls from 0.40 to <strong>0.18</strong>,
+              EV(Wait) drops below $34,200. <em>Below ~18% rot probability, harvest now.</em></li>
+          <li>If Jaeger could dump diluted wine at half price ($1.00/bottle = $12,000), the
+              storm-no-rot branch falls and EV(Wait) becomes $35,640 — still above harvest,
+              but only barely.</li>
+          <li>If risk aversion is binding — for instance, the worst branch ($24,000) would
+              breach a debt covenant — the certainty premium of harvesting now justifies
+              forgoing $5,040 in expectation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reco">
+      <div class="reco-tag">Recommendation</div>
+      <div class="reco-headline">Wait — but only if a $24,000 outcome is <span class="gold">survivable.</span></div>
+      <div class="reco-detail">
+        Expected value points to waiting: <strong>$39,240 vs $34,200</strong>, a 14.7%
+        uplift. The recommendation is, however, <strong>fragile</strong> — it depends on
+        Jaeger's belief that <em>P(botrytis | storm)</em> is closer to 40% than to 20%,
+        and on whether the winery can absorb the 30% probability of $24,000 thin wine
+        without distressing operations. If those conditions hold, plant the option to
+        wait. If not, harvest now and accept the $5,040 certainty premium as the price
+        of sleeping at night.
+      </div>
+    </div>
+
+    <div class="quote">
+      "Decision-driven thinking is the discipline of refusing to compute averages
+       on numbers you have not yet decided to live with."
+      <div class="quote-author">Module I · Reflection</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MODULE II
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy reveal" id="m2">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">Module II · The Analytics Spectrum</div>
+    <h2 class="s-title">Four kinds of question, in <span class="gold">strict order.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Most analytics projects fail on the brief, not the model. Module II teaches
+      problem framing as a craft — distinguishing decisions in disguise from genuine
+      uncertainties, choosing an objective function on purpose, and recognising that
+      the most important variable in any model is the one chosen for the left-hand
+      side.
+    </p>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-step-num">I</div>
+        <div class="process-step-name">DESCRIPTIVE</div>
+        <div class="process-step-desc">What happened? Counts, distributions, comparisons over time. Often where the question hides.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">II</div>
+        <div class="process-step-name">DIAGNOSTIC</div>
+        <div class="process-step-desc">Why did it happen? Decompose, segment, and isolate the drivers using comparisons and slicing.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">III</div>
+        <div class="process-step-name">PREDICTIVE</div>
+        <div class="process-step-desc">What is likely next? Estimate a model that maps inputs to outcomes and reduces uncertainty.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">IV</div>
+        <div class="process-step-name">PRESCRIPTIVE</div>
+        <div class="process-step-desc">So what — what should we do? Optimise an objective subject to constraints; this is where decisions live.</div>
+      </div>
+    </div>
+
+    <div class="row row-2 mt-64">
+      <div class="concept">
+        <div class="concept-tag">Concept · Information matrix</div>
+        <div class="concept-name">What you need to know vs what you know</div>
+        <div class="concept-body">
+          Crossing <strong>need-to-know</strong> with <strong>know</strong> yields four
+          quadrants: <em>Foundational</em> (maintain), <em>Missing</em> (seek — the
+          priority), <em>Random</em> (ignore), <em>Meaningless</em> (stop). The whole
+          discovery brief should aim at the <em>Missing</em> quadrant.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Causal direction</div>
+        <div class="concept-name">Whichever variable is on the left, you have assumed the cause</div>
+        <div class="concept-body">
+          Regress price on demand and you have implicitly modelled price as caused by
+          demand. Regress demand on price and you have inverted the causal arrow. The
+          <em>same data</em>, two different worlds. Choose deliberately.
+          <div class="formula">demand = f(price, …)   ≠   price = f(demand, …)</div>
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Optimisation</div>
+        <div class="concept-name">Decision variables, objective, constraints</div>
+        <div class="concept-body">
+          Every prescriptive model has three pieces: the levers you control, the metric
+          you maximise, and the lines you will not cross. Most arguments inside firms
+          are arguments about the second piece — <em>which</em> objective.
+          <div class="formula">max  f(x)
+s.t.  g(x) &le; b
+      x &ge; 0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FLASHION COMPANION ──────────── -->
+    <div class="case-banner">
+      <div class="case-banner-tag">Companion case · Flashion</div>
+      <div class="case-banner-title">When the same data answers <span class="gold">three different questions.</span></div>
+      <div class="case-banner-meta">
+        <div class="case-banner-meta-item"><span class="cbm-label">Setting</span><span class="cbm-value">January 2017 · US flash-sales pioneer</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Protagonist</span><span class="cbm-value">Kate Wilson, new data scientist</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Tension</span><span class="cbm-value">Pricing as art (Priscilla, 30 yrs) vs Pricing as model</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Target</span><span class="cbm-value">80% sell-through per category</span></div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">The R² parable</div>
+      <div class="case-block-title">The same regression, three different briefs.</div>
+      <div class="case-block-body">
+        <p>
+          Wilson runs the same regression three times. Each version uses the same
+          algorithm and the same target (Quantity Sold). Only the framing of the
+          inputs changes — yet the explained variance moves dramatically:
+        </p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Framing</th>
+            <th>Inputs</th>
+            <th class="num">R²</th>
+            <th>Lesson</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>v1 · IT data only</td>
+            <td>Cost, MSRP, Inventory, Department, Month, Day-of-week, Shipping</td>
+            <td class="num">0.19</td>
+            <td>Raw data is not a problem statement.</td>
+          </tr>
+          <tr>
+            <td>v2 · Domain features</td>
+            <td>+ Discount, RelPrice, NumStyles in event</td>
+            <td class="num">0.24</td>
+            <td>Domain knowledge encoded as features lifts the model only modestly when censoring is ignored.</td>
+          </tr>
+          <tr>
+            <td>v3 · Censoring fixed</td>
+            <td>Same features, exclude sold-out styles where Demand &ne; Quantity Sold</td>
+            <td class="num hi">0.73</td>
+            <td>The biggest gain came from <em>defining the dependent variable correctly.</em></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        "The analytical work in this case happened before anyone built a model. Which
+        problem to solve, which data to use, what to optimise for were all judgment
+        calls. The algorithm was the least important part."
+        <div class="quote-author">Flashion · Session 2 reflection</div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Choosing the objective</div>
+      <div class="case-block-title">Four candidate objectives, four different products.</div>
+      <div class="case-block-body">
+        <p>
+          A pricing model needs an objective. Each candidate gives something up:
+        </p>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Objective</th>
+            <th>What it optimises</th>
+            <th>What it sacrifices</th>
+            <th>Stakeholder it pleases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Max profit</td><td>Margin × volume per event</td><td>Long-run customer relationship</td><td>Dan Garcia, CFO</td></tr>
+          <tr><td>Max sell-through</td><td>Inventory cleared</td><td>Margin (under-prices winners)</td><td>Margie Pulaski, Buyer</td></tr>
+          <tr><td>Hit 80% target</td><td>Predictable warehouse load</td><td>Optimum on either side</td><td>Shreya Doshi, COO</td></tr>
+          <tr><td>Max LTV</td><td>Repeat purchase &amp; brand</td><td>Short-run revenue this week</td><td>Priscilla Johnson, CMO</td></tr>
+        </tbody>
+      </table>
+      <div class="reco">
+        <div class="reco-tag">Module II takeaway</div>
+        <div class="reco-headline">The first analytic act is choosing <span class="gold">whose argument you are answering.</span></div>
+        <div class="reco-detail">
+          The <em>right</em> objective is the one the firm has the appetite to defend
+          when the algorithm pushes back against a long-tenured expert. Priscilla's
+          objection — that automated short-run pricing erodes customer equity — is
+          substantively right; the answer is not to silence her but to encode her
+          insight as a constraint or a multi-objective formulation.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MODULE III
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian reveal" id="m3">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">Module III · Customer Value &amp; Targeting</div>
+    <h2 class="s-title">Not every customer is worth <span class="gold">the same coupon.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The average treatment effect tells you whether a campaign worked on average. It
+      hides what every marketer secretly suspects: most of the lift came from a few
+      segments, and other segments were probably hurt. Module III teaches Customer
+      Lifetime Value as a value scale and uplift modelling as a targeting policy.
+    </p>
+
+    <div class="row row-2">
+      <div class="concept">
+        <div class="concept-tag">CLV · Method 1</div>
+        <div class="concept-name">Discounted individual transactions</div>
+        <div class="concept-body">
+          Sum the discounted gross profit of every transaction a customer has made.
+          Average across customers in a segment.
+          <div class="formula">CLV<sub>i</sub> = &Sigma;<sub>j=1..m</sub> u<sub>ij</sub> / (1+r)<sup>t<sub>ij</sub></sup>
+
+CLV̄ = (1/N) · &Sigma;<sub>i</sub> CLV<sub>i</sub></div>
+          <em>Worked example:</em> Costco customer P91, 56 transactions over 5.66 years,
+          r = 10%, gives <strong>CLV(P91) = $3,180.11</strong>. Segment averages:
+          Personal $2,099, Business $13,558.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">CLV · Method 2a</div>
+        <div class="concept-name">Aggregate, varying retention, finite horizon</div>
+        <div class="concept-body">
+          When you don't have individual transaction logs but you do have year-by-year
+          gross profit and retention rates.
+          <div class="formula">CLV̄ = &Sigma;<sub>T=0..H</sub> u<sub>T</sub> · &prod;<sub>t&lt;T</sub> RR<sub>t,t+1</sub> · (1+i)<sup>−T</sup></div>
+          Personal CLV (10y) = <strong>$2,094.47</strong> · Business CLV (10y) = <strong>$12,637.77</strong>.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">CLV · Method 2b · ∞</div>
+        <div class="concept-name">Closed-form, constant retention &amp; profit</div>
+        <div class="concept-body">
+          The shorthand most marketing decks quote. Constant margin <em>m</em>, retention
+          <em>r</em>, discount rate <em>d</em>:
+          <div class="formula">CLV (∞) = m · (1+d) / (1+d − r)
+       ≈ m · r / (1+d − r)   ← future-only</div>
+          Personal: $631.68 × 1.10 / (1.10 − 0.77) = <strong>$2,105.60</strong>.
+          Business: $2,301.11 × 1.10 / (1.10 − 0.91) = <strong>$13,322.22</strong>.
+          All three methods converge — the choice is governed by <em>data availability</em>
+          and the steadiness of the customer relationship.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Uplift</div>
+        <div class="concept-name">ATE, CATE, and the targeting score</div>
+        <div class="concept-body">
+          The Average Treatment Effect is a single number across the test population.
+          The <em>Conditional</em> Average Treatment Effect (CATE) is the lift for
+          customers like <em>this</em> one — by channel, cart status, recency. Score
+          every prospect, rank by predicted CATE, target only those above zero.
+          <div class="formula">ATE   = E[Y | T=1] − E[Y | T=0]
+CATE(x) = E[Y | T=1, X=x] − E[Y | T=0, X=x]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CASE II: ARTEA ─────────────────────────── -->
+    <div class="case-banner" id="case-artea">
+      <div class="case-banner-tag">Case II · Worked Solution</div>
+      <div class="case-banner-title"><span class="gold">Artea</span> · Designing a Targeting Policy</div>
+      <div class="case-banner-meta">
+        <div class="case-banner-meta-item"><span class="cbm-label">Setting</span><span class="cbm-value">Online retailer · handmade clothing</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Protagonist</span><span class="cbm-value">Alex Campbel, CEO &amp; co-founder</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Test</span><span class="cbm-value">5,000 visitors · 50/50 split · 20% coupon</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Scoring set</span><span class="cbm-value">6,000 customers in <em>Next_Campaign</em></span></div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Headline numbers — A/B test</div>
+      <div class="case-block-title">The average treatment effect is a yes <span class="gold">and</span> a no.</div>
+      <div class="case-block-body">
+        <p>
+          Of 5,000 visitors who had not transacted in the last two months, 2,502
+          received a 20% non-transferable coupon valid for one month; 2,498 served as
+          control. Outcomes one month later:
+        </p>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi"><div class="kpi-label">Conversion · Control</div><div class="kpi-value">10.7<span class="unit">%</span></div><div class="kpi-sub">n = 2,498</div></div>
+        <div class="kpi"><div class="kpi-label">Conversion · Treated</div><div class="kpi-value">12.4<span class="unit">%</span></div><div class="kpi-sub">n = 2,502 · +1.7 pp</div></div>
+        <div class="kpi"><div class="kpi-label">Revenue · Control</div><div class="kpi-value">$7.78</div><div class="kpi-sub">per customer</div></div>
+        <div class="kpi"><div class="kpi-label">Revenue · Treated</div><div class="kpi-value">$7.54</div><div class="kpi-sub">per customer · &minus;$0.24</div></div>
+      </div>
+
+      <div class="case-block-body" style="margin-top:24px;">
+        <p>
+          Read on conversion alone, the coupon worked. Read on revenue, the same
+          coupon was <strong>value-destructive</strong> — every treated customer spent
+          24 cents <em>less</em> than they would have in control. The 20% discount on
+          the marginal converter ate the lift. Blanket-targeting fails by exactly the
+          amount the discount cannibalises the customers who would have bought anyway.
+        </p>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Heterogeneity</div>
+      <div class="case-block-title">The lift is not flat. It is hidden inside two segments.</div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th class="num">Revenue · control</th>
+            <th class="num">Revenue · treated</th>
+            <th class="num">Δ revenue</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>channel_acq = 1 · Google</td><td class="num">$4.92</td><td class="num">$2.80</td><td class="num lo">&minus;$2.12</td><td>Hurt</td></tr>
+          <tr><td>channel_acq = 2 · Facebook</td><td class="num">$9.81</td><td class="num">$10.90</td><td class="num hi">+$1.08</td><td>Lift</td></tr>
+          <tr><td>channel_acq = 3 · Instagram</td><td class="num">$9.17</td><td class="num">$10.34</td><td class="num hi">+$1.16</td><td>Lift</td></tr>
+          <tr><td>channel_acq = 4 · Referral</td><td class="num">$11.18</td><td class="num">$11.52</td><td class="num hi">+$0.34</td><td>Lift</td></tr>
+          <tr><td>channel_acq = 5 · Other</td><td class="num">$14.86</td><td class="num">$12.76</td><td class="num lo">&minus;$2.10</td><td>Hurt</td></tr>
+          <tr><td>shopping_cart = 0 · No active cart</td><td class="num">$5.48</td><td class="num">$4.74</td><td class="num lo">&minus;$0.74</td><td>Hurt</td></tr>
+          <tr><td>shopping_cart = 1 · Active cart</td><td class="num">$13.15</td><td class="num">$14.53</td><td class="num hi">+$1.38</td><td>Lift</td></tr>
+        </tbody>
+      </table>
+
+      <div class="case-block-body" style="margin-top:24px;">
+        <p>
+          The pattern is structural, not noise. <strong>Customers who left a product in
+          their cart and arrived through Facebook, Instagram or Referral are the
+          coupon's responders.</strong> Customers acquired via Google or "Other" — who
+          generally spend more at full price — do not need the coupon, and the discount
+          subtracts from revenue. Those who never opened a cart are simply not engaged
+          enough for a coupon to matter.
+        </p>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Targeting policy</div>
+      <div class="case-block-title">Score the next 6,000, send the coupon to <span class="gold">about a third.</span></div>
+      <div class="case-block-body">
+        <p>
+          Build an uplift model on the AB_Test sample (e.g. two outcome models for
+          treated and control, or a meta-learner) that predicts the <em>incremental</em>
+          revenue for each prospect given their features. Apply the model to the 6,000
+          users in <em>Next_Campaign</em>. Rank by predicted uplift. Send coupons only
+          where predicted uplift &gt; 0.
+        </p>
+        <p>
+          Empirical thresholds from the AB_Test pattern: include if
+          <strong>shopping_cart = 1</strong>, <strong>channel_acq ∈ {2, 3, 4}</strong>,
+          and <strong>weeks_since_visit ≤ 3</strong>. Roughly <strong>30–35%</strong> of
+          the next 6,000 will pass — the rest get nothing (or a non-discount touch).
+        </p>
+      </div>
+      <div class="reco">
+        <div class="reco-tag">Recommendation</div>
+        <div class="reco-headline">Move from blanket to <span class="gold">selective</span> couponing.</div>
+        <div class="reco-detail">
+          A targeted policy turns Artea's revenue ATE from <strong>−$0.24/customer</strong>
+          to a positive ~<strong>+$1.20/customer</strong> on those treated. Targeting
+          ~30% of the file means total campaign revenue rises while discount cost falls
+          two-thirds. The caveat: <em>repeated</em> coupon use trains customers to wait
+          for discounts. Cap frequency, vary the offer, and re-test the policy quarterly.
+        </div>
+      </div>
+    </div>
+
+    <div class="reflect-grid">
+      <div class="reflect">
+        <div class="reflect-q">Did the coupon work?</div>
+        <div class="reflect-a">On conversion: <strong>+1.7 pp</strong> across the board. On revenue: <strong>negative</strong> on average, <strong>positive</strong> on the right segments. Both statements are true; reporting only one is malpractice.</div>
+      </div>
+      <div class="reflect">
+        <div class="reflect-q">Should Artea continue couponing?</div>
+        <div class="reflect-a">Yes — but selectively, on customers with active carts and the right acquisition channel, capped in frequency to avoid eroding price expectation.</div>
+      </div>
+      <div class="reflect">
+        <div class="reflect-q">By how much can revenue rise?</div>
+        <div class="reflect-a">If targeted at the cart=1 + channels {2,3,4} sub-population (~30%), revenue per <em>treated</em> customer should run ~$1.20–$1.40 above control, with discount cost ~⅓ of the blanket campaign.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MODULE IV
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate reveal" id="m4">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">Module IV · Digital Analytics</div>
+    <h2 class="s-title">A 7:1 ROAS can be a <span class="gold">fiction.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Digital marketing produces dashboards faster than it produces understanding.
+      Module IV separates four kinds of confusion that look identical on a chart but
+      lead to opposite decisions: wrong audience, wrong metric, wrong attribution,
+      wrong allocation.
+    </p>
+
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-tag">Concept · Funnel</div>
+        <div class="concept-name">AIDA</div>
+        <div class="concept-body">
+          Awareness → Interest → Desire → Action. Lower-funnel spend (Action) needs
+          enough conversions to train the bidding algorithm. A "Book Now" creative on
+          a tiny audience has neither.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Attribution</div>
+        <div class="concept-name">Last-click vs incrementality</div>
+        <div class="concept-body">
+          Last-click credits the final touch with 100% of the conversion. Incrementality
+          asks: would the conversion have happened anyway? Only the second metric is
+          decision-grade.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Equimarginal principle</div>
+        <div class="concept-name">Allocate until marginal returns equalise</div>
+        <div class="concept-body">
+          The next pound goes to the channel with the highest marginal return — not
+          the highest average. Stop when marginal returns equalise across channels.
+          <div class="formula">∂R/∂x<sub>k</sub>  equal across k     (and = price of capital, if budgets are flexible)</div>
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Matched-market test</div>
+        <div class="concept-name">Geo-experiments</div>
+        <div class="concept-body">
+          Pick paired markets matched on baseline volume; turn the channel off in one,
+          leave it on in the other; compare. Gold-standard incrementality test for
+          channels that resist user-level holdouts (e.g. branded paid search).
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · Average vs marginal ROI</div>
+        <div class="concept-name">Two different questions</div>
+        <div class="concept-body">
+          Average ROI ranks historical winners. Marginal ROI tells you where the next
+          dollar belongs. They are different and they often disagree.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">Concept · CLV as the value metric</div>
+        <div class="concept-name">Volume vs Value</div>
+        <div class="concept-body">
+          A campaign that produces more accounts at lower CLV produces less business
+          value. Pick the metric that survives a 12-month horizon.
+        </div>
+      </div>
+    </div>
+
+    <table class="vignette-table">
+      <thead>
+        <tr>
+          <th style="width:22%;">Vignette</th>
+          <th style="width:22%;">Dashboard said</th>
+          <th style="width:22%;">Was actually measuring</th>
+          <th style="width:34%;">What it missed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Windharbor Inn</td>
+          <td>Campaign not working</td>
+          <td>Wrong funnel stage</td>
+          <td class="miss">Customers were at <em>awareness</em>, not <em>action</em>; "Book Now" assumed intent that didn't exist.</td>
+        </tr>
+        <tr>
+          <td>InsightAI</td>
+          <td>Ease-of-use wins (700 vs 500 accounts)</td>
+          <td>Volume, not value</td>
+          <td class="miss">Active accounts at day 30 were equal (220 vs 210). CLV: AI-Tech $75,600 portfolio vs ease-of-use $22,200.</td>
+        </tr>
+        <tr>
+          <td>MasRetail</td>
+          <td>Branded paid-search ROAS = 7:1</td>
+          <td>Attribution, not incrementality</td>
+          <td class="miss">Matched-market test showed only ~15% incremental lift. Branded search captures intent that already exists.</td>
+        </tr>
+        <tr>
+          <td>EduPlus</td>
+          <td>TikTok wins at every level</td>
+          <td>Average return, not marginal</td>
+          <td class="miss">Optimal is $50K TikTok + $30K YouTube = $435K vs $334K all-TikTok. +$101K from marginal thinking.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ─── CASE III: MASRETAIL ──────────── -->
+    <div class="case-banner" id="case-masretail">
+      <div class="case-banner-tag">Case III · Worked Solution</div>
+      <div class="case-banner-title"><span class="gold">MasRetail</span> · Returns to Branded Search</div>
+      <div class="case-banner-meta">
+        <div class="case-banner-meta-item"><span class="cbm-label">Setting</span><span class="cbm-value">US omnichannel retailer · 1,000+ stores</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Decision</span><span class="cbm-value">Scale or kill branded paid-search?</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Reported ROAS</span><span class="cbm-value">7 : 1 (last-click)</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Spend at stake</span><span class="cbm-value">$1,170 / month · 6-month spend</span></div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Step 1 · the dashboard view</div>
+      <div class="case-block-title">Last-click attribution makes branded search look heroic.</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th class="num">Spend ($)</th>
+            <th class="num">Last-click revenue ($)</th>
+            <th class="num">Reported ROAS</th>
+            <th class="num">Purchases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#B8954A;"></span>Branded search</span></td><td class="num">1,170</td><td class="num hi">7,612</td><td class="num hi">6.5×</td><td class="num">152</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#4A8FB8;"></span>Email</span></td><td class="num">750</td><td class="num">2,265</td><td class="num">3.0×</td><td class="num">81</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#6BAA7E;"></span>Non-branded search</span></td><td class="num">760</td><td class="num">1,904</td><td class="num">2.5×</td><td class="num">28</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#C16E8C;"></span>Social media</span></td><td class="num">640</td><td class="num">704</td><td class="num">1.1×</td><td class="num">10</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#8A7FA6;"></span>Display</span></td><td class="num">570</td><td class="num">456</td><td class="num lo">0.8×</td><td class="num">6</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#7A8FA6;"></span>Direct visit</span></td><td class="num">—</td><td class="num">7,682</td><td class="num">—</td><td class="num">111</td></tr>
+        </tbody>
+      </table>
+      <div class="case-block-body" style="margin-top:18px;">
+        <p>
+          A naive read says: pour money into branded search and email, kill display and
+          social. The VP of marketing — uncomfortable with how cheap a 7:1 ROAS sounds —
+          orders an incrementality test.
+        </p>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Step 2 · matched-market test</div>
+      <div class="case-block-title">Holding branded search off in matched markets reveals <span class="gold">cannibalisation.</span></div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th class="num">Test (paid on)</th>
+            <th class="num">Control (paid off)</th>
+            <th class="num">Δ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Ad spend</td><td class="num">$10,000</td><td class="num">$0</td><td class="num">—</td></tr>
+          <tr><td>Paid brand click-throughs (k)</td><td class="num">12.0</td><td class="num">0.0</td><td class="num hi">+12.0</td></tr>
+          <tr><td>Organic brand click-throughs (k)</td><td class="num">28.0</td><td class="num">29.1</td><td class="num lo">&minus;3.9%</td></tr>
+          <tr><td>Direct visits (k)</td><td class="num">16.0</td><td class="num">16.7</td><td class="num lo">&minus;4.2%</td></tr>
+          <tr><td>Total site visits (k)</td><td class="num">56.0</td><td class="num">45.8</td><td class="num">+22.3%*</td></tr>
+          <tr class="total"><td>Total e-commerce revenue ($)</td><td class="num">85,330</td><td class="num">72,190</td><td class="num">+18.2%*</td></tr>
+        </tbody>
+      </table>
+
+      <div class="case-block-body" style="margin-top:14px; font-size:12px; color:var(--steel);">
+        <p>
+          *The signed delta in the case PDF is debated; some readings show the lift as
+          slightly negative (paid-search advertising actually <em>reduces</em> measured
+          totals because of organic cannibalisation). Either way, the matched-market
+          uplift is in the order of <strong>15–20%</strong>, not 700%.
+        </p>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Step 3 · CLV by first channel</div>
+      <div class="case-block-title">Where the <span class="gold">long-run</span> dollar comes from.</div>
+      <div class="case-block-body">
+        <p>
+          Switching the metric from last-click revenue to CLV by acquisition channel
+          (m·r/(1+d−r), monthly d = 0.01) tells a very different story.
+        </p>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>First channel</th>
+            <th class="num">n</th>
+            <th class="num">Avg margin / period</th>
+            <th class="num">Retention r</th>
+            <th class="num">CLV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Display</td><td class="num">37</td><td class="num">$37</td><td class="num">73%</td><td class="num hi">$96</td></tr>
+          <tr><td>Email</td><td class="num">15</td><td class="num">$18</td><td class="num">87%</td><td class="num hi">$109</td></tr>
+          <tr><td>Non-branded search</td><td class="num">59</td><td class="num">$29</td><td class="num">68%</td><td class="num">$59</td></tr>
+          <tr><td>Social media</td><td class="num">26</td><td class="num">$24</td><td class="num">38%</td><td class="num lo">$15</td></tr>
+          <tr><td>Branded search</td><td class="num">70</td><td class="num">$19</td><td class="num">43%</td><td class="num lo">$14</td></tr>
+        </tbody>
+      </table>
+      <div class="case-block-body" style="margin-top:18px;">
+        <p>
+          Branded-search converts often but at low margin and low retention — exactly
+          what you would expect of a channel capturing customers who are already
+          searching for the brand by name. Display, by contrast, has the highest
+          per-acquisition CLV among scalable channels.
+        </p>
+      </div>
+    </div>
+
+    <div class="reco">
+      <div class="reco-tag">Recommendation</div>
+      <div class="reco-headline">Cap branded search; reallocate the freed <span class="gold">$1,170/mo</span> to Display + Non-branded search.</div>
+      <div class="reco-detail">
+        Branded paid-search produces <strong>~15–20% incremental revenue, not 700%</strong>;
+        the rest is intent that would have arrived organically or directly. Reduce
+        branded-search spend to a defensive floor sufficient to deny the SERP to
+        competitors. Reallocate the freed budget to Display (highest acquisition CLV
+        among scalable channels) and Non-branded search (mid-funnel demand capture).
+        Re-run the matched-market test in 90 days to confirm the new allocation lifts
+        incremental revenue, and report <em>incremental ROAS</em>, not last-click ROAS,
+        in the marketing dashboard.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MODULE V
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian reveal" id="m5">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">Module V · ML, MMM &amp; the Accountability Gap</div>
+    <h2 class="s-title">When the algorithm meets the <span class="gold">P&amp;L.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The final module is about putting an analytical model into a global organisation.
+      The technique is Marketing Mix Modelling — adstock, saturation, response curves.
+      The harder problem is human: brand directors who do not want their pet channel
+      cut, sales reps who do not want their territory algorithm-managed, finance teams
+      sceptical that a model can move a P&amp;L.
+    </p>
+
+    <div class="row row-2">
+      <div class="concept">
+        <div class="concept-tag">MMM · Adstock</div>
+        <div class="concept-name">Advertising has memory</div>
+        <div class="concept-body">
+          A pound of TV spent today still drives sales next week. Adstock encodes that
+          memory as an exponential decay.
+          <div class="formula">A<sub>t</sub> = x<sub>t</sub> + λ · A<sub>t−1</sub>     0 ≤ λ &lt; 1</div>
+          λ near zero ≈ short-lived performance media; λ near one ≈ long-half-life
+          brand media.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">MMM · Saturation</div>
+        <div class="concept-name">Diminishing returns are real</div>
+        <div class="concept-body">
+          Doubling spend never doubles response. Saturation curves bend.
+          <div class="formula">R(x) = α · x / (β + x)        Hill / Michaelis-Menten
+R(x) = α · log(1 + x/β)        log-saturation</div>
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">MMM · Estimation</div>
+        <div class="concept-name">Bounded Variable Least Squares</div>
+        <div class="concept-body">
+          BVLS constrains coefficients to non-negative for media (advertising shouldn't
+          reduce sales) and negative for price (a price cut should lift volume). It
+          stabilises a model where multicollinearity is the rule, not the exception.
+        </div>
+      </div>
+      <div class="concept">
+        <div class="concept-tag">MMM · Decomposition</div>
+        <div class="concept-name">Baseline vs incremental</div>
+        <div class="concept-body">
+          A fitted MMM splits weekly volume into <em>baseline</em> (intercept + trend +
+          seasonality + price) and <em>incremental</em> (each channel's adstocked,
+          saturated contribution). The baseline is brand equity; the incremental is
+          the marginal media pound.
+        </div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Pernod Ricard · the four KDPs</div>
+      <div class="case-block-title">In-house digital programs, scaled across 70+ affiliates.</div>
+      <div class="case-block-body">
+        <p>
+          In April 2020, Pernod Ricard's first Chief Digital Officer, Pierre-Yves
+          Calloc'h, selected four <strong>Key Digital Programs</strong> from a shortlist
+          of twenty. Built in-house — because off-the-shelf would have meant exposing
+          50 strategic business parameters per program — the four mature programs each
+          target a different commercial decision.
+        </p>
+      </div>
+      <div class="row row-2 mt-32">
+        <div class="concept">
+          <div class="concept-tag">KDP · Matrix</div>
+          <div class="concept-name">Marketing Mix Modelling</div>
+          <div class="concept-body">
+            Allocates marketing budget across brands and channels (TV, digital, social,
+            in-store activation). Trained on three years of weekly sales + marketing
+            data. Produces response curves and a recommended allocation. Adoption
+            60–70%. Reported impact: <strong>up to 15% gain in marketing efficiency</strong>.
+          </div>
+        </div>
+        <div class="concept">
+          <div class="concept-tag">KDP · D-STAR</div>
+          <div class="concept-name">Sales-rep recommendations</div>
+          <div class="concept-body">
+            Clusters retail outlets using 30–50 features (size, brands sold,
+            demographics, proximity to bars/leisure). Each Monday gives reps a
+            recommended visit list with tailored actions: negotiate a new SKU, increase
+            order size, push a promotion. Pilot in France: <strong>+1.2% net sales</strong>
+            vs control.
+          </div>
+        </div>
+        <div class="concept">
+          <div class="concept-tag">KDP · Vista Rev-up</div>
+          <div class="concept-name">Promotion timing</div>
+          <div class="concept-body">
+            Scenario simulation for optimal promotional windows. Less mature than
+            Matrix and D-STAR; not yet at full deployment.
+          </div>
+        </div>
+        <div class="concept">
+          <div class="concept-tag">KDP · Maestria</div>
+          <div class="concept-name">Consumer-choice prediction</div>
+          <div class="concept-body">
+            ML to forecast consumer preference at category and SKU level. Earlier in
+            the maturity curve; intended to feed Matrix and Vista Rev-up.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">D-STAR · UK estate worked example</div>
+      <div class="case-block-title">Forty stores, four archetypes, ten priorities.</div>
+      <div class="case-block-body">
+        <p>
+          A k-means model on the UK store estate (40 stores, 10 numeric features —
+          PR brands, SKUs, sellout volume &amp; value, sell-in, rep visits, POI density,
+          competitor visibility — z-scored, plus channel one-hot at 0.5 weight) yields
+          four clusters at k = 4 (silhouette 0.16). Two PCA components explain 58% of
+          variance.
+        </p>
+      </div>
+
+      <div class="cluster-grid">
+        <div class="cluster" style="--cluster-color: #B8954A;">
+          <div class="cluster-tag">Cluster 1</div>
+          <div class="cluster-name">Premium On-Trade Anchors</div>
+          <div class="case-block-body">Six stores. Hotel bars, restaurants, night clubs. Highest sellout (£1,565/mo), highest rep visits (25.3 / 12 months), broad PR portfolio. <strong>Defend share, deepen mix.</strong></div>
+          <div class="cluster-stats"><span>n <strong>6</strong></span><span>£/mo <strong>1,565</strong></span><span>SKUs <strong>19.3</strong></span></div>
+        </div>
+        <div class="cluster" style="--cluster-color: #6BAA7E;">
+          <div class="cluster-tag">Cluster 2</div>
+          <div class="cluster-name">Mid-Tier On-Trade</div>
+          <div class="case-block-body">Nine stores. High SKU breadth, moderate volume, decent rep cadence. <strong>Scale activation, push volume up the curve.</strong></div>
+          <div class="cluster-stats"><span>n <strong>9</strong></span><span>£/mo <strong>572</strong></span><span>SKUs <strong>18.1</strong></span></div>
+        </div>
+        <div class="cluster" style="--cluster-color: #4A8FB8;">
+          <div class="cluster-tag">Cluster 3</div>
+          <div class="cluster-name">Mass Off-Trade Coverage</div>
+          <div class="case-block-body">Ten stores. Supermarkets and convenience. Narrow PR mix, decent volume, low rep contact. <strong>Distribution play — push SKU range expansion via promotion.</strong></div>
+          <div class="cluster-stats"><span>n <strong>10</strong></span><span>£/mo <strong>630</strong></span><span>Brands <strong>3.6</strong></span></div>
+        </div>
+        <div class="cluster" style="--cluster-color: #C16E8C;">
+          <div class="cluster-tag">Cluster 4</div>
+          <div class="cluster-name">Low-Velocity Long Tail</div>
+          <div class="case-block-body">Fifteen stores. Below-average on every dimension. Five carry inventory risk (sell-in/sellout &gt; 2×). <strong>Triage — reduce visit cadence, fix stock.</strong></div>
+          <div class="cluster-stats"><span>n <strong>15</strong></span><span>£/mo <strong>323</strong></span><span>Visits <strong>4.9</strong></span></div>
+        </div>
+      </div>
+
+      <div class="case-block-body mt-32">
+        <p>
+          A composite priority score (Commercial 35% · Distribution 25% · Context 20% ·
+          Velocity 10% · Competitive 10%) yields a top-10 ranking led by <strong>S40
+          (Bar, score 78.9)</strong>, <strong>S08 (Restaurant, 70.4)</strong> and
+          <strong>S37 (Night Club, 68.5)</strong>. The full clustering report is
+          available as a companion artefact via the link below.
+        </p>
+      </div>
+    </div>
+
+    <!-- ─── CASE IV: ABSOLUT UK ─────────────────────── -->
+    <div class="case-banner" id="case-absolut">
+      <div class="case-banner-tag">Case IV · Worked Solution</div>
+      <div class="case-banner-title">Absolut <span class="gold">UK</span> · Marketing Mix Model</div>
+      <div class="case-banner-meta">
+        <div class="case-banner-meta-item"><span class="cbm-label">Period</span><span class="cbm-value">Jan 2018 — Dec 2022</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Observations</span><span class="cbm-value">261 weeks</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Channels</span><span class="cbm-value">Six + Price</span></div>
+        <div class="case-banner-meta-item"><span class="cbm-label">Method</span><span class="cbm-value">Adstock · Saturation · BVLS</span></div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Executive summary</div>
+      <div class="case-block-title">A model of <span class="gold">measurable conviction.</span></div>
+      <div class="case-block-body">
+        <p>
+          Five years of weekly Absolut UK volume regressed on six adstocked, saturated
+          spend channels and a price index, with linear trend, Fourier seasonality and
+          a Christmas/NYE indicator as controls. The model explains <strong>82% of weekly
+          volume variance</strong> with a 3.5% mean absolute percentage error — sufficient
+          to guide reallocation, with the humility that 18% remains unexplained by
+          media, price, trend and seasonality alone.
+        </p>
+      </div>
+
+      <div class="kpi-strip mt-32">
+        <div class="kpi"><div class="kpi-label">Model Fit · R²</div><div class="kpi-value">0.82</div><div class="kpi-sub">Variance explained</div></div>
+        <div class="kpi"><div class="kpi-label">MAPE</div><div class="kpi-value">3.6<span class="unit">%</span></div><div class="kpi-sub">Mean absolute % error</div></div>
+        <div class="kpi"><div class="kpi-label">Total Media Spend</div><div class="kpi-value">£62<span class="unit">M</span></div><div class="kpi-sub">Six channels · 5 years</div></div>
+        <div class="kpi"><div class="kpi-label">Baseline Volume</div><div class="kpi-value">58<span class="unit">%</span></div><div class="kpi-sub">Brand equity &amp; seasonality</div></div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Findings</div>
+      <div class="case-block-title">Four conclusions, drawn from the <span class="gold">data alone.</span></div>
+      <div class="find-list">
+        <div class="find">
+          <div class="find-num">Finding I</div>
+          <div class="find-headline">Out-of-Home is the most efficient channel by a factor of two.</div>
+          <div class="find-detail">OOH delivers <strong>3.08 incremental units per £1k</strong> spent — more than double the next best channel. Yet it absorbs only <strong>4.7% of media budget</strong>, while contributing <strong>6.6% of total volume</strong>. The model says: lean in.</div>
+        </div>
+        <div class="find">
+          <div class="find-num">Finding II</div>
+          <div class="find-headline">Trade marketing carries the heaviest load.</div>
+          <div class="find-detail">On-Trade and Off-Trade together drive <strong>20.8% of volume</strong> — more than any pair of above-the-line channels. For a vodka brand, the bar and the shelf still convert harder than the screen.</div>
+        </div>
+        <div class="find">
+          <div class="find-num">Finding III</div>
+          <div class="find-headline">Social spend shows no measurable lift.</div>
+          <div class="find-detail">With <strong>£8.6M deployed</strong> over the period, Social returns only <strong>0.13 units per £1k</strong> — eight times less than On-Trade. Either the creative isn't converting, or the model is attributing its lift elsewhere. Either way: review.</div>
+        </div>
+        <div class="find">
+          <div class="find-num">Finding IV</div>
+          <div class="find-headline">A 58% baseline points to genuine brand equity.</div>
+          <div class="find-detail">More than half of weekly volume would persist with zero media spend, driven by trend, seasonality and Christmas. The brand is not being built from scratch each week — but the marginal pound still shapes <strong>42% of outcomes</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-eyebrow">Reallocation brief — the next pound</div>
+      <div class="case-block-title">Where the marginal £ should and should not go.</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th class="num">Spend (£m)</th>
+            <th class="num">Units / £1k</th>
+            <th class="num">Share of volume</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#B8954A;"></span>Out-of-Home</span></td><td class="num">2.9</td><td class="num hi">3.08</td><td class="num">6.6%</td><td>↑ Scale</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#6BAA7E;"></span>On-Trade</span></td><td class="num">10.4</td><td class="num">~1.4</td><td class="num">10.6%</td><td>↑ Scale</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#4A8FB8;"></span>Off-Trade</span></td><td class="num">11.5</td><td class="num">~1.2</td><td class="num">10.2%</td><td>= Hold</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#8A7FA6;"></span>Digital</span></td><td class="num">13.9</td><td class="num">0.93</td><td class="num">7.4%</td><td>= Hold</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#7A8FA6;"></span>Television</span></td><td class="num">14.5</td><td class="num">0.35</td><td class="num">3.6%</td><td>↓ Trim</td></tr>
+          <tr><td><span class="ch-name"><span class="ch-dot" style="background:#C16E8C;"></span>Social</span></td><td class="num">8.6</td><td class="num lo">0.13</td><td class="num">1.6%</td><td>↓ Review</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reco">
+      <div class="reco-tag">Recommendation</div>
+      <div class="reco-headline">Lean into Out-of-Home and On-Trade. Trim TV. <span class="gold">Audit Social.</span></div>
+      <div class="reco-detail">
+        Reallocate roughly £4–6m of annual budget from TV and Social toward OOH and
+        On-Trade activation. Retest the new mix through 2-region matched-market
+        experiments before committing the full reallocation. The 18% residual variance
+        is unaccounted for; findings are directionally robust but precise reallocation
+        should be validated through controlled in-market tests. The full quantitative
+        deep-dive — model fit charts, response curves per channel, decomposition by
+        week, and methodology — is available in the companion file.
+      </div>
+      <div class="cta-row">
+        <a href="course/marketinganalytics-absolut-mmm.html" class="cta">View Full Quantitative Analysis →</a>
+        <a href="course/marketinganalytics-dstar-clustering.html" class="cta ghost">D-STAR Store Clustering →</a>
+      </div>
+    </div>
+
+    <div class="quote">
+      "The accountability gap closes when the algorithm explains itself in the
+      language of the P&amp;L. Until then, the marketing director is right to be sceptical."
+      <div class="quote-author">Module V · Reflection</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CLOSING — THE THROUGHLINE
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy reveal">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">Closing</div>
+    <h2 class="s-title">One discipline, five <span class="gold">different timescales.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The five modules and four cases are arranged on a deliberate gradient. The unit
+      of decision shrinks — from a one-shot harvest, to an annual coupon strategy, to
+      a weekly media allocation. The toolset grows. The discipline does not change.
+    </p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Decision unit</th>
+          <th>Method</th>
+          <th>Case</th>
+          <th>Key recommendation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>I · Decision-driven thinking</td>
+          <td>One-shot</td>
+          <td>Decision tree, EV, EVPI</td>
+          <td>Freemark Abbey</td>
+          <td>Wait — if a $24K floor is survivable</td>
+        </tr>
+        <tr>
+          <td>II · Analytics spectrum</td>
+          <td>Strategic</td>
+          <td>Problem framing, optimisation</td>
+          <td>Flashion (companion)</td>
+          <td>Choose the objective on purpose</td>
+        </tr>
+        <tr>
+          <td>III · Customer value &amp; targeting</td>
+          <td>Annual</td>
+          <td>CLV (3 methods), uplift</td>
+          <td>Artea</td>
+          <td>Target ~30% with cart=1 and channels 2–4</td>
+        </tr>
+        <tr>
+          <td>IV · Digital analytics</td>
+          <td>Quarterly</td>
+          <td>Attribution, incrementality, marginal ROI</td>
+          <td>MasRetail</td>
+          <td>Cap branded search; reallocate to display</td>
+        </tr>
+        <tr>
+          <td>V · MMM &amp; accountability</td>
+          <td>Weekly</td>
+          <td>Adstock, saturation, BVLS</td>
+          <td>Absolut UK</td>
+          <td>Lean into OOH + On-Trade; trim TV; audit Social</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="quote mt-48">
+      "Information becomes insight when it changes a decision. Insight becomes value
+      when the decision is acted on. The course teaches the path between the three —
+      and refuses to let any of them stand in for the others."
+      <div class="quote-author">Course closing</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer>
+  <div class="hex-bg"></div>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-mark">
+        <svg><use href="#hex-gold"/></svg>
+        <span class="footer-mark-text">JC Consulting <span class="gold">&amp;</span> Advisory</span>
+      </div>
+      <div class="footer-tagline">Innovation, taken further.</div>
+    </div>
+    <div class="footer-meta">
+      Marketing &amp; Business Analytics · Course v1.0<br>
+      Prepared April 2026 · Educational Use<br>
+      Joao Victor Creste · joao.creste@edu.escp.eu
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Scroll reveal */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

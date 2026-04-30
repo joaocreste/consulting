@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Mix Model · Absolut UK · JC Consulting & Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<style>
+  /* ═══════════════════════════════════════════════
+     JC GROUP — DESIGN TOKENS
+     ═══════════════════════════════════════════════ */
+  :root {
+    --obsidian:    #0A1420;
+    --navy:        #0D1B2A;
+    --slate:       #1E2D3D;
+    --slate-2:     #243549;
+    --gold:        #B8954A;
+    --gold-glow:   #D4AF5F;
+    --gold-pale:   #E5D4A8;
+    --gold-deep:   #8E7038;
+    --steel:       #7A8FA6;
+    --steel-soft:  #5C6F84;
+    --parchment:   #F9F7F4;
+    --ivory:       #F0EDE6;
+    --ivory-dim:   #C8C2B5;
+    --white:       #FFFFFF;
+    --consulting:  #B8954A;
+    --investing:   #4A8FB8;
+    --ops:         #6BAA7E;
+    --rose:        #C16E8C;
+    --heritage:    #8A7FA6;
+
+    --rule-gold:   linear-gradient(90deg, transparent 0%, rgba(184,149,74,0.35) 50%, transparent 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: 'Mulish', sans-serif;
+    background-color: var(--obsidian);
+    color: var(--ivory);
+    line-height: 1.65;
+    overflow-x: hidden;
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     ANIMATIONS
+     ═══════════════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes drawLine {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes hexRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 0.85; }
+  }
+
+  /* ═══════════════════════════════════════════════
+     LAYOUT PRIMITIVES
+     ═══════════════════════════════════════════════ */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
+  }
+
+  /* Hex pattern overlay */
+  .hex-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Cpolygon points='60,2 114,28 114,76 60,102 6,76 6,28' fill='none' stroke='%23B8954A' stroke-width='0.5'/%3E%3C/svg%3E");
+    background-size: 120px 104px;
+  }
+
+  .gold-rule {
+    position: absolute;
+    top: 0; left: 56px; right: 56px;
+    height: 0.5px;
+    background: var(--rule-gold);
+  }
+  @media (max-width: 768px) {
+    .gold-rule { left: 24px; right: 24px; }
+  }
+
+  .gold-accent {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px 0;
+    transform-origin: left center;
+    animation: drawLine 0.8s ease both;
+  }
+
+  /* ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    background: var(--obsidian);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 56px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 800px; height: 800px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(184,149,74,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-orbit {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 540px; height: 540px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: hexRotate 180s linear infinite;
+    opacity: 0.5;
+  }
+  .hero-orbit svg { width: 100%; height: 100%; }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-mast {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-mast-mark { width: 32px; height: 32px; }
+  .hero-mast-text {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero-mast-sep {
+    width: 1px; height: 18px;
+    background: var(--gold);
+    opacity: 0.3;
+  }
+  .hero-mast-secondary {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(54px, 9vw, 120px);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+    color: var(--ivory);
+    margin-bottom: 24px;
+    animation: fadeUp 0.9s ease 0.18s both;
+  }
+  .hero-title .gold { color: var(--gold); font-style: italic; font-weight: 400; }
+
+  .hero-divider {
+    width: 84px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 36px 0;
+    animation: drawLine 1.2s ease 0.3s both;
+    transform-origin: left center;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 300;
+    color: var(--gold-pale);
+    max-width: 720px;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    animation: fadeUp 0.9s ease 0.4s both;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    margin-top: 72px;
+    animation: fadeUp 0.9s ease 0.55s both;
+  }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hero-meta-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .hero-meta-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ivory);
+    letter-spacing: 0.02em;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+    animation: fadeIn 1s ease 1.5s both, pulseGlow 3s ease infinite 1.5s;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SECTIONS
+     ═══════════════════════════════════════════════ */
+  section {
+    position: relative;
+    padding: 96px 0;
+  }
+  section.s-obsidian { background: var(--obsidian); }
+  section.s-navy     { background: var(--navy); }
+  section.s-slate    { background: var(--slate); }
+
+  .s-eyebrow {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .s-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.08;
+    color: var(--ivory);
+    max-width: 880px;
+    margin-bottom: 24px;
+  }
+  .s-title .gold { color: var(--gold); font-style: italic; font-weight: 400; }
+  .s-lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1.55;
+    max-width: 720px;
+    margin-bottom: 56px;
+    letter-spacing: 0.01em;
+  }
+  .s-body {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--steel);
+    max-width: 680px;
+  }
+  .s-body strong { color: var(--gold-pale); font-weight: 500; }
+
+  /* ═══════════════════════════════════════════════
+     KPI STRIP
+     ═══════════════════════════════════════════════ */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(184,149,74,0.15);
+    border: 0.5px solid rgba(184,149,74,0.15);
+  }
+  @media (max-width: 900px) {
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+  .kpi {
+    background: var(--obsidian);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi:hover { background: var(--navy); transition: background 0.3s; }
+  .kpi-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .kpi-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    color: var(--ivory);
+    margin-bottom: 8px;
+  }
+  .kpi-value .unit {
+    font-size: 18px;
+    color: var(--gold);
+    font-style: italic;
+    margin-left: 2px;
+  }
+  .kpi-sub {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--steel);
+    letter-spacing: 0.04em;
+  }
+
+  /* ═══════════════════════════════════════════════
+     EXECUTIVE SUMMARY
+     ═══════════════════════════════════════════════ */
+  .exec-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .exec-grid { grid-template-columns: 1fr; }
+  }
+  .exec-find {
+    border-left: 1px solid rgba(184,149,74,0.2);
+    padding: 8px 0 8px 28px;
+    margin-bottom: 28px;
+  }
+  .exec-find-num {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .exec-find-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ivory);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+  }
+  .exec-find-detail {
+    font-size: 13px;
+    color: var(--steel);
+    line-height: 1.7;
+  }
+  .exec-find-detail strong {
+    color: var(--gold-pale);
+    font-weight: 500;
+  }
+
+  /* ═══════════════════════════════════════════════
+     CHART CONTAINERS
+     ═══════════════════════════════════════════════ */
+  .chart-card {
+    background: linear-gradient(145deg, var(--navy), var(--slate));
+    border: 0.5px solid rgba(184,149,74,0.15);
+    border-radius: 6px;
+    padding: 32px;
+    position: relative;
+  }
+  .chart-card.lite {
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+  }
+  .chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 0.5px solid rgba(184,149,74,0.12);
+  }
+  .chart-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ivory);
+  }
+  .chart-meta {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .chart-wrap {
+    position: relative;
+    height: 360px;
+  }
+  .chart-wrap.tall { height: 440px; }
+  .chart-wrap.short { height: 220px; }
+
+  /* ─── Time-range segmented toggle ─── */
+  .range-toggle {
+    display: inline-flex;
+    align-items: stretch;
+    border: 0.5px solid rgba(184,149,74,0.35);
+    border-radius: 2px;
+    overflow: hidden;
+    background: rgba(10,20,32,0.4);
+  }
+  .range-toggle button {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--steel);
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  .range-toggle button + button {
+    border-left: 0.5px solid rgba(184,149,74,0.20);
+  }
+  .range-toggle button:hover {
+    color: var(--ivory);
+  }
+  .range-toggle button.is-active {
+    background: var(--gold);
+    color: var(--obsidian);
+    font-weight: 600;
+  }
+  .chart-head.with-toggle {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ─── Channel picker (segmented colored pills) ─── */
+  .ch-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 0;
+    border-top: 0.5px solid rgba(184,149,74,0.10);
+    border-bottom: 0.5px solid rgba(184,149,74,0.10);
+  }
+  .ch-pick {
+    background: transparent;
+    border: 0.5px solid rgba(184,149,74,0.25);
+    border-radius: 2px;
+    padding: 8px 14px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .ch-pick .ch-pick-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+  .ch-pick:hover { color: var(--ivory); border-color: rgba(184,149,74,0.5); }
+  .ch-pick.is-active {
+    background: var(--obsidian);
+    color: var(--ivory);
+    border-color: var(--ch-color, var(--gold));
+    box-shadow: inset 0 0 0 1px var(--ch-color, var(--gold));
+    font-weight: 600;
+  }
+
+  /* ─── Regression stats strip ─── */
+  .reg-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(184,149,74,0.10);
+    border: 0.5px solid rgba(184,149,74,0.10);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .reg-stat {
+    background: rgba(10,20,32,0.5);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .reg-stat-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .reg-stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ivory);
+    letter-spacing: 0.01em;
+  }
+  .reg-note {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    color: var(--steel);
+    line-height: 1.7;
+    margin-top: 16px;
+    font-style: italic;
+  }
+  @media (max-width: 720px) {
+    .reg-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ═══════════════════════════════════════════════
+     CHANNEL TABLE
+     ═══════════════════════════════════════════════ */
+  .ch-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+  }
+  .ch-table thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 16px 14px;
+    border-bottom: 0.5px solid rgba(184,149,74,0.25);
+  }
+  .ch-table thead th.num { text-align: right; }
+  .ch-table tbody td {
+    padding: 18px 16px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    color: var(--ivory);
+  }
+  .ch-table tbody td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ivory-dim);
+  }
+  .ch-table tbody td.num.hi { color: var(--gold-glow); font-weight: 500; }
+  .ch-table tbody tr:hover { background: rgba(184,149,74,0.04); }
+  .ch-table tbody tr:last-child td { border-bottom: none; }
+  .ch-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .ch-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .ch-bar {
+    display: inline-block;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 1px;
+    vertical-align: middle;
+    margin-right: 8px;
+    opacity: 0.7;
+  }
+
+  /* ═══════════════════════════════════════════════
+     RESPONSE CURVES — small multiples
+     ═══════════════════════════════════════════════ */
+  .rc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .rc-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .rc-grid { grid-template-columns: 1fr; }
+  }
+  .rc-card {
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 22px;
+    position: relative;
+  }
+  .rc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--ch-color, var(--gold));
+  }
+  .rc-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .rc-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ivory);
+  }
+  .rc-eff {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-glow);
+    font-variant-numeric: tabular-nums;
+  }
+  .rc-canvas {
+    height: 140px;
+    position: relative;
+  }
+  .rc-foot {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    color: var(--steel);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTIMIZATION CARDS
+     ═══════════════════════════════════════════════ */
+  .opt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 768px) {
+    .opt-grid { grid-template-columns: 1fr; }
+  }
+  .opt-card {
+    background: linear-gradient(145deg, var(--slate), var(--navy));
+    border: 0.5px solid rgba(184,149,74,0.12);
+    border-radius: 4px;
+    padding: 26px 28px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 22px;
+    align-items: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .opt-card:hover {
+    border-color: rgba(184,149,74,0.3);
+    transform: translateY(-2px);
+  }
+  .opt-rank {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    width: 48px;
+    text-align: center;
+  }
+  .opt-body {}
+  .opt-ch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .opt-ch-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+  }
+  .opt-verdict {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--gold-pale);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .opt-verdict.up    { color: var(--ops); }
+  .opt-verdict.hold  { color: var(--gold-pale); }
+  .opt-verdict.down  { color: var(--rose); }
+  .opt-detail {
+    font-size: 12px;
+    color: var(--steel);
+    line-height: 1.65;
+  }
+  .opt-stats {
+    display: flex;
+    gap: 18px;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ivory-dim);
+    letter-spacing: 0.04em;
+  }
+  .opt-stats span strong { color: var(--gold-glow); font-weight: 500; }
+
+  /* ═══════════════════════════════════════════════
+     METHODOLOGY
+     ═══════════════════════════════════════════════ */
+  .meth-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) {
+    .meth-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .meth-card {
+    background: rgba(255,255,255,0.02);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 24px;
+    border-top: 1px solid var(--gold);
+  }
+  .meth-step {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .meth-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+    margin-bottom: 10px;
+  }
+  .meth-desc {
+    font-size: 12px;
+    color: var(--steel);
+    line-height: 1.7;
+  }
+
+  /* ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ */
+  footer {
+    background: var(--obsidian);
+    padding: 56px 56px 40px;
+    border-top: 0.5px solid rgba(184,149,74,0.18);
+    position: relative;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .footer-mark {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .footer-mark svg { width: 28px; height: 28px; }
+  .footer-mark-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ivory);
+    letter-spacing: 0.04em;
+  }
+  .footer-tagline {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .footer-meta {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    color: var(--steel);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  /* helpers */
+  .row { display: grid; gap: 24px; }
+  .row-2 { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px) { .row-2 { grid-template-columns: 1fr; } }
+  .mt-32 { margin-top: 32px; }
+  .mt-48 { margin-top: 48px; }
+  .mt-64 { margin-top: 64px; }
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     HEX MARK — REUSABLE SVG SYMBOLS
+     ═══════════════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="hex-gold" viewBox="0 0 64 64">
+      <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="none" stroke="#B8954A" stroke-width="1.2"/>
+      <polygon points="32,16 44,23 44,41 32,48 20,41 20,23" fill="none" stroke="#B8954A" stroke-width="0.8"/>
+      <circle cx="32" cy="32" r="3" fill="#B8954A"/>
+    </symbol>
+    <symbol id="hex-line" viewBox="0 0 64 64">
+      <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="none" stroke="#B8954A" stroke-width="0.6" opacity="0.8"/>
+      <polygon points="32,12 49,21 49,43 32,52 15,43 15,21" fill="none" stroke="#B8954A" stroke-width="0.4" opacity="0.5"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hex-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-orbit">
+    <svg viewBox="0 0 540 540">
+      <polygon points="270,30 450,140 450,400 270,510 90,400 90,140"
+               fill="none" stroke="rgba(184,149,74,0.18)" stroke-width="0.5"
+               stroke-dasharray="4 8"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-mast">
+      <svg class="hero-mast-mark"><use href="#hex-gold"/></svg>
+      <span class="hero-mast-text">JC Consulting &amp; Advisory</span>
+      <span class="hero-mast-sep"></span>
+      <span class="hero-mast-secondary">Strategy · Financial Modelling · Innovation</span>
+    </div>
+
+    <div class="hero-eyebrow">Marketing Mix Model · Quantitative Analysis</div>
+
+    <h1 class="hero-title">
+      Absolut.<br>
+      <span class="gold">United Kingdom.</span>
+    </h1>
+
+    <div class="hero-divider"></div>
+
+    <p class="hero-tagline">
+      Five years of weekly media spend, decomposed into incremental volume.
+      Where the pound is working — and where it isn't.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Period</span>
+        <span class="hero-meta-value">Jan 2018 — Dec 2022</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Observations</span>
+        <span class="hero-meta-value">261 weeks</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Channels Modelled</span>
+        <span class="hero-meta-value">Six + Price</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Method</span>
+        <span class="hero-meta-value">Adstock · Saturation · BVLS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">↓ Scroll · 01 Synopsis</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     01 · SYNOPSIS — KPI STRIP
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">01 · Synopsis</div>
+    <h2 class="s-title">A model of <span class="gold">measurable conviction.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The model explains 82% of weekly volume variance with a 3.5% mean absolute error —
+      sufficient to guide spend reallocation with confidence, with the humility that 18% remains
+      unexplained by media, price, trend, and seasonality alone.
+    </p>
+
+    <div class="kpi-strip mt-48">
+      <div class="kpi">
+        <div class="kpi-label">Model Fit · R²</div>
+        <div class="kpi-value">__R2__<span class="unit"></span></div>
+        <div class="kpi-sub">Variance explained</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">MAPE</div>
+        <div class="kpi-value">__MAPE__<span class="unit">%</span></div>
+        <div class="kpi-sub">Mean absolute % error</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total Media Spend</div>
+        <div class="kpi-value">£__SPEND__<span class="unit">M</span></div>
+        <div class="kpi-sub">Across six channels, 5 years</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Baseline Volume</div>
+        <div class="kpi-value">__BASELINE__<span class="unit">%</span></div>
+        <div class="kpi-sub">Brand equity &amp; seasonality</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     02 · KEY FINDINGS
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">02 · Findings</div>
+    <h2 class="s-title">Four conclusions, drawn from the <span class="gold">data alone.</span></h2>
+    <div class="gold-accent"></div>
+
+    <div class="exec-grid mt-48">
+      <div>
+        <div class="exec-find">
+          <div class="exec-find-num">Finding I</div>
+          <div class="exec-find-headline">Out-of-Home is the most efficient channel by a factor of two.</div>
+          <div class="exec-find-detail">
+            OOH delivers <strong>3.08 incremental units per £1k</strong> spent — more than double
+            the next best channel. Yet it absorbs only <strong>4.7% of media budget</strong>,
+            while contributing <strong>6.6% of total volume</strong>.
+            The model says: lean in.
+          </div>
+        </div>
+
+        <div class="exec-find">
+          <div class="exec-find-num">Finding II</div>
+          <div class="exec-find-headline">Trade marketing carries the heaviest load.</div>
+          <div class="exec-find-detail">
+            On-Trade and Off-Trade together drive <strong>20.8% of volume</strong> — more than
+            any pair of above-the-line channels. For a vodka brand,
+            the bar and the shelf still convert harder than the screen.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="exec-find">
+          <div class="exec-find-num">Finding III</div>
+          <div class="exec-find-headline">Social spend shows no measurable lift.</div>
+          <div class="exec-find-detail">
+            With <strong>£8.6M deployed</strong> over the period, Social returns only
+            <strong>0.13 units per £1k</strong> — eight times less than On-Trade.
+            Either the creative isn't converting, or the model attributes its lift
+            elsewhere. Either way: review.
+          </div>
+        </div>
+
+        <div class="exec-find">
+          <div class="exec-find-num">Finding IV</div>
+          <div class="exec-find-headline">A 58% baseline points to genuine brand equity.</div>
+          <div class="exec-find-detail">
+            More than half of weekly volume would persist with zero media spend,
+            driven by trend, seasonality, and Christmas. The brand is not
+            being built from scratch each week — but the marginal pound still
+            shapes <strong>42% of outcomes.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     03 · MODEL FIT
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">03 · Diagnostics</div>
+    <h2 class="s-title">Actual versus <span class="gold">predicted volume.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The model captures both the underlying seasonality (Christmas peaks, summer troughs)
+      and the noise around it. Residuals average <strong>3.5%</strong> — within the standard
+      tolerance for client-facing decisions.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head with-toggle">
+        <span class="chart-title">Weekly Sales Volume · Fitted versus Actual</span>
+        <div class="range-toggle" data-range-toggle>
+          <button type="button" data-range="all" class="is-active">Full period · 2018–2022</button>
+          <button type="button" data-range="post-feb-2020">Post-Feb 2020</button>
+        </div>
+        <span class="chart-meta" data-range-meta>261 weeks · R² __R2__</span>
+      </div>
+      <div class="chart-wrap tall">
+        <canvas id="fitChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     04 · DECOMPOSITION
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">04 · Decomposition</div>
+    <h2 class="s-title">Where the volume <span class="gold">comes from.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      A stacked attribution of weekly volume into baseline equity, price effect,
+      and the six paid media channels. The seasonality of trade marketing is
+      visible — peaking each Christmas alongside on-trade activity.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head with-toggle">
+        <span class="chart-title">Weekly Volume Contribution by Source</span>
+        <div class="range-toggle" data-range-toggle>
+          <button type="button" data-range="all" class="is-active">Full period · 2018–2022</button>
+          <button type="button" data-range="post-feb-2020">Post-Feb 2020</button>
+        </div>
+        <span class="chart-meta" data-range-meta-decomp>Stacked Area · 2018–2022</span>
+      </div>
+      <div class="chart-wrap tall">
+        <canvas id="decompChart"></canvas>
+      </div>
+    </div>
+
+    <div class="row row-2 mt-48">
+      <div class="chart-card lite">
+        <div class="chart-head">
+          <span class="chart-title">Share of Volume</span>
+          <span class="chart-meta">5-year cumulative</span>
+        </div>
+        <div class="chart-wrap short">
+          <canvas id="shareVolChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card lite">
+        <div class="chart-head">
+          <span class="chart-title">Share of Spend</span>
+          <span class="chart-meta">£__SPEND__M total</span>
+        </div>
+        <div class="chart-wrap short">
+          <canvas id="shareSpChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     05 · CHANNEL PERFORMANCE
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">05 · Channel Performance</div>
+    <h2 class="s-title">Efficiency, ranked.</h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      A single table to compare what each channel costs against what it delivers.
+      Efficiency — incremental units per £1,000 spent — is the metric that survives
+      changes in pricing strategy and currency.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head with-toggle">
+        <span class="chart-title">Channel Performance Matrix</span>
+        <div class="range-toggle" data-range-toggle>
+          <button type="button" data-range="all" class="is-active">Full period · 2018–2022</button>
+          <button type="button" data-range="post-feb-2020">Post-Feb 2020</button>
+        </div>
+        <span class="chart-meta" data-range-meta-table>Sorted by efficiency</span>
+      </div>
+      <table class="ch-table mt-32">
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th class="num">Spend (£k)</th>
+            <th class="num">Volume Share</th>
+            <th class="num">Spend Share</th>
+            <th class="num">Adstock Decay</th>
+            <th class="num">Efficiency · u/£k</th>
+          </tr>
+        </thead>
+        <tbody id="chTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     06 · COEFFICIENT ANATOMY
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">06 · Coefficient Anatomy</div>
+    <h2 class="s-title">Each channel, <span class="gold">a regression line.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      The coefficient β for any channel is the slope of <em>partial sales</em> — what's
+      left after the other channels and the baseline are subtracted — against that
+      channel's adstocked, log-saturated spend. One dot per week. The line through the
+      cloud is the regression itself; its slope is the number that lands in the table above.
+    </p>
+
+    <div class="chart-card mt-48">
+      <div class="chart-head with-toggle">
+        <span class="chart-title">Partial Regression · Per Channel</span>
+        <div class="range-toggle" data-range-toggle>
+          <button type="button" data-range="all" class="is-active">Full period · 2018–2022</button>
+          <button type="button" data-range="post-feb-2020">Post-Feb 2020</button>
+        </div>
+        <span class="chart-meta" data-range-meta-reg>n weeks</span>
+      </div>
+
+      <div class="ch-picker mt-24" id="chPicker"></div>
+
+      <div class="reg-stats mt-16">
+        <div class="reg-stat">
+          <span class="reg-stat-label">Slope (β fit on this view)</span>
+          <span class="reg-stat-value" id="regBetaFit">—</span>
+        </div>
+        <div class="reg-stat">
+          <span class="reg-stat-label">Model β (from full BVLS)</span>
+          <span class="reg-stat-value" id="regBetaModel">—</span>
+        </div>
+        <div class="reg-stat">
+          <span class="reg-stat-label">R² of this 2D fit</span>
+          <span class="reg-stat-value" id="regR2">—</span>
+        </div>
+        <div class="reg-stat">
+          <span class="reg-stat-label">Decay λ · Saturation k</span>
+          <span class="reg-stat-value" id="regParams">—</span>
+        </div>
+      </div>
+
+      <div class="chart-wrap tall mt-24">
+        <canvas id="regChart"></canvas>
+      </div>
+
+      <p class="reg-note">
+        X-axis: log(1 + adstocked spend / saturation scale). Y-axis: actual sales minus
+        all other modelled contributions (baseline + price + other 5 channels). The β
+        fitted on this 2D view will closely mirror the full BVLS β — small differences
+        come from the joint estimation correcting for residual collinearity.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     07 · RESPONSE CURVES
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">07 · Response Curves</div>
+    <h2 class="s-title">Where each channel <span class="gold">runs out of road.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Diminishing returns curves show the steady-state weekly volume each channel would deliver
+      at any given spend level. The vertical marker is current average weekly spend —
+      the gap to the curve's plateau is the headroom before saturation.
+    </p>
+
+    <div class="rc-grid mt-48" id="rcGrid"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     08 · SPEND OPTIMIZATION
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">08 · Reallocation Brief</div>
+    <h2 class="s-title">The next pound.</h2>
+    <div class="gold-accent"></div>
+    <p class="s-lede">
+      Channel-by-channel verdict — informed by efficiency, headroom to saturation,
+      and current share of mix. A practitioner's brief, not an algorithmic prescription.
+    </p>
+
+    <div class="opt-grid mt-48" id="optGrid"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     09 · METHODOLOGY
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-eyebrow">09 · Methodology</div>
+    <h2 class="s-title">How the model was <span class="gold">built.</span></h2>
+    <div class="gold-accent"></div>
+    <p class="s-body">
+      Sales volume was modelled as a linear combination of transformed media variables,
+      a price index, and time-based controls. Media spend was first <strong>adstocked</strong>
+      using a geometric decay (carryover) parameter optimised per channel by coordinate descent on R².
+      The adstocked series was then <strong>saturated</strong> via log(1 + spend / scale),
+      where scale is the channel's median weekly active spend. The full system was solved
+      via <strong>Bounded Variable Least Squares (BVLS)</strong>, constraining all media coefficients and
+      the price-lift coefficient to be non-negative — preserving economic interpretability.
+      Time controls (linear trend, Fourier seasonality at annual and semi-annual frequencies,
+      and a Christmas/NYE indicator) were left unbounded.
+    </p>
+
+    <div class="meth-grid">
+      <div class="meth-card">
+        <div class="meth-step">Step 1</div>
+        <div class="meth-name">Adstock Transform</div>
+        <div class="meth-desc">Geometric carryover per channel: x*(t) = spend(t) + λ · x*(t−1).
+        Optimal λ ranged from 0.0 (Social) to 0.50 (OOH), reflecting how long each medium continues to influence purchase after exposure.</div>
+      </div>
+      <div class="meth-card">
+        <div class="meth-step">Step 2</div>
+        <div class="meth-name">Saturation Curve</div>
+        <div class="meth-desc">Log(1 + x/scale) applied to adstocked spend, where scale = median nonzero weekly spend.
+        Captures diminishing returns without imposing a steep Hill-function turning point.</div>
+      </div>
+      <div class="meth-card">
+        <div class="meth-step">Step 3</div>
+        <div class="meth-name">Bounded Regression</div>
+        <div class="meth-desc">BVLS constrains media coefficients ≥ 0 — ruling out negative lift estimates that would be economically incoherent. Controls remain unbounded.</div>
+      </div>
+      <div class="meth-card">
+        <div class="meth-step">Step 4</div>
+        <div class="meth-name">Decomposition &amp; Curves</div>
+        <div class="meth-desc">Per-week contribution computed as coefficient × transformed spend. Response curves derived analytically from the steady-state form of adstock + saturation.</div>
+      </div>
+    </div>
+
+    <p class="s-body mt-48">
+      <strong>Limitations.</strong> The model assumes additive separability between channels —
+      no explicit interaction effects. Adstock and saturation parameters are deterministic
+      rather than Bayesian (no posterior credible intervals). Media spend may correlate with
+      unobserved drivers such as competitor activity, distribution changes, or PR coverage.
+      An 18% residual variance is unaccounted for. Findings are directionally robust;
+      precise reallocation should be validated through controlled in-market tests.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer>
+  <div class="hex-bg"></div>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-mark">
+        <svg><use href="#hex-gold"/></svg>
+        <span class="footer-mark-text">JC Consulting &amp; Advisory</span>
+      </div>
+      <div style="margin-top:12px;" class="footer-tagline">Strategy · Capital · Execution</div>
+    </div>
+    <div class="footer-meta">
+      Marketing Mix Model · Absolut UK<br>
+      Prepared April 2026 · Internal &amp; Partners<br>
+      Methodology v1.0 · BVLS / Adstock / Saturation
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     EMBEDDED DATA + CHARTS
+     ═══════════════════════════════════════════════ -->
+<script id="mmm-data" type="application/json">{"meta": {"brand": "Absolut", "market": "United Kingdom", "frequency": "Weekly", "n_weeks": 261, "date_range": ["2018-01-01", "2022-12-26"], "methodology": "Bounded Variable Least Squares (BVLS) on adstocked & log-saturated media. Controls: intercept, linear trend, Fourier seasonality (annual + semi-annual), Christmas/NYE indicator, price (constrained to lift volume when reduced). Adstock decay per channel selected by coordinate descent on R\u00b2."}, "fit": {"r2": 0.8208113120171922, "mape_pct": 3.552160714594219, "nrmse_pct": 4.451161305059925}, "channels": ["Spend_TV", "Spend_Digital", "Spend_Social", "Spend_OnTrade", "Spend_OffTrade", "Spend_OOH"], "channels_pretty": {"Spend_TV": "Television", "Spend_Digital": "Digital", "Spend_Social": "Social", "Spend_OnTrade": "On-Trade", "Spend_OffTrade": "Off-Trade", "Spend_OOH": "Out-of-Home"}, "roi": {"Spend_TV": {"spend_k": 14532.6, "contribution_units": 5155.003592633277, "units_per_1k_gbp": 0.35471998077654904, "cost_per_incremental_unit_gbp": 2819.1250963952216, "decay": 0.1, "saturation_scale": 69.77447838107183, "coef": 32.49674400277962}, "Spend_Digital": {"spend_k": 13912.1, "contribution_units": 12938.512946722356, "units_per_1k_gbp": 0.9300186849377416, "cost_per_incremental_unit_gbp": 1075.2472140567188, "decay": 0.4, "saturation_scale": 81.49584573175719, "coef": 68.63686989635531}, "Spend_Social": {"spend_k": 8569.6, "contribution_units": 1090.9452233642214, "units_per_1k_gbp": 0.12730410093402508, "cost_per_incremental_unit_gbp": 7855.2064910952595, "decay": 0.0, "saturation_scale": 30.1, "coef": 5.812615771706765}, "Spend_OnTrade": {"spend_k": 10325.199999999999, "contribution_units": 14318.281861285688, "units_per_1k_gbp": 1.386731672150243, "cost_per_incremental_unit_gbp": 721.1200408002628, "decay": 0.05, "saturation_scale": 51.705432300763235, "coef": 102.28311142989166}, "Spend_OffTrade": {"spend_k": 11516.7, "contribution_units": 13815.541100119186, "units_per_1k_gbp": 1.1996093585939709, "cost_per_incremental_unit_gbp": 833.6047004268726, "decay": 0.2, "saturation_scale": 52.47804037561963, "coef": 74.41352498853293}, "Spend_OOH": {"spend_k": 2877.3999999999996, "contribution_units": 8867.19269874174, "units_per_1k_gbp": 3.081668415493758, "cost_per_incremental_unit_gbp": 324.4995454320401, "decay": 0.5, "saturation_scale": 22.37441869515282, "coef": 52.74377322509718}}, "share_of_volume_pct": {"Baseline": 58.45344960781853, "Price": 2.2330067120053434e-15, "Spend_TV": 3.811885675034774, "Spend_Digital": 9.567429250358527, "Spend_Social": 0.8067033115422941, "Spend_OnTrade": 10.587704263900386, "Spend_OffTrade": 10.215950826427468, "Spend_OOH": 6.556877064917913}, "share_of_spend_pct": {"Spend_TV": 23.5408270374642, "Spend_Digital": 22.5357017896251, "Spend_Social": 13.881581505047496, "Spend_OnTrade": 16.725413713115707, "Spend_OffTrade": 18.655480969844625, "Spend_OOH": 4.660994984902873}, "decomposition": {"weeks": ["2018-01-01", "2018-01-08", "2018-01-15", "2018-01-22", "2018-01-29", "2018-02-05", "2018-02-12", "2018-02-19", "2018-02-26", "2018-03-05", "2018-03-12", "2018-03-19", "2018-03-26", "2018-04-02", "2018-04-09", "2018-04-16", "2018-04-23", "2018-04-30", "2018-05-07", "2018-05-14", "2018-05-21", "2018-05-28", "2018-06-04", "2018-06-11", "2018-06-18", "2018-06-25", "2018-07-02", "2018-07-09", "2018-07-16", "2018-07-23", "2018-07-30", "2018-08-06", "2018-08-13", "2018-08-20", "2018-08-27", "2018-09-03", "2018-09-10", "2018-09-17", "2018-09-24", "2018-10-01", "2018-10-08", "2018-10-15", "2018-10-22", "2018-10-29", "2018-11-05", "2018-11-12", "2018-11-19", "2018-11-26", "2018-12-03", "2018-12-10", "2018-12-17", "2018-12-24", "2018-12-31", "2019-01-07", "2019-01-14", "2019-01-21", "2019-01-28", "2019-02-04", "2019-02-11", "2019-02-18", "2019-02-25", "2019-03-04", "2019-03-11", "2019-03-18", "2019-03-25", "2019-04-01", "2019-04-08", "2019-04-15", "2019-04-22", "2019-04-29", "2019-05-06", "2019-05-13", "2019-05-20", "2019-05-27", "2019-06-03", "2019-06-10", "2019-06-17", "2019-06-24", "2019-07-01", "2019-07-08", "2019-07-15", "2019-07-22", "2019-07-29", "2019-08-05", "2019-08-12", "2019-08-19", "2019-08-26", "2019-09-02", "2019-09-09", "2019-09-16", "2019-09-23", "2019-09-30", "2019-10-07", "2019-10-14", "2019-10-21", "2019-10-28", "2019-11-04", "2019-11-11", "2019-11-18", "2019-11-25", "2019-12-02", "2019-12-09", "2019-12-16", "2019-12-23", "2019-12-30", "2020-01-06", "2020-01-13", "2020-01-20", "2020-01-27", "2020-02-03", "2020-02-10", "2020-02-17", "2020-02-24", "2020-03-02", "2020-03-09", "2020-03-16", "2020-03-23", "2020-03-30", "2020-04-06", "2020-04-13", "2020-04-20", "2020-04-27", "2020-05-04", "2020-05-11", "2020-05-18", "2020-05-25", "2020-06-01", "2020-06-08", "2020-06-15", "2020-06-22", "2020-06-29", "2020-07-06", "2020-07-13", "2020-07-20", "2020-07-27", "2020-08-03", "2020-08-10", "2020-08-17", "2020-08-24", "2020-08-31", "2020-09-07", "2020-09-14", "2020-09-21", "2020-09-28", "2020-10-05", "2020-10-12", "2020-10-19", "2020-10-26", "2020-11-02", "2020-11-09", "2020-11-16", "2020-11-23", "2020-11-30", "2020-12-07", "2020-12-14", "2020-12-21", "2020-12-28", "2021-01-04", "2021-01-11", "2021-01-18", "2021-01-25", "2021-02-01", "2021-02-08", "2021-02-15", "2021-02-22", "2021-03-01", "2021-03-08", "2021-03-15", "2021-03-22", "2021-03-29", "2021-04-05", "2021-04-12", "2021-04-19", "2021-04-26", "2021-05-03", "2021-05-10", "2021-05-17", "2021-05-24", "2021-05-31", "2021-06-07", "2021-06-14", "2021-06-21", "2021-06-28", "2021-07-05", "2021-07-12", "2021-07-19", "2021-07-26", "2021-08-02", "2021-08-09", "2021-08-16", "2021-08-23", "2021-08-30", "2021-09-06", "2021-09-13", "2021-09-20", "2021-09-27", "2021-10-04", "2021-10-11", "2021-10-18", "2021-10-25", "2021-11-01", "2021-11-08", "2021-11-15", "2021-11-22", "2021-11-29", "2021-12-06", "2021-12-13", "2021-12-20", "2021-12-27", "2022-01-03", "2022-01-10", "2022-01-17", "2022-01-24", "2022-01-31", "2022-02-07", "2022-02-14", "2022-02-21", "2022-02-28", "2022-03-07", "2022-03-14", "2022-03-21", "2022-03-28", "2022-04-04", "2022-04-11", "2022-04-18", "2022-04-25", "2022-05-02", "2022-05-09", "2022-05-16", "2022-05-23", "2022-05-30", "2022-06-06", "2022-06-13", "2022-06-20", "2022-06-27", "2022-07-04", "2022-07-11", "2022-07-18", "2022-07-25", "2022-08-01", "2022-08-08", "2022-08-15", "2022-08-22", "2022-08-29", "2022-09-05", "2022-09-12", "2022-09-19", "2022-09-26", "2022-10-03", "2022-10-10", "2022-10-17", "2022-10-24", "2022-10-31", "2022-11-07", "2022-11-14", "2022-11-21", "2022-11-28", "2022-12-05", "2022-12-12", "2022-12-19", "2022-12-26"], "actual": [618.0, 607.0, 462.0, 455.0, 470.0, 461.0, 472.0, 482.0, 528.0, 525.0, 504.0, 535.0, 536.0, 531.0, 533.0, 527.0, 518.0, 531.0, 530.0, 528.0, 531.0, 528.0, 535.0, 571.0, 554.0, 595.0, 590.0, 556.0, 529.0, 565.0, 565.0, 557.0, 557.0, 543.0, 537.0, 546.0, 535.0, 520.0, 521.0, 520.0, 518.0, 528.0, 532.0, 535.0, 531.0, 605.0, 602.0, 617.0, 616.0, 618.0, 607.0, 612.0, 615.0, 613.0, 478.0, 461.0, 457.0, 464.0, 482.0, 470.0, 538.0, 525.0, 519.0, 524.0, 545.0, 534.0, 525.0, 519.0, 516.0, 535.0, 542.0, 519.0, 539.0, 536.0, 519.0, 559.0, 564.0, 561.0, 572.0, 581.0, 537.0, 562.0, 558.0, 565.0, 560.0, 538.0, 546.0, 523.0, 532.0, 524.0, 518.0, 523.0, 518.0, 539.0, 519.0, 543.0, 537.0, 597.0, 602.0, 618.0, 634.0, 603.0, 610.0, 603.0, 619.0, 601.0, 471.0, 454.0, 468.0, 483.0, 465.0, 481.0, 531.0, 521.0, 503.0, 461.0, 427.0, 446.0, 445.0, 416.0, 430.0, 445.0, 423.0, 445.0, 466.0, 462.0, 474.0, 460.0, 478.0, 461.0, 505.0, 459.0, 450.0, 478.0, 477.0, 469.0, 468.0, 464.0, 452.0, 450.0, 454.0, 433.0, 445.0, 447.0, 439.0, 447.0, 441.0, 448.0, 447.0, 523.0, 503.0, 501.0, 510.0, 519.0, 514.0, 504.0, 462.0, 524.0, 500.0, 406.0, 395.0, 397.0, 404.0, 395.0, 399.0, 446.0, 431.0, 435.0, 439.0, 443.0, 429.0, 445.0, 439.0, 442.0, 435.0, 481.0, 469.0, 450.0, 465.0, 465.0, 457.0, 473.0, 456.0, 538.0, 504.0, 510.0, 515.0, 529.0, 547.0, 534.0, 496.0, 523.0, 515.0, 539.0, 522.0, 506.0, 491.0, 508.0, 524.0, 500.0, 523.0, 532.0, 580.0, 556.0, 610.0, 613.0, 601.0, 589.0, 572.0, 593.0, 644.0, 477.0, 473.0, 440.0, 466.0, 467.0, 471.0, 535.0, 506.0, 535.0, 536.0, 527.0, 536.0, 527.0, 527.0, 530.0, 517.0, 534.0, 544.0, 521.0, 567.0, 545.0, 562.0, 574.0, 558.0, 555.0, 533.0, 547.0, 562.0, 561.0, 567.0, 573.0, 544.0, 539.0, 522.0, 566.0, 550.0, 531.0, 514.0, 501.0, 513.0, 526.0, 532.0, 529.0, 597.0, 596.0, 628.0, 622.0, 605.0, 620.0, 598.0], "predicted": [572.5987273557171, 520.1680097921753, 491.52926671496766, 486.4093654998392, 498.298811011259, 492.716651119345, 488.7308115059948, 497.4374048255446, 500.0760576829638, 504.13560064433346, 490.76577277364004, 521.5591099430369, 547.2199338407875, 524.9751704942778, 503.3572513680832, 497.16957472373986, 505.52605895051397, 528.5223540281395, 534.7776843278297, 545.7605307513514, 555.0591641238151, 543.6308383213202, 555.061904115919, 575.24583140143, 568.9294529145358, 600.8941710170923, 589.1873483806985, 570.5832281540521, 544.4779959202501, 577.0583003863165, 553.2309187405172, 544.3193762517336, 553.8876716697328, 535.8852761666326, 534.1679510500843, 571.659353939217, 569.5321138171741, 540.313263836276, 519.7541055381171, 538.6904540804217, 536.1960546245434, 542.3298017533366, 543.5245108998346, 541.8653970128166, 544.4854157258706, 564.5543274228061, 564.0348719828532, 582.2375740602081, 593.9656303310671, 627.0905485403705, 606.9293701929596, 602.4138194159085, 610.2210646197004, 546.525742784513, 529.8215947182754, 507.6289893430493, 497.1940152176746, 493.4198544250232, 501.584448335478, 495.4850272410411, 517.9396016547992, 490.661323927632, 496.36805003424087, 497.77942622503485, 543.7255793331053, 534.6850093385877, 501.50109575594894, 504.8430989392758, 505.05445754177197, 530.6218995061375, 553.9363299861275, 517.5625932816665, 554.666786946159, 533.8013302534517, 523.531762741155, 567.7683514354937, 567.3487657004111, 574.2181633862324, 569.523424633775, 589.7227220678772, 543.3691865204293, 554.6407832115285, 534.8299688065408, 552.6059136223844, 537.9923657586049, 514.6227293793022, 512.7438473450534, 522.299901236749, 536.4223302643611, 528.4729240311242, 516.2967779189844, 518.8920074356063, 531.3904542432615, 559.5096970974034, 516.1422645839227, 549.2012286516895, 576.2567490210541, 568.890215192765, 562.9880740333765, 588.9761872324924, 617.8047351273215, 629.0505792047172, 606.8856047439824, 617.3699115454958, 610.8444790470073, 523.486323334159, 513.8979891836584, 492.22907879567197, 513.2561033485438, 509.6276413396881, 480.88727649132704, 510.1416399300448, 500.66937863588964, 492.0192412622222, 491.1528942066392, 452.4826929264326, 437.96111061555746, 416.8817057959663, 437.9098760429627, 425.31970558274423, 428.9754798620029, 434.19310781439475, 419.0167220310577, 442.96944485382994, 468.5106768099006, 476.60069505540383, 467.2399638405545, 453.05646028305637, 480.60097373502305, 480.06269143216826, 515.007043010538, 462.4328188395251, 424.4290734679677, 468.6707193185846, 464.2971743487486, 463.6807372113375, 454.8770449540688, 423.85296701553466, 432.449313248537, 475.1130810960983, 485.5963468663603, 443.1639109854082, 466.31111167597487, 467.1999308046864, 470.91128293713047, 474.19000415895607, 473.4852897506612, 465.3015481258464, 474.53330915685314, 494.0302462016925, 496.83446114129936, 486.4799705603479, 486.12318699668003, 539.8476741435557, 537.3461715619308, 508.5461994359539, 474.20494119009203, 504.7092098585507, 450.4384658142736, 441.5925152785133, 419.800844914131, 425.7860888759161, 448.816873695804, 438.1234592974462, 410.52042264975614, 404.614137129362, 423.7248764464183, 428.725136457701, 431.53474111840944, 438.53585106956683, 419.4184162361862, 447.9223408976789, 436.34725225521345, 443.2276012110557, 442.7747804409639, 475.608951703927, 485.5514972835703, 473.27829408025656, 480.4476728830518, 467.7907398584092, 445.6766286979407, 463.43719225687823, 473.1155927087051, 519.8713742463758, 486.7149984015856, 501.2517095825293, 487.1175360286106, 479.1093738265197, 517.4277850396207, 507.3640869185142, 473.6147264804763, 489.0619345748524, 525.8145543644439, 548.4176587686585, 537.1412759407865, 499.05781839851954, 481.80268244068117, 514.0199509764832, 524.1477038468665, 491.3822410293478, 536.7951870231369, 555.8315332113827, 548.3898137848983, 531.4095428679918, 579.2410896314179, 584.4804179424608, 599.4795245966864, 582.9192813614108, 569.9177890313858, 567.4602097563675, 564.1425290138471, 521.7775198911182, 512.6318667502812, 483.4488790035749, 472.4866164569536, 481.0976837467414, 487.1582232339528, 500.17404540480595, 505.32547560708724, 511.26442760098735, 515.9979062864804, 524.5808996458096, 525.4476551528346, 512.8524515026253, 531.4079991541324, 536.7678760725153, 506.5956586446082, 520.9640427664483, 566.782847342623, 553.8674821273443, 578.2142463438554, 571.269112254455, 564.8817081352521, 586.883259566919, 580.4385472975291, 562.1445728019413, 536.8323251508506, 573.3488611458345, 574.4374024277697, 546.8966142183617, 545.6003751525475, 562.8585924331385, 529.6210388728983, 515.6015275843769, 534.5993603013779, 596.3612078973651, 560.2534389841052, 521.6280467371917, 525.243562258168, 533.0024118861676, 522.2703171483424, 535.6137333662866, 565.2138101047956, 549.605004288165, 565.5513956219831, 570.0936593082104, 603.6275385227143, 602.5759220110779, 624.9309701788213, 616.6322429391009, 596.6016812802737], "baseline": [355.7097637083081, 299.6940478661028, 293.41529462057343, 287.10730326378996, 281.061673571792, 275.5611385315734, 270.8641313088437, 267.1906568292023, 264.71027607553543, 263.53289017957513, 263.7028505940042, 265.19673038981267, 267.9248811160934, 271.7366818942825, 276.4291751190993, 281.7585886089661, 287.4540785614759, 293.23290080904763, 298.8161369767762, 303.94407188903745, 308.39034068290465, 311.97403725296016, 314.56909559716934, 316.11041536498436, 316.59639312564195, 316.0877305073759, 314.7026072130345, 312.608518384533, 310.01126957500486, 307.14178743226955, 304.2415305251775, 301.54736522275596, 299.2768015005429, 297.6144612740256, 296.70057865999945, 296.62221171987414, 297.40768573518125, 299.02459820259395, 301.3815065778077, 304.3332035317023, 307.6892737095402, 311.22543298713134, 314.6969872465407, 317.85362231045946, 320.45465719777144, 322.2838639428535, 323.1629805675454, 322.9631180775832, 321.61338328186014, 369.157011777162, 365.54981246568366, 360.96298669485554, 355.57418296951386, 299.55846712730846, 293.2797138817791, 286.9717225249957, 280.92609283299777, 275.42555779277916, 270.7285505700494, 267.055076090408, 264.5746953367412, 263.3973094407808, 263.56726985520993, 265.06114965101835, 267.7893003772991, 271.6011011554882, 276.29359438030497, 281.62300787017176, 287.31849782268165, 293.0973200702533, 298.6805562379819, 303.8084911502431, 308.25475994411033, 311.8384565141659, 314.433514858375, 315.97483462619005, 316.46081238684764, 315.95214976858165, 314.5670264742402, 312.4729376457387, 309.87568883621054, 307.00620669347524, 304.1059497863832, 301.41178448396164, 299.1412207617486, 297.47888053523127, 296.56499792120513, 296.4866309810798, 297.27210499638693, 298.88901746379963, 301.24592583901347, 304.19762279290796, 307.5536929707459, 311.0898522483371, 314.56140650774637, 317.71804157166514, 320.3190764589771, 322.1482832040592, 323.02739982875113, 322.82753733878894, 321.4778025430659, 369.0214310383677, 365.4142317268894, 360.8274059560612, 355.43860223071954, 299.4228863885142, 293.14413314298486, 286.8361417862014, 280.79051209420345, 275.28997705398484, 270.5929698312551, 266.9194953516137, 264.43911459794685, 263.26172870198656, 263.4316891164156, 264.9255689122241, 267.6537196385048, 271.46552041669395, 276.15801364151065, 281.4874271313775, 287.18291708388733, 292.961739331459, 298.5449754991876, 303.6729104114488, 308.119179205316, 311.7028757753716, 314.29793411958076, 315.8392538873958, 316.3252316480533, 315.81656902978733, 314.4314457354459, 312.3373569069444, 309.7401080974163, 306.870625954681, 303.9703690475889, 301.2762037451674, 299.00564002295425, 297.343299796437, 296.4294171824108, 296.35105024228557, 297.1365242575926, 298.7534367250053, 301.11034510021915, 304.06204205411365, 307.41811223195157, 310.95427150954276, 314.4258257689521, 317.5824608328708, 320.18349572018286, 322.0127024652649, 322.8918190899568, 322.6919565999946, 321.34222180427156, 368.8858502995734, 365.27865098809514, 360.69182521726697, 355.3030214919252, 355.30041417002536, 299.28469832781997, 293.0059450822906, 286.6979537255072, 280.6523240335093, 275.15178899329067, 270.4547817705609, 266.78130729091953, 264.3009265372527, 263.1235406412924, 263.29350105572144, 264.7873808515299, 267.51553157781063, 271.3273323559997, 276.0198255808165, 281.3492390706833, 287.04472902319316, 292.8235512707648, 298.40678743849344, 303.53472235075463, 307.98099114462184, 311.5646877146774, 314.1597460588866, 315.7010658267016, 316.18704358735914, 315.67838096909315, 314.2932576747517, 312.19916884625025, 309.60192003672205, 306.7324378939868, 303.83218098689474, 301.1380156844732, 298.86745196226013, 297.2051117357428, 296.29122912171664, 296.2128621815914, 296.99833619689844, 298.61524866431114, 300.972157039525, 303.92385399341947, 307.2799241712574, 310.8160834488486, 314.2876377082579, 317.44427277217665, 320.0453076594887, 321.87451440457073, 322.75363102926264, 322.55376853930045, 321.2040337435774, 368.74766223887923, 365.1404629274009, 360.55363715657273, 355.16483343123105, 299.1491175890257, 292.87036434349636, 286.56237298671294, 280.51674329471496, 275.01620825449635, 270.3192010317666, 266.6457265521252, 264.16534579845836, 262.98795990249806, 263.1579203169271, 264.6518001127356, 267.3799508390164, 271.19175161720545, 275.8842448420222, 281.213658331889, 286.9091482843989, 292.68797053197056, 298.2712066996991, 303.3991416119604, 307.8454104058276, 311.4291069758831, 314.02416532009227, 315.5654850879073, 316.0514628485649, 315.5428002302989, 314.15767693595745, 312.0635881074559, 309.4663392979278, 306.5968571551925, 303.6966002481004, 301.0024349456789, 298.73187122346576, 297.0695309969485, 296.1556483829224, 296.0772814427971, 296.8627554581042, 298.4796679255169, 300.83657630073066, 303.7882732546252, 307.14434343246313, 310.68050271005427, 314.1520569694636, 317.3086920333824, 319.90972692069437, 321.7389336657764, 322.6180502904683, 322.41818780050613, 321.0684530047831, 368.6120815000849, 365.00488218860664, 360.4180564177785], "price": [-0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, 25.340097432494495, 12.21754697638128, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, 25.340097432494495, 12.21754697638128, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, 25.340097432494495, 12.21754697638128, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, 25.340097432494495, 12.21754697638128, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, 25.340097432494495, 12.21754697638128, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, 25.340097432494495, 12.21754697638128, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341, -0.9050034797319341], "channels": {"Spend_TV": [25.039290321719168, 29.29568895208097, 26.53668882267427, 6.977317936834831, 5.892318195382179, 22.38795743078698, 25.76790284022212, 25.263074713721924, 26.37040681257177, 14.675976465638605, 7.079376691061535, 23.898361669597566, 25.29259190933624, 25.746667140297816, 23.433742358983547, 10.721776704460845, 9.96090373967333, 23.35914026163282, 25.98249051479272, 25.09184353156026, 27.452834491112004, 6.7705412597317585, 3.366617320389557, 26.00788744911505, 26.236064887998815, 26.2380287523411, 30.03713374015192, 15.690638905161725, 8.237497443999619, 24.890895794300476, 27.031274046889987, 26.873140241463275, 26.219264978619922, 10.983363837064752, 3.446095851452197, 25.399504477246655, 23.487198853956347, 27.04454913027334, 23.822681427979813, 18.10978245861386, 6.0989263087105945, 24.766678653655454, 32.07976001907862, 29.096060156553055, 27.147311539862454, 16.849079935334835, 11.011093447177114, 29.99044428883312, 28.507494940694592, 28.53009947886141, 25.660473696072007, 16.086044675526207, 26.794816167959254, 26.480431070879142, 22.966610642409808, 10.213938125771353, 4.908542135716782, 24.61357172062204, 23.563006542345462, 25.303399900817027, 26.80582862953904, 11.733567589666222, 14.498730153563427, 29.88094063657174, 24.037370240890223, 23.003011893399066, 20.55950247533263, 9.93727868175004, 9.151714560389996, 25.097342499672948, 30.360850559170352, 23.535687241617175, 24.65298312093614, 5.521411996448629, 2.8058264487112825, 23.681305799710106, 25.078691955641453, 23.656367848302548, 23.959364368638575, 16.485637408719327, 8.839158128322936, 22.433284582966458, 25.433066039623025, 23.218360054753443, 23.602366464822747, 11.441929703298827, 10.879312464394484, 22.525026482905005, 25.906438178478513, 23.878139472534745, 27.44210146497761, 13.19797288767902, 13.610699181215566, 27.3937836759511, 30.32533362896734, 27.91751920427004, 28.17941987443817, 14.19785964866075, 13.15633246597741, 28.89280218512493, 29.483880791070888, 25.892243532734362, 28.10196607033137, 13.639604753376616, 28.46050446786346, 21.266628330092864, 27.19628854639695, 9.860456635464052, 7.632906343187625, 30.346280410432612, 24.577968369403752, 24.776895392363112, 24.578845568446116, 14.09486692063868, 3.8552814787200544, 19.502127692144086, 18.558012405949242, 17.68765912932272, 21.187492699028315, 7.426501268304972, 6.324699959355983, 21.489829203965552, 23.996794777679995, 22.443305984583183, 24.174905507767644, 7.162125346634115, 12.811973109967973, 22.431175888075593, 18.662905143908425, 21.324628272829145, 24.07047981540586, 9.452997563220919, 3.8415980406451866, 21.024065317603043, 20.870544456208126, 18.464968429594467, 19.08015999212584, 8.967750812575154, 5.124284786500622, 19.11981730897222, 20.634856529218908, 18.360354486915284, 24.0987837988192, 11.05382605459142, 11.303802366132423, 23.40449486643867, 25.202741158606635, 23.601836141512337, 21.332814306611635, 14.211434913782778, 6.643628204987178, 23.71579009605463, 24.165137458945996, 24.43008848129349, 25.215544104934267, 10.354321100268818, 2.9448079170215524, 20.330504729102213, 16.586156051663927, 19.9507994605425, 9.85355241355123, 13.938619428804863, 22.07071945759937, 21.916045129231925, 23.24901925925303, 25.571971518536536, 5.295600572444211, 4.731093895032356, 12.834907855772602, 19.883359852883103, 20.461316739280356, 20.91247590927492, 7.972999868661018, 7.361750340073092, 20.28368244923844, 21.211754673023403, 21.591984144862693, 25.314535720950246, 10.740211041635787, 9.40968487601662, 20.771332626109114, 20.201321023687992, 20.88692706062552, 28.49006231841667, 11.553520611952726, 4.303099523074688, 21.17305459701959, 25.40551787464976, 25.482593806119485, 25.849651693342192, 5.740294130842797, 6.916039909654476, 20.749579690936454, 25.19742466482712, 25.269854556856348, 26.92488602469168, 8.190499462261467, 9.848534821723291, 30.130041352579344, 29.116902776871267, 25.956398627939596, 30.2333616387283, 12.683841580275685, 3.665500734943471, 25.834100584627752, 28.05727874103948, 28.889937288201025, 27.666707276975536, 7.298371531596791, 23.93376133489062, 22.131718328380344, 25.596924523151298, 11.314972861312956, 3.4881001051811524, 25.316274357939665, 21.521046394612718, 28.11214917198041, 25.359985869827998, 7.807739463688909, 16.59419837640136, 24.833777545789584, 24.518936060035053, 22.638008455937374, 21.375893457596714, 11.847072824535932, 14.776284658443084, 21.757446528914436, 25.963939430262382, 24.938949611319345, 25.943366500037392, 15.349375351565138, 11.528506390470493, 24.003768740891253, 29.39520136021599, 25.608181696874837, 23.21436161617577, 11.18836022739892, 6.315570218827445, 29.12446194708041, 23.791339856404033, 25.601669531507053, 25.331782748241373, 15.207044699683413, 16.332850572007477, 25.56444917879845, 22.425008338697847, 23.66002712723499, 25.09817556996995, 14.076591713922092, 3.8527776693731663, 21.6526873926873, 28.162097138384095, 28.12545607464407, 28.062928205233504, 13.449301532692832, 9.874991859896058, 24.96975041385031, 26.63077354340346, 28.210801082615923, 29.773477046889386, 12.351597794565695], "Spend_Digital": [26.784370418863723, 38.668764735316216, 32.50469359684044, 32.021288307520074, 38.00305422654747, 46.478360577875634, 35.832277477282574, 37.841925142164, 32.77393069285371, 55.877040850615835, 60.224878036221945, 52.567511358026515, 51.073068932307095, 37.91998273576524, 37.88892856031195, 43.328848712374544, 42.91084246996877, 38.79078931493305, 39.85983472679425, 41.673584817935044, 37.832576114760826, 52.832638871323795, 60.959122469028316, 45.584260468029115, 45.670395594677494, 44.1732639513723, 44.01014460150301, 39.164731444872594, 37.420132060104415, 42.66018025743858, 38.44434084755505, 39.72360570134448, 35.67535263687519, 34.44716703871006, 34.76652036668492, 57.041699666801264, 60.525127594850915, 44.00589578569391, 44.64982378858755, 44.77424444976859, 42.14225286398848, 39.04002662643145, 44.02305817661647, 45.00724855975414, 37.96707021017038, 50.09150761318975, 56.907069695529906, 43.54174537059285, 39.72367518171046, 37.892898433096505, 37.63515645825356, 37.434225957078134, 42.620155388935245, 41.208941797722105, 36.458219159366365, 35.72458596008908, 37.702930403641226, 37.75357875635236, 38.929833054444664, 36.33893214598351, 44.80719946662184, 56.8660822640629, 63.72997748615477, 48.37240095969164, 44.59064986142731, 44.222034565842975, 47.065589224216204, 43.685743213503486, 43.9484047614181, 39.42335527588532, 46.643207422432496, 45.75031022494163, 45.47676463375908, 56.90794440476606, 62.97557647923314, 53.65730889594676, 42.7087164106548, 42.48076563191011, 39.466833793956766, 39.46657413927337, 36.7598723445906, 35.093213253682386, 35.3271601114977, 33.276058275933266, 36.11783141671697, 38.91517957088074, 36.431984763435125, 55.86832768612095, 58.195588979939664, 48.58398163829226, 40.04688334166099, 39.887848458599905, 41.500715373520556, 39.62863140215777, 38.913054548745684, 46.202618841530374, 45.87494393451524, 63.54817952036502, 61.40566688408999, 48.22784514946798, 40.63532901372874, 36.06367870935582, 34.656417941784326, 39.40913272621833, 38.440652958801124, 45.51430448873662, 43.128092673230846, 36.1529855500001, 41.736326634716335, 41.542621040286555, 39.171546612323226, 45.69242151451348, 41.56686897525012, 59.46880851132367, 64.02386280918867, 72.43980312884722, 56.6967595810716, 47.224488853273385, 58.301789463387, 64.71390665223508, 67.4989852827978, 40.043509926884106, 25.00708637328617, 50.27289803812075, 57.192804072742604, 75.74498693183851, 62.4648858804423, 37.08410678112236, 60.07641789664708, 57.0870227874651, 64.37280236431128, 44.112173788164355, 36.04468586701413, 62.40867581500259, 64.35212967752439, 62.758739237349154, 52.351032879804656, 44.518629907003884, 56.8797930115664, 77.77048031296172, 83.33285356880535, 53.415059468615205, 57.22078587267537, 62.82103563060199, 72.98308374749723, 68.90676219082452, 53.33461030852192, 43.547037349279385, 60.71395435127179, 76.06497629203267, 77.57430244746273, 53.67227769405561, 40.13666836293515, 61.378351033365135, 65.72161549400467, 64.51743647113564, 38.27993797856407, 51.838597065349475, 61.472780616324684, 49.25377792693516, 45.83389109976728, 57.06577012146179, 67.08045306966343, 68.88229833705022, 46.44380226746831, 35.11282280069087, 75.65224916139539, 78.816404897285, 77.99152438565625, 56.397648363239604, 33.637019731923445, 67.63297646999985, 68.19975944399684, 58.798762873847146, 51.2981470731871, 42.20649038237855, 60.64815693344551, 60.08345087921809, 82.55447668239955, 72.02198188641268, 44.25255452482891, 52.92874292714719, 49.19473642520981, 54.78762902435218, 54.43306880915069, 50.078185841145235, 56.16307579654206, 49.60517803339584, 54.25496417546847, 55.843719049390714, 60.66624773843711, 60.68472620530884, 68.94179223297427, 70.52385942863964, 68.68340234633904, 64.79485642744497, 52.722817864030574, 55.286594382694595, 54.59611912947994, 48.87865244223589, 54.97438555719135, 53.007396029573606, 63.66979038050046, 69.46659989028278, 61.40899478447646, 55.878907542378634, 48.531699524368136, 52.3010432217903, 49.136446712637714, 50.94536995927563, 51.93299920834705, 48.40249237009226, 48.24294839445687, 51.797008912794126, 52.34865938962987, 50.137000478724424, 47.69394439680895, 54.085070225511444, 66.09677266451008, 65.09582663866627, 51.408650242423285, 48.88810825952009, 49.18253269049736, 53.016601409852775, 56.849896288502855, 51.953399701693264, 38.923526808992975, 46.12041393759294, 51.99286301121056, 42.06984057185026, 57.834526185880556, 56.455875824872855, 43.367627395603144, 43.4203494803115, 42.0407590051858, 39.80399354945905, 43.95401802381431, 50.96521614117746, 49.28194232858764, 44.4497004246815, 47.57545285111846, 43.27563346878356, 44.051771590851914, 47.63433550688685, 57.35466143247179, 52.87596059466294, 47.63305342348136, 43.03073856364641, 38.84174029122352, 43.41454431596184, 40.046886212666934, 40.49745392183998, 44.963655519303835, 41.30440343018265, 58.31612569003537, 59.64869011438377, 45.88773399825225, 37.14394909940573, 36.598194856762326, 36.7248039108667, 42.49406633566959], "Spend_Social": [4.200249709951592, 3.535510387874353, 2.6883375132222778, 4.642383899470927, 3.087744968782448, 3.8125983747038075, 2.961503533905499, 2.85613601232301, 4.009655068659204, 3.299541552628627, 3.121703872218495, 4.038645731108312, 1.991536960754454, 3.6910758487889623, 4.348349843020759, 3.3864607912663702, 3.8226114965111027, 3.7216954934589768, 2.540551185463974, 3.8025679739892255, 4.607525529502571, 3.882330677005985, 3.244549507903848, 3.9610136486427803, 3.0307021579743565, 3.3972348736313656, 3.064994975859538, 4.375703379484756, 3.2666087972703974, 3.8326073988398988, 3.1442334189188808, 3.288584686478087, 3.921805299156655, 4.028998233836815, 4.124760132402209, 4.366599829038634, 3.524989813469791, 3.535510387874353, 3.364852529312013, 2.4525747808317, 4.115254626160038, 4.796710197283689, 2.832459336931544, 3.233488389871936, 4.7286260716231405, 4.483848187706994, 3.862492378664678, 4.9799310209763705, 3.701300329475784, 4.339203317495827, 4.256230390853356, 4.143724637876634, 4.554842850688666, 3.882330677005985, 4.474912573692516, 3.8724199912772983, 4.06749251871003, 3.535510387874353, 4.009655068659204, 3.8125983747038075, 3.752154685106251, 3.882330677005985, 4.988123574512596, 3.299541552628627, 4.028998233836815, 2.9730939979088356, 3.752154685106251, 3.5460119549074016, 4.237630004511554, 4.685664931695392, 3.6705727736620384, 4.430027286777207, 4.6597350042109404, 4.048277242461517, 4.038645731108312, 3.200178179675969, 3.4827160578897542, 3.752154685106251, 3.649997121126726, 4.162627470053639, 2.7728422422972274, 4.754251164286418, 4.668391172261484, 4.357481998507527, 3.4508077484566284, 3.6808333513867684, 3.882330677005985, 3.343163639327793, 4.190866954449013, 3.2776071274613385, 4.1342501194436165, 4.038645731108312, 4.019334697493477, 3.9902473185031027, 2.4525747808317, 4.019334697493477, 2.85613601232301, 3.931632208972663, 3.862492378664678, 3.6602940516701685, 4.320866974934347, 2.6394917150911117, 5.133648677294796, 3.3322887703526827, 3.200178179675969, 3.7318663023037093, 2.996205820690974, 3.6705727736620384, 4.838861330306436, 3.8326073988398988, 3.8025679739892255, 1.9640540926680417, 2.9149091700016942, 4.237630004511554, 3.6808333513867684, 5.252196955737091, 5.916797477968693, 1.5502208313758497, 3.6189964301943647, 6.249037375740521, 6.2753388494478495, 4.237630004511554, 1.5502208313758497, 5.608724792385256, 7.606401529334227, 5.512278412451699, 4.92225753520735, 5.519754446629188, 6.443457364832511, 3.649997121126726, 3.9021014980117172, 5.73967787028054, 5.732479583575198, 3.2776071274613385, 4.6162597396684575, 5.314447786563635, 5.895825901022005, 3.5038913664513593, 4.384792694506081, 6.176088587712135, 6.262202989006031, 3.155465530185394, 2.565444652941044, 6.4306964030184295, 6.468895548854199, 3.2224061829463606, 5.205067380470978, 6.443457364832511, 5.542125028847423, 2.5280643583810813, 3.931632208972663, 7.184463764022209, 6.2753388494478495, 3.792520234630382, 4.607525529502571, 6.588229507488508, 6.538281911027472, 6.984697857353256, 2.376091890891007, 4.572456851354391, 6.462546432142419, 7.122416815340787, 2.515550648980174, 3.8326073988398988, 7.02520405452779, 6.735547612939301, 4.554842850688666, 3.155465530185394, 4.711479699981111, 6.006810003393031, 2.6883375132222778, 3.5982370660868854, 6.0136766501120995, 6.637751560151373, 1.8947729891456053, 4.086644482566206, 6.717335747059093, 6.242443369620184, 3.6705727736620384, 2.8443097299693134, 4.9635111914932715, 7.065429929753354, 5.306702794382837, 5.236529518295314, 4.430027286777207, 4.971726904199137, 4.237630004511554, 4.457000030174038, 4.938794148840907, 4.81360734805407, 3.970774550637125, 4.330042376637076, 5.0935891405709155, 5.260014866494263, 4.181469028761167, 4.430027286777207, 4.668391172261484, 3.2555896171519256, 4.153183738046643, 4.685664931695392, 5.197175165040301, 5.825369089617153, 4.94704484685036, 3.772372499478243, 4.52832136389352, 4.028998233836815, 4.457000030174038, 5.236529518295314, 3.999959293647586, 4.421008486253031, 5.260014866494263, 3.921805299156655, 4.590017637435523, 3.3322887703526827, 3.882330677005985, 4.237630004511554, 4.2096173441655855, 3.2224061829463606, 3.772372499478243, 4.633688885476009, 4.439032115490174, 3.1442334189188808, 4.838861330306436, 3.8525477812488895, 3.5982370660868854, 4.375703379484756, 5.267822276360758, 4.572456851354391, 4.339203317495827, 4.2840198418966295, 4.228307443135924, 4.256230390853356, 3.6910758487889623, 3.0535865015952273, 3.3322887703526827, 4.237630004511554, 2.9032019842279584, 3.472099405126949, 4.402928795870465, 3.7216954934589768, 3.087744968782448, 4.668391172261484, 3.6808333513867684, 3.524989813469791, 3.535510387874353, 3.8025679739892255, 3.189032220801988, 3.2666087972703974, 4.6597350042109404, 4.246937637840166, 4.2840198418966295, 2.7608450950625523, 3.177864847968883, 3.299541552628627, 2.1936181156324097, 3.7115068567193297, 3.8922244934742154, 4.330042376637076, 3.556494583125786, 4.847255000749434, 4.105733549876114], "Spend_OnTrade": [87.7264602454557, 82.30789434822348, 71.7738442434022, 74.4206774970586, 80.2133269078986, 66.62838571457262, 78.21404889291657, 69.96650753963796, 72.7915226759268, 73.70351873742113, 64.80839996142146, 69.98423189348865, 83.91359686212881, 80.50230532605299, 80.05776803377195, 73.88407997997611, 74.52450915701773, 80.39866458622738, 76.74375127777581, 65.29050306543189, 62.23629807341047, 81.64709384426837, 99.19035400634375, 98.19137097974411, 75.97303526846558, 88.51906672007928, 92.60665317540347, 90.79112472235147, 80.14910867883447, 98.37439793282377, 91.65940399249459, 73.76798888676211, 89.74727716308702, 91.8633755362925, 91.5647689297642, 83.48050059890772, 77.92657107915267, 86.59007902376945, 79.37569659618933, 78.7267737143554, 84.74391990102389, 80.90478713377988, 72.47869828190692, 76.06635249329798, 62.49843339193042, 76.26535088507629, 73.10702813335683, 68.38679702881733, 81.99770523099889, 89.4552811752787, 92.25124781316802, 85.68044216512831, 77.48898758829483, 82.32511259638704, 84.22416866340573, 70.6986367060624, 71.16376923665196, 78.69619466773763, 89.88085882677947, 74.81169929453783, 80.41224080615618, 69.58716564353783, 69.01463311082365, 70.68490991587635, 92.78019933381283, 93.37277158438785, 88.6086143522801, 83.05958108113323, 66.17343566169077, 77.45431900778797, 85.54502097734671, 59.47795789207591, 76.69747528517014, 86.36402138562748, 78.8158039244763, 90.867309183341, 76.66102481061168, 84.7338960362439, 65.44170336597178, 88.74226561314056, 88.87022255700259, 94.3681728984577, 91.93369961702965, 102.29871404261193, 80.46297662497166, 78.78176075461002, 92.88002165933402, 59.52616540017705, 59.10110676068723, 72.38644693294498, 89.27619391247575, 71.78125296806382, 72.68633269575983, 94.44517301689162, 68.00660441181665, 74.33599161415171, 86.85186169172593, 79.66248162575637, 72.41163524130415, 77.74194679250155, 97.59139517809265, 99.54144799698301, 88.85820950628879, 91.09191869632491, 76.39312252386766, 72.72572946017468, 63.699571448937725, 73.65732145455473, 86.73724749313094, 77.17510459339945, 71.69248307220909, 86.31186411337164, 69.82425974462282, 65.33425547641775, 72.76543093995504, 6.105856846275936, 0.5111288829713203, 1.5956600488086221, 0.6716551511731655, 0.033687713785837396, 0.19930923798081937, 0.7981286640711323, 0.2376052308648502, 0.011893379747052589, 0.7888206787860188, 0.631099188347802, 1.0156872505881078, 0.4457026290852827, 1.0064601604532424, 0.8384014218545163, 0.6335826228678465, 0.42652467755762996, 1.396525688230942, 1.2495546310530727, 1.632317537450868, 0.27970669365952855, 0.6056643891787328, 1.9890950347482916, 1.4744812329194665, 0.07423107300655546, 0.9880199725317497, 1.6193054628262977, 0.4761373969860015, 1.2036654795722372, 0.4551623161770559, 1.3979442438497498, 0.46495643143356014, 0.811349796931188, 1.4156194497089627, 1.8350823609208873, 0.8800607302226351, 0.044183340966671605, 0.0022096203977593743, 0.788340176323238, 0.23711313937505382, 0.20947365261669432, 0.9947261711773321, 1.2294732607527474, 0.06182592429164062, 1.1831362726343073, 1.2388803991981587, 0.8500541149542279, 0.6341664569899171, 0.03180187941335823, 0.001590328828888503, 0.5918207072319609, 0.22724307675083177, 1.3866647893000372, 0.4643873206235831, 0.8113214376705755, 1.6105321005972562, 0.8687396988568308, 1.0275377586118375, 0.8394571381135022, 1.0260761007136137, 0.8393839212053337, 1.2217295424124424, 0.2589435966008196, 0.4077873844180756, 1.3955977471135008, 1.6395973553174363, 1.2617394381694769, 0.06345800035347635, 29.671687289231006, 18.53129595460531, 39.42191811755009, 23.280654130908385, 30.642693827813225, 43.883771852857315, 31.408586829041102, 23.45944667732624, 36.07527839312242, 39.66357818676778, 58.637650043747904, 55.55490953696028, 38.27392471852653, 32.40500566399504, 45.87445503982677, 43.44507640813933, 29.77014539082372, 51.8958547124208, 52.056827767468974, 58.5157782512646, 28.172046348614554, 50.14975045377376, 62.15716436493192, 55.04867801906655, 60.97292326420239, 55.79127310817557, 38.96592900819891, 69.09449457717817, 58.71597669374161, 71.7829118689316, 61.827237354396686, 39.734949565805216, 69.22382949158309, 58.94571849717896, 53.364103836657215, 82.18463089328557, 73.13088973218545, 65.82197814292974, 64.07712594894217, 78.37766797541498, 72.7324261589093, 82.19182821095683, 84.56437035510254, 68.71697687259714, 71.95091695969928, 81.97898124221562, 72.14722306597204, 88.6027170443552, 90.34603179231699, 79.85297284185914, 90.42448285477279, 92.61905450733725, 84.23473731996751, 70.89725030652812, 87.8817918927647, 92.01446111411308, 83.50488513265071, 85.31844923425041, 92.21453858639848, 78.95673591624819, 76.76296875003169, 60.80643871859698, 91.51460529428059, 80.36986398594915, 68.98191673444431, 73.90293781339733, 74.0470169746939, 64.30102931491655, 86.59791885870499, 77.90899119110884, 77.73247419313218, 67.0033642276035, 88.47226457327301, 100.0093986322773, 87.12708724675161, 96.38914931501695, 96.29222634404422, 80.19160524222879], "Spend_OffTrade": [39.37353850143742, 44.161559200382065, 42.485323206349086, 47.20118397854626, 45.07720799451794, 50.98242338304085, 51.756426274323054, 46.64625261321089, 44.574872814347614, 48.7851548041973, 51.68149692282349, 50.3256904104781, 62.24029721758389, 69.26103082590178, 50.470768823540574, 46.67623948922528, 41.07238975449581, 54.73978060767747, 49.66072903123163, 53.250319260390725, 51.575420457241734, 41.50991340438109, 43.071771934810094, 39.39673992577419, 48.64938695081496, 62.75472335372884, 60.658288787723976, 54.11746489413218, 48.86906875487386, 46.94807605763396, 46.785055006913815, 45.68568014786682, 43.43514803452971, 51.821177555771904, 51.00004196121101, 47.16506382706208, 57.511026064400184, 50.26287405562404, 48.65079301255938, 45.068953655023556, 41.78753354577731, 40.786375844583205, 52.13292116831521, 32.967457708677195, 43.16040250807245, 56.961388227029055, 63.53458454425246, 63.82622826736293, 62.30534350620226, 54.480265343099916, 49.2403128515919, 47.250200726998294, 50.81783653547977, 44.83360893260167, 50.07432500084761, 52.63355828943136, 45.23094126402024, 40.598921625145735, 50.31949586165284, 49.832863272076075, 51.317153750210835, 48.72027640828714, 51.88116168338831, 38.77035679121017, 63.59865046433072, 68.50034666991243, 45.50838781212084, 42.5229757977627, 39.615571716444094, 51.57952504132864, 51.521057841359465, 43.26248081749844, 54.087596775592054, 39.5530650135647, 43.95999997933949, 44.73322052729258, 55.69789854757923, 65.09993447904073, 59.06041915483395, 62.59010680576777, 47.846809644650136, 47.94030965225574, 43.19474418349795, 40.41770178657468, 46.74178414074661, 45.06033072378568, 39.48612022241806, 38.488626598481254, 45.85708413591876, 51.907660569912316, 36.98691269382377, 46.275706364439344, 45.42871692292103, 51.261404496445664, 39.87811220457402, 50.12122398480757, 49.8655782080419, 60.10436832996544, 65.42640362185821, 63.12208709771424, 65.76362736669658, 54.5847858449867, 49.845600021065195, 56.27366101419465, 49.91938186452327, 43.699920608421984, 45.609439392556595, 34.25370781379502, 44.17366819721998, 48.11764517845784, 44.724523187209755, 52.75439847883673, 43.855167002922784, 44.79019564345829, 50.49911085126437, 59.89884815257241, 75.04027282795761, 64.01946104800335, 64.93719972779495, 52.52705923339699, 53.04438006702853, 58.632739864167725, 58.54864045597254, 53.454729190648955, 58.38623367550499, 64.09772367694056, 56.62503418723587, 57.629882498474196, 63.59712800912829, 72.40580064071864, 72.99310110191952, 62.63863353045457, 60.25680608604648, 56.060117895822465, 55.124041311757814, 57.53270351603199, 61.62279844750644, 55.68331713856499, 54.77670388129867, 65.3519784054799, 69.39198744238038, 58.08890517188712, 63.56145884547801, 63.530291050442365, 60.18963133969785, 59.694087690015756, 59.78531703912087, 56.294079611206236, 49.56047003696605, 62.04888229282281, 68.43904563123434, 65.24360223958976, 77.55675020898886, 65.67427029460171, 68.49912219995717, 58.20699357770745, 60.5036848991556, 57.631146681278466, 56.779098634467175, 58.375559650191285, 55.531643915741654, 54.33722554613861, 67.99761386538182, 59.06016450034826, 50.53531381892037, 55.93404496116095, 59.94168406016181, 61.404538225665064, 52.9705289508127, 69.74177249872875, 75.9245716616352, 67.10036869660298, 60.44895989554512, 63.765330586351006, 53.91927637188854, 58.279274120528974, 64.25752030858021, 59.263157358150316, 63.35862546858472, 58.621688752358494, 53.88395344466214, 53.799133836291524, 61.800521330941294, 66.734918239167, 44.565627952130484, 51.31631221244198, 51.041190587727556, 41.143610151969746, 47.2523447796956, 44.62210909850783, 44.00626488714867, 43.33005483792239, 46.22635520381352, 45.11001930049013, 54.614854496048146, 46.740115040163225, 48.75871271247907, 53.42586987147035, 51.46948964524982, 48.160341110558704, 42.92380104309205, 47.88218326733844, 58.545756132545044, 64.78327538007319, 67.817145203381, 64.63981330000054, 56.08083989020101, 49.732200632583016, 48.54264121915029, 43.797353718472735, 46.16412806816941, 45.86692427099188, 51.697415117111724, 43.38112816174792, 44.541107471800274, 47.8155193062213, 45.89599781637261, 53.865315675495026, 52.12512701336661, 54.343708554270066, 57.644108045116774, 67.47829339881608, 68.62470414471696, 57.976069159016035, 50.29354732965485, 46.790355323309406, 46.75346845508005, 46.97271663359985, 50.69330287817337, 46.115204877416716, 48.637486090524305, 53.610374597610715, 46.517963027020045, 52.87084925981207, 61.94369200584385, 70.04162508997109, 46.23674959026106, 54.2693608598488, 52.62865606005494, 51.94419713663661, 45.54198446756321, 42.76978889740352, 45.27485881941296, 48.030912957503595, 50.248993116752665, 55.47827862156138, 52.8077257438841, 47.922677377596486, 47.88099500493909, 48.24433075233283, 49.34671026945026, 44.905978083786096, 49.28784709999954, 43.32578804900182, 63.06323020302144, 61.90377636813686, 65.17649583281015, 64.0363826139341, 51.963339043031375, 46.76630096764129, 44.75515711046872], "Spend_OOH": [34.67005792971331, 23.409547781927397, 23.03008819163788, 34.94421409635049, 45.86848862607023, 27.77079058652363, 24.2395246582332, 48.577855455016454, 55.75039702280118, 45.16648153398875, 41.05207017562083, 56.452941970256965, 55.688964322315506, 37.02243020292038, 31.633522109087107, 38.31858391720254, 46.68572725110322, 35.18438643489413, 42.079194094726994, 53.61264369273879, 63.86917225461477, 45.919286491380916, 31.565396760006, 46.89914704487225, 53.67847840869457, 34.384025426068966, 31.88997891064075, 54.74004990324832, 57.42931408989449, 54.115358992742266, 42.83008438229926, 54.3380148447948, 56.51702553665327, 46.031736170662896, 53.470188628302246, 58.48877730001837, 50.05451815589496, 30.754760730178848, 19.41375508541322, 46.12992496985819, 50.523897149074784, 41.714793790203466, 26.185630150177094, 38.546170873934756, 49.43391828617213, 38.524292111347584, 33.35462669605884, 49.454313485774165, 57.021731339857006, 44.14079249510816, 33.24113999706907, 51.76119803817732, 53.275246598560656, 49.141854062340535, 39.248648276506145, 48.41913122515405, 54.09925030566849, 33.70152295424385, 25.05805189127888, 39.235461642246754, 47.175332460155744, 37.37959538402301, 29.593157650320112, 42.61513019776991, 47.80541430124028, 31.91765295138032, 20.61825630631988, 41.37350381977914, 55.5142064943677, 40.18937615924593, 38.42006765390654, 38.20264214824489, 41.742475662112284, 30.473157176149382, 17.407398799643417, 36.559197703069245, 48.163909010918445, 39.44789841677907, 38.03798292251259, 53.585026008802494, 49.309596247087164, 43.950348446136445, 31.07196137597969, 48.53081645977387, 49.3803820808736, 40.168818219840816, 33.52408311699254, 46.96696392838902, 46.804143738232966, 30.45507430591085, 18.06951402732105, 40.41796171253983, 47.49596588133713, 32.605608418848995, 22.910181980972883, 29.79150221750308, 43.21473632076469, 26.20241413471754, 24.603147092462887, 45.40867809695651, 59.436836739464226, 42.21250384693041, 35.780534280060515, 53.70090310869928, 59.89704030128819, 38.02999123564686, 39.0292616385924, 48.702896261726615, 48.251584735511, 34.22840914401883, 27.230220924668775, 32.62751446641008, 54.39521705643122, 41.73675948361759, 33.801689139440576, 25.26329471836369, 14.48942328086608, 14.243698948220349, 13.939732409606188, 13.787089687635259, 9.354852861236514, 16.934534299067607, 12.036402342422614, 8.409986536627834, 13.147335620181028, 12.654609203551509, 16.007195237264067, 15.011587632005858, 15.394376991732123, 9.845275638118734, 9.263432440081434, 15.50790752652142, 8.321873584771444, 18.685076056693063, 14.636516058281991, 18.958971282703292, 17.22092680120882, 12.75198643948587, 14.284843939066883, 11.17443864541218, 8.754905586557213, 10.676387619705503, 18.18315948858798, 19.003377612078264, 12.997598866552073, 7.515040955070159, 15.971775143287088, 17.92633050894589, 16.689833742996374, 16.23410699821927, 17.378976308194925, 14.832700305396328, 17.54986417142482, 15.80325710350028, 8.69160358579386, 8.882923389201764, 10.54548430095271, 12.299379574421149, 14.782817848547138, 16.155843514296976, 15.087380407954987, 12.724682295438448, 14.271584683630541, 14.850763761733559, 17.38918910957015, 17.272006471281628, 15.834719563416925, 16.84247154424367, 18.67953553376523, 19.084410815573086, 14.67430961325987, 12.6947209557729, 12.240083047335109, 19.684823169058358, 22.434277665757755, 25.23851925323662, 15.362501280074419, 15.039775490826985, 9.056315297406115, 10.242734287383907, 5.3696172085601805, 12.898784994201494, 21.089869607830867, 21.56229366189384, 41.907292420450865, 42.46355042712804, 25.39449649764656, 24.928196401354267, 41.382304071897714, 46.86396441765007, 39.471590240073525, 42.339567210222484, 49.83180120752147, 47.595357747292915, 31.126540791242363, 17.826855341122897, 32.03840505196599, 39.95398655209076, 30.442713604254763, 17.387900148636877, 39.30830262500811, 47.68609123889957, 29.058091668623355, 39.70112046506891, 47.854012181696916, 49.41922549642793, 38.62871108552825, 22.774417999895203, 45.500463489337015, 51.136957297777364, 45.069958943757776, 34.185485414106815, 39.346231364051484, 40.0113758841193, 32.552090220008154, 18.748460519053562, 36.56007293505301, 47.01682129564151, 31.255876649991674, 35.213198576793076, 48.10356356172716, 49.99925520029287, 31.499132418488006, 28.919672173711223, 46.31876258223804, 48.30361784981532, 33.3934506504242, 28.01739573397233, 50.34540914997973, 56.36742034407559, 53.03773073224318, 41.952931417970184, 52.7878186729142, 52.5723307413785, 40.25677456136777, 27.359551765630833, 50.494160390896226, 61.8834868098933, 41.29309850660269, 36.69319940616141, 38.37764263337897, 56.77158981631623, 46.28526697809847, 28.064825081287022, 41.917029503818554, 48.06193418357448, 41.89652158085541, 33.39635687326536, 42.99829265558174, 52.957464583234504, 32.86348488640239, 19.44238677877726, 45.34630681811999, 36.87514541702384, 40.69182566695312, 24.769382725064915, 42.178750831275906, 63.144237605894666, 40.50591327791607, 38.128300960035205, 53.19046830941831]}, "raw_spend": {"Spend_TV": [81.0, 94.0, 77.9, 7.9, 12.2, 67.8, 77.5, 73.6, 79.1, 31.1, 13.0, 74.1, 74.6, 76.1, 65.3, 19.9, 22.3, 70.9, 78.1, 72.7, 84.5, 6.9, 6.0, 84.8, 78.1, 78.0, 97.4, 32.7, 15.8, 78.3, 82.5, 80.7, 77.6, 19.4, 5.0, 81.9, 65.7, 83.2, 66.4, 44.5, 9.2, 78.3, 109.5, 89.3, 81.0, 38.3, 23.4, 103.0, 87.4, 88.3, 74.1, 36.3, 84.9, 78.9, 62.9, 18.6, 8.8, 77.9, 66.4, 74.8, 81.2, 21.4, 36.2, 101.3, 65.9, 64.2, 54.4, 18.8, 20.2, 79.0, 99.7, 63.4, 71.8, 5.0, 5.0, 74.2, 73.7, 66.6, 68.6, 38.5, 17.2, 67.2, 75.9, 64.5, 67.2, 22.0, 24.8, 67.0, 78.1, 67.2, 85.0, 25.7, 32.8, 88.7, 98.4, 84.2, 86.8, 28.6, 31.0, 96.5, 93.1, 74.7, 87.4, 26.8, 94.1, 54.7, 84.9, 15.6, 16.0, 105.9, 68.1, 71.9, 70.9, 30.0, 5.0, 56.5, 48.0, 45.1, 59.1, 11.5, 13.2, 63.9, 69.7, 61.8, 70.1, 9.5, 32.0, 66.0, 47.2, 59.3, 70.1, 15.9, 6.4, 62.6, 56.5, 47.1, 50.4, 16.6, 9.7, 54.7, 56.3, 46.8, 71.4, 20.6, 26.2, 70.7, 74.4, 66.3, 57.3, 31.8, 12.0, 73.4, 69.5, 70.5, 74.0, 18.0, 4.0, 60.0, 40.4, 54.5, 18.8, 34.9, 64.1, 60.4, 66.2, 76.2, 4.0, 9.7, 32.7, 55.5, 55.3, 56.9, 13.1, 15.8, 58.7, 58.2, 59.4, 75.7, 19.1, 20.7, 60.1, 53.9, 56.9, 91.6, 20.0, 6.9, 63.1, 76.3, 74.8, 76.5, 5.0, 15.2, 60.7, 75.5, 73.9, 81.8, 11.0, 22.7, 104.1, 90.5, 75.2, 98.6, 22.6, 5.0, 83.9, 87.2, 90.4, 83.7, 8.2, 74.2, 60.5, 76.8, 20.7, 5.0, 81.5, 57.3, 89.4, 72.9, 10.7, 44.6, 75.4, 70.6, 62.4, 57.9, 24.2, 37.1, 62.5, 78.7, 72.0, 77.2, 33.6, 25.5, 73.3, 95.0, 73.4, 64.4, 21.4, 12.1, 99.7, 65.2, 76.1, 74.0, 33.4, 41.4, 78.9, 61.0, 67.8, 73.8, 29.7, 5.0, 65.2, 89.6, 86.4, 86.1, 26.2, 21.2, 78.2, 80.5, 87.6, 95.0, 21.8], "Spend_Digital": [38.9, 46.1, 24.7, 28.7, 40.9, 54.8, 24.3, 37.6, 25.9, 82.5, 73.5, 48.0, 52.5, 24.1, 36.0, 47.7, 42.1, 33.6, 39.4, 42.4, 32.7, 70.5, 78.8, 30.2, 46.3, 42.8, 43.8, 33.4, 34.0, 46.6, 33.1, 39.4, 30.0, 30.9, 32.5, 84.1, 73.1, 27.1, 45.4, 45.1, 39.1, 34.8, 48.3, 46.2, 30.0, 63.5, 70.2, 30.1, 35.0, 34.5, 35.5, 35.3, 46.5, 39.0, 30.3, 32.8, 37.4, 35.9, 38.3, 32.0, 52.3, 75.1, 82.7, 33.5, 41.2, 43.9, 50.8, 40.4, 44.1, 34.0, 54.0, 45.5, 45.7, 74.6, 80.4, 47.6, 31.7, 41.7, 35.4, 38.0, 32.4, 31.3, 33.1, 28.9, 36.1, 39.6, 32.2, 79.6, 67.8, 40.4, 31.0, 38.4, 42.0, 36.6, 36.7, 53.4, 46.2, 93.2, 68.2, 35.9, 32.6, 30.0, 31.0, 41.8, 35.9, 52.2, 40.6, 28.0, 45.6, 40.5, 35.6, 52.0, 37.0, 85.2, 80.7, 102.4, 43.6, 38.8, 76.8, 84.1, 85.3, 10.0, 10.0, 73.7, 70.8, 121.8, 55.3, 10.0, 90.7, 60.1, 84.4, 22.8, 26.9, 98.3, 78.3, 71.2, 44.5, 37.1, 75.4, 129.5, 124.3, 18.8, 67.7, 79.6, 105.7, 79.1, 39.4, 33.9, 87.0, 119.0, 104.7, 28.3, 26.1, 91.9, 83.7, 74.8, 10.0, 67.6, 81.3, 38.3, 43.2, 74.7, 92.8, 86.8, 22.5, 22.9, 142.1, 109.9, 102.2, 34.9, 10.0, 116.2, 83.9, 55.0, 46.4, 33.0, 88.0, 67.8, 144.2, 75.3, 13.3, 65.2, 47.5, 65.4, 58.8, 48.1, 68.2, 45.1, 63.6, 63.1, 74.8, 69.5, 94.7, 89.8, 81.7, 71.9, 43.0, 63.2, 58.7, 45.0, 66.2, 54.9, 86.6, 92.9, 60.8, 55.3, 42.8, 59.6, 48.0, 55.6, 56.3, 46.6, 49.7, 58.6, 56.5, 50.4, 46.7, 65.0, 92.9, 76.1, 39.3, 48.3, 51.5, 60.8, 67.1, 50.2, 25.3, 53.2, 61.1, 32.0, 80.2, 60.9, 30.2, 43.2, 40.1, 36.5, 47.5, 60.5, 49.7, 40.0, 51.8, 39.0, 44.7, 52.3, 73.8, 52.0, 43.8, 38.4, 33.6, 47.1, 35.8, 39.7, 49.2, 37.1, 82.2, 69.2, 32.4, 27.5, 34.0, 34.7, 46.8], "Spend_Social": [31.9, 25.2, 17.7, 36.8, 21.1, 27.9, 20.0, 19.1, 29.9, 23.0, 21.4, 30.2, 12.3, 26.7, 33.5, 23.8, 28.0, 27.0, 16.5, 27.8, 36.4, 28.6, 22.5, 29.4, 20.6, 23.9, 20.9, 33.8, 22.7, 28.1, 21.6, 22.9, 29.0, 30.1, 31.1, 33.7, 25.1, 25.2, 23.6, 15.8, 31.0, 38.6, 18.9, 22.4, 37.8, 35.0, 28.4, 40.8, 26.8, 33.4, 32.5, 31.3, 35.8, 28.6, 34.9, 28.5, 30.5, 25.2, 29.9, 27.9, 27.3, 28.6, 40.9, 23.0, 30.1, 20.1, 27.3, 25.3, 32.3, 37.3, 26.5, 34.4, 37.0, 30.3, 30.2, 22.1, 24.7, 27.3, 26.3, 31.5, 18.4, 38.1, 37.1, 33.6, 24.4, 26.6, 28.6, 23.4, 31.8, 22.8, 31.2, 30.2, 30.0, 29.7, 15.8, 30.0, 19.1, 29.1, 28.4, 26.4, 33.2, 17.3, 42.7, 23.3, 22.1, 27.1, 20.3, 26.5, 39.1, 28.1, 27.8, 12.1, 19.6, 32.3, 26.6, 44.2, 53.2, 9.2, 26.0, 58.1, 58.5, 32.3, 9.2, 48.9, 81.3, 47.6, 40.1, 47.7, 61.1, 26.3, 28.8, 50.7, 50.6, 22.8, 36.5, 45.0, 52.9, 24.9, 33.9, 57.0, 58.3, 21.7, 16.7, 60.9, 61.5, 22.3, 43.6, 61.1, 48.0, 16.4, 29.1, 73.5, 58.5, 27.7, 36.4, 63.4, 62.6, 70.0, 15.2, 36.0, 61.4, 72.4, 16.3, 28.1, 70.7, 65.8, 35.8, 21.7, 37.6, 54.5, 17.7, 25.8, 54.6, 64.2, 11.6, 30.7, 65.5, 58.0, 26.5, 19.0, 40.6, 71.4, 44.9, 44.0, 34.4, 40.7, 32.3, 34.7, 40.3, 38.8, 29.5, 33.3, 42.2, 44.3, 31.7, 34.4, 37.1, 22.6, 31.4, 37.3, 43.5, 51.9, 40.4, 27.5, 35.5, 30.1, 34.7, 44.0, 29.8, 34.3, 44.3, 29.0, 36.2, 23.3, 28.6, 32.3, 32.0, 22.3, 27.5, 36.7, 34.5, 21.6, 39.1, 28.3, 25.8, 33.8, 44.4, 36.0, 33.4, 32.8, 32.2, 32.5, 26.7, 20.8, 23.3, 32.3, 19.5, 24.6, 34.1, 27.0, 21.1, 37.1, 26.6, 25.1, 25.2, 27.8, 22.0, 22.7, 37.0, 32.4, 32.8, 18.3, 21.9, 23.0, 13.8, 26.9, 28.7, 33.3, 25.4, 39.2, 30.9], "Spend_OnTrade": [70.2, 60.4, 49.4, 52.7, 58.8, 44.4, 57.0, 47.8, 51.1, 51.9, 43.0, 48.5, 63.2, 58.6, 58.3, 51.7, 52.7, 59.0, 54.7, 43.3, 41.0, 61.0, 81.5, 79.1, 52.8, 68.3, 72.6, 70.1, 57.8, 80.5, 70.8, 50.9, 69.9, 71.6, 71.1, 61.5, 55.8, 65.9, 57.2, 56.9, 63.7, 59.0, 50.2, 54.4, 40.7, 55.1, 51.1, 46.5, 61.1, 69.1, 72.1, 64.0, 55.2, 61.0, 62.9, 48.2, 49.4, 57.3, 69.8, 52.1, 59.0, 47.3, 47.3, 49.0, 73.8, 73.3, 67.4, 61.2, 43.8, 56.2, 64.7, 37.4, 55.7, 65.7, 56.6, 71.0, 54.0, 63.8, 43.0, 69.1, 68.0, 74.8, 71.4, 85.1, 57.4, 56.9, 73.5, 37.0, 38.4, 51.2, 69.4, 49.0, 50.9, 75.8, 44.9, 52.8, 66.4, 57.5, 50.2, 56.2, 79.6, 81.0, 67.3, 70.7, 53.7, 50.7, 42.0, 52.3, 66.3, 54.8, 49.6, 65.9, 47.2, 43.7, 51.3, 0.5, 0.1, 0.8, 0.3, 0.0, 0.1, 0.4, 0.1, 0.0, 0.4, 0.3, 0.5, 0.2, 0.5, 0.4, 0.3, 0.2, 0.7, 0.6, 0.8, 0.1, 0.3, 1.0, 0.7, 0.0, 0.5, 0.8, 0.2, 0.6, 0.2, 0.7, 0.2, 0.4, 0.7, 0.9, 0.4, 0.0, 0.0, 0.4, 0.1, 0.1, 0.5, 0.6, 0.0, 0.6, 0.6, 0.4, 0.3, 0.0, 0.0, 0.3, 0.1, 0.7, 0.2, 0.4, 0.8, 0.4, 0.5, 0.4, 0.5, 0.4, 0.6, 0.1, 0.2, 0.7, 0.8, 0.6, 0.0, 17.4, 9.4, 23.8, 12.0, 17.4, 26.8, 17.2, 12.4, 21.2, 23.4, 38.8, 35.3, 21.6, 18.1, 28.3, 25.9, 16.1, 33.3, 32.6, 38.2, 14.4, 31.9, 41.6, 34.7, 40.3, 35.4, 22.1, 48.7, 37.6, 50.6, 40.3, 22.4, 48.8, 37.8, 33.4, 62.0, 50.8, 44.0, 42.7, 57.3, 50.6, 61.1, 63.3, 46.2, 50.3, 60.9, 49.8, 68.6, 69.8, 57.5, 70.4, 72.5, 62.3, 48.4, 67.8, 71.9, 61.5, 64.1, 72.3, 56.4, 54.8, 39.1, 72.7, 58.0, 46.7, 52.3, 52.2, 42.5, 66.6, 55.6, 55.9, 44.9, 68.7, 82.2, 65.2, 77.5, 76.8, 57.5], "Spend_OffTrade": [36.6, 35.2, 31.9, 38.4, 34.4, 42.9, 42.4, 35.2, 33.9, 40.0, 42.9, 40.2, 58.5, 66.9, 34.8, 35.6, 29.5, 49.3, 38.4, 44.9, 41.5, 28.7, 33.3, 28.4, 41.1, 59.8, 52.2, 42.9, 37.5, 36.4, 36.7, 35.3, 32.7, 44.5, 41.1, 36.1, 51.9, 38.4, 38.3, 34.0, 30.8, 30.4, 45.6, 18.6, 35.4, 52.1, 58.7, 57.1, 54.5, 42.9, 37.9, 36.7, 42.1, 33.1, 41.7, 43.9, 33.1, 29.3, 43.1, 39.9, 42.1, 38.1, 43.2, 25.3, 63.7, 65.1, 28.4, 31.6, 28.8, 45.1, 41.9, 30.9, 47.8, 25.6, 34.9, 34.8, 49.8, 61.7, 48.9, 56.5, 33.5, 38.0, 31.8, 29.6, 38.3, 34.5, 28.0, 28.2, 37.6, 44.0, 23.2, 38.5, 35.1, 43.2, 26.8, 43.0, 40.0, 55.2, 60.9, 55.3, 60.5, 41.9, 38.7, 49.3, 38.3, 31.9, 36.0, 21.8, 36.4, 39.2, 33.7, 45.5, 31.3, 34.9, 42.3, 54.7, 78.4, 53.3, 58.8, 39.2, 43.8, 52.0, 50.2, 42.6, 51.5, 59.2, 45.5, 49.4, 58.6, 72.2, 70.2, 51.8, 51.6, 45.9, 45.8, 49.7, 55.4, 44.9, 45.4, 62.4, 66.1, 45.9, 58.4, 56.6, 51.2, 51.5, 51.8, 46.4, 37.8, 58.4, 65.5, 57.8, 81.6, 55.1, 64.4, 46.4, 53.4, 48.2, 47.8, 50.5, 45.7, 44.8, 67.1, 47.9, 38.3, 48.6, 53.2, 54.3, 41.0, 70.6, 76.8, 58.2, 50.4, 58.0, 41.6, 51.2, 59.5, 49.5, 57.7, 48.8, 43.2, 44.5, 56.8, 62.6, 27.8, 43.5, 41.3, 28.4, 38.8, 33.8, 33.7, 33.0, 36.9, 34.7, 48.1, 34.5, 39.4, 45.4, 41.3, 37.3, 31.4, 39.2, 53.3, 60.3, 63.5, 57.0, 44.5, 38.1, 38.3, 32.4, 36.7, 35.7, 43.7, 31.0, 34.7, 38.7, 35.3, 46.8, 42.1, 45.8, 50.1, 65.2, 64.0, 46.0, 38.3, 35.8, 36.7, 37.0, 42.0, 34.8, 39.4, 45.7, 34.5, 45.2, 57.3, 68.4, 28.8, 47.3, 42.7, 42.2, 33.7, 31.9, 35.8, 38.8, 41.1, 48.0, 42.6, 36.6, 37.9, 38.4, 39.8, 33.6, 40.6, 31.6, 61.7, 54.1, 59.9, 56.9, 38.7, 35.3, 34.1], "Spend_OOH": [20.8, 2.1, 6.0, 14.9, 20.5, 0.0, 5.3, 27.3, 25.1, 9.3, 11.2, 29.7, 20.5, 1.8, 7.0, 14.7, 19.9, 5.3, 16.7, 25.8, 33.0, 4.7, 2.8, 22.9, 23.5, 0.8, 8.3, 31.5, 23.7, 18.0, 8.0, 26.3, 22.8, 9.7, 23.7, 25.8, 12.7, 0.0, 1.1, 26.3, 20.3, 9.0, 0.9, 16.9, 22.7, 6.7, 7.7, 24.9, 26.2, 7.5, 5.0, 27.5, 20.4, 14.9, 7.5, 21.3, 23.2, 0.0, 3.6, 17.9, 20.0, 6.9, 5.3, 19.4, 19.1, 2.1, 1.4, 21.3, 28.4, 4.7, 11.2, 11.8, 15.1, 4.0, 0.0, 18.0, 22.2, 8.2, 11.2, 27.6, 14.9, 11.8, 3.4, 24.8, 17.8, 8.2, 7.1, 22.2, 15.9, 1.5, 0.4, 21.2, 19.8, 2.8, 2.6, 10.9, 19.9, 0.2, 6.1, 23.9, 31.4, 4.1, 8.0, 28.7, 27.5, 0.0, 12.7, 21.7, 16.5, 3.7, 4.9, 11.6, 30.8, 6.8, 6.6, 3.7, 0.2, 3.4, 3.3, 3.3, 1.0, 6.3, 1.5, 1.0, 4.4, 2.9, 4.9, 3.4, 3.9, 0.8, 2.0, 5.5, 0.0, 7.6, 2.4, 6.1, 3.8, 1.8, 3.9, 1.8, 1.4, 3.0, 6.7, 5.1, 1.4, 0.3, 6.2, 5.1, 3.8, 3.9, 4.7, 2.9, 5.2, 3.4, 0.1, 2.1, 2.9, 3.4, 4.3, 4.4, 3.4, 2.4, 3.9, 3.8, 5.1, 4.3, 3.5, 4.5, 5.3, 5.0, 2.3, 2.5, 2.8, 7.2, 6.8, 7.8, 0.7, 3.6, 0.5, 2.7, 0.0, 5.0, 7.9, 5.8, 21.5, 14.1, 0.0, 6.6, 19.9, 18.7, 8.9, 15.1, 21.4, 15.2, 1.6, 0.0, 14.2, 16.0, 4.8, 0.0, 20.4, 20.5, 0.0, 16.9, 20.5, 18.2, 6.8, 0.0, 24.6, 21.3, 11.9, 5.3, 14.6, 13.0, 6.4, 0.0, 17.6, 21.0, 2.0, 12.2, 22.7, 18.7, 0.6, 7.2, 23.3, 17.8, 3.0, 5.8, 27.9, 24.9, 17.4, 7.8, 24.9, 19.0, 6.5, 2.4, 28.3, 32.0, 1.6, 9.2, 12.7, 31.3, 9.8, 0.0, 19.3, 19.7, 10.5, 6.2, 18.3, 24.6, 0.0, 0.3, 25.5, 7.4, 14.7, 0.4, 20.7, 38.0, 0.0, 10.8, 27.1]}}, "response_curves": {"Spend_TV": {"spend_k": [0.0, 2.7838983050847457, 5.567796610169491, 8.351694915254237, 11.135593220338983, 13.919491525423728, 16.703389830508474, 19.487288135593218, 22.271186440677965, 25.055084745762713, 27.838983050847457, 30.6228813559322, 33.40677966101695, 36.190677966101696, 38.974576271186436, 41.75847457627118, 44.54237288135593, 47.32627118644068, 50.110169491525426, 52.894067796610166, 55.67796610169491, 58.46186440677966, 61.2457627118644, 64.02966101694915, 66.8135593220339, 69.59745762711864, 72.38135593220339, 75.16525423728814, 77.94915254237287, 80.73305084745762, 83.51694915254237, 86.30084745762711, 89.08474576271186, 91.86864406779661, 94.65254237288136, 97.4364406779661, 100.22033898305085, 103.00423728813558, 105.78813559322033, 108.57203389830508, 111.35593220338983, 114.13983050847457, 116.92372881355932, 119.70762711864407, 122.4915254237288, 125.27542372881355, 128.0593220338983, 130.84322033898306, 133.6271186440678, 136.41101694915253, 139.1949152542373, 141.97881355932202, 144.76271186440678, 147.54661016949152, 150.33050847457628, 153.114406779661, 155.89830508474574, 158.6822033898305, 161.46610169491524, 164.25], "incremental_volume_weekly": [0.0, 1.409616038214393, 2.7606205480934927, 4.057693686019152, 5.304976494972526, 6.506150653408863, 7.66450400235313, 8.782984789634272, 9.864246885158284, 10.910687712714502, 11.924480262384915, 12.907600258580885, 13.861849337632641, 14.788874918247423, 15.690187315420278, 16.567174544321915, 17.421115178515304, 18.253189561520696, 19.0644896184711, 19.85602747251409, 20.628743036538786, 21.38351072306433, 22.121145392423117, 22.84240764070186, 23.548008513477303, 24.238613718580915, 24.914847400456292, 25.577295529742976, 26.226508954218218, 26.863006150901732, 27.487275713774608, 28.099778607017154, 28.700950209797057, 29.291202175328774, 29.87092412408735, 30.440485188619753, 31.000235425293507, 31.550507106503595, 32.09161590528252, 32.623861982888585, 33.14753098875448, 33.66289498113653, 34.17021327589325, 34.669733230022835, 35.16169096588591, 35.64631204142186, 36.12381207112035, 36.59439730202737, 37.05826514863717, 37.51560469014236, 37.96659713317663, 38.41141624288449, 38.85022874488455, 39.283194700453116, 39.71046785704111, 40.13219597604497, 40.54852113958033, 40.959580037852, 41.36550423857478, 41.766420439773775], "current_avg_spend_k": 55.68045977011494, "max_spend_k": 109.5}, "Spend_Digital": {"spend_k": [0.0, 3.666101694915254, 7.332203389830508, 10.998305084745763, 14.664406779661016, 18.33050847457627, 21.996610169491525, 25.662711864406777, 29.328813559322032, 32.994915254237284, 36.66101694915254, 40.327118644067795, 43.99322033898305, 47.659322033898306, 51.325423728813554, 54.99152542372881, 58.657627118644065, 62.32372881355932, 65.98983050847457, 69.65593220338982, 73.32203389830508, 76.98813559322033, 80.65423728813559, 84.32033898305085, 87.9864406779661, 91.65254237288136, 95.31864406779661, 98.98474576271185, 102.65084745762711, 106.31694915254236, 109.98305084745762, 113.64915254237287, 117.31525423728813, 120.98135593220339, 124.64745762711864, 128.31355932203388, 131.97966101694914, 135.6457627118644, 139.31186440677965, 142.9779661016949, 146.64406779661016, 150.31016949152541, 153.97627118644067, 157.64237288135593, 161.30847457627118, 164.97457627118644, 168.6406779661017, 172.30677966101695, 175.9728813559322, 179.63898305084746, 183.3050847457627, 186.97118644067797, 190.63728813559322, 194.30338983050848, 197.9694915254237, 201.63559322033896, 205.30169491525422, 208.96779661016947, 212.63389830508473, 216.29999999999998], "incremental_volume_weekly": [0.0, 4.962282075984512, 9.589865015286367, 13.925059992734719, 18.00262975904005, 21.851483845513755, 25.49592308032383, 28.95656997019986, 32.25107554297106, 35.394664157240335, 38.40055890433444, 41.28031769328416, 44.044101618346644, 46.700891349979784, 49.25866318011654, 51.72453342502382, 54.10487777447426, 56.40543062890769, 58.63136832091459, 60.787379260070246, 62.87772339186917, 64.90628286661354, 66.87660543293813, 68.79194177462873, 70.65527777769164, 72.46936253195135, 74.23673272642074, 75.95973398179841, 77.6405395702692, 79.28116689743305, 80.88349205991351, 82.44926274211038, 83.98010967441476, 85.47755684124202, 86.94303059907892, 88.37786784129247, 89.78332332684208, 91.1605762735783, 92.51073630294452, 93.83484881117118, 95.13389983210197, 96.4088204483193, 97.66049080000181, 98.88974373474758, 100.09736813627156, 101.28411196529608, 102.4506850419892, 103.59776159587054, 104.7259826061213, 105.83595795263872, 106.92826839590839, 108.00346740178612, 109.06208282554327, 110.10461846800312, 111.1315555152521, 112.14335387222492, 113.14045339941438, 114.12327506103047, 115.09222199210929, 116.04768049134252], "current_avg_spend_k": 53.30306513409962, "max_spend_k": 144.2}, "Spend_Social": {"spend_k": [0.0, 2.0669491525423727, 4.133898305084745, 6.200847457627118, 8.26779661016949, 10.334745762711863, 12.401694915254236, 14.468644067796609, 16.53559322033898, 18.602542372881352, 20.669491525423727, 22.7364406779661, 24.803389830508472, 26.870338983050843, 28.937288135593217, 31.00423728813559, 33.07118644067796, 35.13813559322033, 37.205084745762704, 39.27203389830508, 41.33898305084745, 43.405932203389824, 45.4728813559322, 47.53983050847457, 49.606779661016944, 51.673728813559315, 53.740677966101686, 55.807627118644064, 57.874576271186434, 59.941525423728805, 62.00847457627118, 64.07542372881355, 66.14237288135593, 68.2093220338983, 70.27627118644067, 72.34322033898304, 74.41016949152541, 76.47711864406779, 78.54406779661016, 80.61101694915253, 82.6779661016949, 84.74491525423728, 86.81186440677965, 88.87881355932203, 90.9457627118644, 93.01271186440677, 95.07966101694915, 97.14661016949151, 99.21355932203389, 101.28050847457627, 103.34745762711863, 105.41440677966101, 107.48135593220337, 109.54830508474575, 111.61525423728813, 113.68220338983049, 115.74915254237287, 117.81610169491525, 119.88305084745761, 121.94999999999999], "incremental_volume_weekly": [0.0, 0.386040981024184, 0.7480322658994405, 1.088795442887902, 1.4106829384253459, 1.7156765911287828, 2.005461623897931, 2.2814830332394083, 2.5449891842327443, 2.7970659439866767, 3.0386637155569516, 3.270619073771954, 3.4936722469064105, 3.7084813660459783, 3.9156341738139946, 4.115657717385066, 4.309026428379687, 4.49616890143758, 4.6774736151448595, 4.853293787363799, 5.023951517521695, 5.189741337940019, 5.350933272574623, 5.507775482948527, 5.6604965663788605, 5.809307559927736, 5.954403694166913, 6.095965933326846, 6.234162332312053, 6.369149236107968, 6.5010723430476975, 6.630067650071183, 6.75626229535263, 6.879775311384457, 7.000718299699139, 7.119196036814542, 7.2353070196476885, 7.349143957511278, 7.460794216850491, 7.570340224065116, 7.677859831069776, 7.783426647653409, 7.887110344191936, 7.988976927832039, 8.089088994887918, 8.187505961867956, 8.28428427726641, 8.379477616010467, 8.473137058239796, 8.56531125390941, 8.656046574543891, 8.74538725332798, 8.833375514593019, 8.920051693648139, 9.00545434780742, 9.089620359378024, 9.172585031297807, 9.254382176043153, 9.335044198367356, 9.41460217237632], "current_avg_spend_k": 32.833716475095784, "max_spend_k": 81.3}, "Spend_OnTrade": {"spend_k": [0.0, 2.163559322033898, 4.327118644067796, 6.4906779661016945, 8.654237288135592, 10.81779661016949, 12.981355932203389, 15.144915254237286, 17.308474576271184, 19.47203389830508, 21.63559322033898, 23.799152542372877, 25.962711864406778, 28.126271186440675, 30.289830508474573, 32.45338983050847, 34.61694915254237, 36.780508474576266, 38.94406779661016, 41.10762711864406, 43.27118644067796, 45.434745762711856, 47.59830508474575, 49.76186440677965, 51.925423728813556, 54.08898305084745, 56.25254237288135, 58.41610169491525, 60.579661016949146, 62.74322033898304, 64.90677966101694, 67.07033898305083, 69.23389830508474, 71.39745762711864, 73.56101694915253, 75.72457627118644, 77.88813559322033, 80.05169491525423, 82.21525423728812, 84.37881355932203, 86.54237288135592, 88.70593220338982, 90.86949152542371, 93.03305084745762, 95.1966101694915, 97.36016949152541, 99.5237288135593, 101.6872881355932, 103.85084745762711, 106.014406779661, 108.1779661016949, 110.3415254237288, 112.5050847457627, 114.66864406779659, 116.8322033898305, 118.99576271186439, 121.15932203389829, 123.32288135593218, 125.48644067796609, 127.64999999999999], "incremental_volume_weekly": [0.0, 4.408790564842593, 8.635372359443524, 12.6942103793323, 16.598112683109505, 20.358474177730926, 23.98547715472011, 27.488257469882498, 30.875043196418197, 34.15327104795947, 37.32968471592623, 40.4104183912707, 43.40106807100898, 46.30675273255211, 49.13216705586706, 51.881627057222815, 54.559109748270956, 57.16828773524733, 59.71255951373249, 62.19507608601228, 64.61876442403415, 66.98634821618406, 69.30036626668598, 71.56318885929485, 73.77703234971828, 75.94397221197556, 78.06595473118801, 80.14480750790072, 82.18224891600953, 84.1798966369382, 86.13927537626134, 88.06182385499247, 89.9489011558448, 91.80179249458607, 93.62171447787347, 95.40981990144165, 97.16720213603554, 98.89489914287591, 100.59389715558515, 102.2651340612771, 103.90950250983317, 105.52785277717288, 107.12099540551154, 108.6897036411302, 110.2347156880116, 111.75673679378411, 113.25644118272758, 114.7344738491032, 116.19145222274562, 117.62796771768353, 119.04458717350884, 120.44185419828725, 121.82029042097142, 123.1803966605385, 124.52265401840897, 125.84752490010995, 127.1554539716122, 128.44686905528988, 129.72218197002036, 130.98178931955178], "current_avg_spend_k": 39.56015325670498, "max_spend_k": 85.1}, "Spend_OffTrade": {"spend_k": [0.0, 2.0745762711864404, 4.149152542372881, 6.223728813559321, 8.298305084745762, 10.372881355932202, 12.447457627118641, 14.522033898305082, 16.596610169491523, 18.671186440677964, 20.745762711864405, 22.820338983050846, 24.894915254237283, 26.969491525423724, 29.044067796610165, 31.118644067796605, 33.193220338983046, 35.26779661016948, 37.34237288135593, 39.416949152542365, 41.49152542372881, 43.56610169491525, 45.64067796610169, 47.71525423728813, 49.789830508474566, 51.86440677966101, 53.93898305084745, 56.01355932203389, 58.08813559322033, 60.16271186440677, 62.23728813559321, 64.31186440677965, 66.38644067796609, 68.46101694915254, 70.53559322033897, 72.61016949152541, 74.68474576271186, 76.7593220338983, 78.83389830508473, 80.90847457627117, 82.98305084745762, 85.05762711864405, 87.1322033898305, 89.20677966101694, 91.28135593220338, 93.35593220338981, 95.43050847457626, 97.5050847457627, 99.57966101694913, 101.65423728813558, 103.72881355932202, 105.80338983050846, 107.8779661016949, 109.95254237288134, 112.02711864406778, 114.10169491525423, 116.17627118644066, 118.2508474576271, 120.32542372881355, 122.39999999999999], "incremental_volume_weekly": [0.0, 3.589201869756015, 7.01322178159206, 10.286597129677462, 13.422026807620867, 16.43066872165353, 19.32237945565397, 22.105909081808214, 24.789060828125226, 27.37882294626411, 29.881478392992236, 32.30269665918417, 34.64761112364474, 36.92088458637723, 39.126765084748975, 41.26913367186501, 43.35154550732981, 45.37726535316563, 47.34929836484603, 49.2704169065026, 51.143183990872146, 52.9699738413073, 54.7529899897285, 56.49428125657734, 58.19575590342392, 59.859194203385485, 61.48625963697902, 63.07850888992395, 64.6374008035184, 66.16430440657226, 67.66050613972179, 69.12721636765576, 70.56557526185489, 71.97665812547875, 73.36148022270102, 74.72100116682475, 76.05612891468374, 77.36772340897414, 78.6565999051101, 79.92353201483547, 81.16925449504566, 82.39446580699375, 83.59983046820031, 84.78598121689517, 85.95352100664172, 87.10302484688532, 88.2350415034905, 89.35009507185701, 90.44868643390237, 91.53129460905, 92.5983780083434, 93.65037559990438, 94.6877079931512, 95.71077844847942, 96.71997381847042, 97.71566542612601, 98.6982098851183, 99.6679498665888, 100.62521481662341, 101.57032162816164], "current_avg_spend_k": 44.12528735632184, "max_spend_k": 81.6}, "Spend_OOH": {"spend_k": [0.0, 0.9661016949152542, 1.9322033898305084, 2.8983050847457625, 3.864406779661017, 4.830508474576271, 5.796610169491525, 6.762711864406779, 7.728813559322034, 8.694915254237287, 9.661016949152541, 10.627118644067796, 11.59322033898305, 12.559322033898304, 13.525423728813559, 14.491525423728813, 15.457627118644067, 16.423728813559322, 17.389830508474574, 18.35593220338983, 19.322033898305083, 20.28813559322034, 21.25423728813559, 22.220338983050848, 23.1864406779661, 24.152542372881356, 25.11864406779661, 26.084745762711865, 27.050847457627118, 28.016949152542374, 28.983050847457626, 29.949152542372882, 30.915254237288135, 31.881355932203387, 32.847457627118644, 33.813559322033896, 34.77966101694915, 35.74576271186441, 36.71186440677966, 37.67796610169491, 38.644067796610166, 39.610169491525426, 40.57627118644068, 41.54237288135593, 42.50847457627118, 43.47457627118644, 44.440677966101696, 45.40677966101695, 46.3728813559322, 47.33898305084745, 48.30508474576271, 49.271186440677965, 50.23728813559322, 51.20338983050847, 52.16949152542373, 53.13559322033898, 54.101694915254235, 55.06779661016949, 56.03389830508475, 57.0], "incremental_volume_weekly": [0.0, 4.368795391302282, 8.40323913847562, 12.150890055115466, 15.649829965974265, 18.93102559156903, 22.019997595833292, 24.93802722462004, 27.70304622952937, 30.33030487733854, 32.83288130717244, 35.22207540830431, 37.507717277721106, 39.698411566475066, 41.8017330688805, 43.824384782756376, 45.77232676341432, 47.650882017304184, 49.46482417637172, 51.218450589942755, 52.91564365119771, 54.55992256014986, 56.15448725877439, 57.70225591720358, 59.2058970745802, 60.667857323926775, 62.09038526240246, 63.47555229564637, 64.82527077940672, 66.1413098972253, 67.42530960496669, 68.67879291793204, 69.90317677147462, 71.09978164935063, 72.26984014386693, 73.41450458695662, 74.53485387061957, 75.63189955791678, 76.7065913712707, 77.75982213269425, 78.79243222034219, 79.80521359712122, 80.79891345974261, 81.7742375503373, 82.73185316739908, 83.67239190823092, 84.59645217112349, 85.50460144209129, 86.39737838805023, 87.2752947757701, 88.13883723371912, 88.98846887198762, 89.82463077379218, 90.64774337058604, 91.45820771150856, 92.25640663676887, 93.04270586355753, 93.81745499219633, 94.58098843945501, 95.33362630527117], "current_avg_spend_k": 11.024521072796933, "max_spend_k": 38.0}}, "totals": {"total_volume": 135235.0, "total_spend_k": 61733.6, "total_incremental_units": 56185.47742286647, "blended_units_per_1k_gbp": 0.9101279922581296}, "rankings": {"by_efficiency": ["Spend_OOH", "Spend_OnTrade", "Spend_OffTrade", "Spend_Digital", "Spend_TV", "Spend_Social"], "by_contribution": ["Spend_OnTrade", "Spend_OffTrade", "Spend_Digital", "Spend_OOH", "Spend_TV", "Spend_Social"]}, "optimization": [{"channel": "Spend_TV", "current_avg_k": 55.68045977011494, "saturation_spend_k": 114.13983050847457, "headroom_k": 58.45937073835963, "saturation_pct": 49.39235610851599, "channel_avg_efficiency": 0.35471998077654904}, {"channel": "Spend_Digital", "current_avg_k": 53.30306513409962, "saturation_spend_k": 142.9779661016949, "headroom_k": 89.67490096759528, "saturation_pct": 43.59316074153851, "channel_avg_efficiency": 0.9300186849377416}, {"channel": "Spend_Social", "current_avg_k": 32.833716475095784, "saturation_spend_k": 80.61101694915253, "headroom_k": 47.777300474056744, "saturation_pct": 45.53363370208467, "channel_avg_efficiency": 0.12730410093402508}, {"channel": "Spend_OnTrade", "current_avg_k": 39.56015325670498, "saturation_spend_k": 88.70593220338982, "headroom_k": 49.14577894668484, "saturation_pct": 46.128145084443375, "channel_avg_efficiency": 1.386731672150243}, {"channel": "Spend_OffTrade", "current_avg_k": 44.12528735632184, "saturation_spend_k": 85.05762711864405, "headroom_k": 40.93233976232221, "saturation_pct": 52.62420253849639, "channel_avg_efficiency": 1.1996093585939709}, {"channel": "Spend_OOH", "current_avg_k": 11.024521072796933, "saturation_spend_k": 36.71186440677966, "headroom_k": 25.687343333982728, "saturation_pct": 37.93233017994461, "channel_avg_efficiency": 3.081668415493758}], "model_coefficients": {"intercept": 299.15870386876657, "trend": -0.6805110158713603, "sin52": -16.762207915555752, "cos52": -2.553882711787889, "sin26": -12.388434911356374, "cos26": 14.440326974318728, "xmas": 50.05081198045255, "price_lift_per_pt_reduction": 2.187091742685536}, "channel_colors": {"Spend_TV": "#B8954A", "Spend_Digital": "#4A8FB8", "Spend_Social": "#C16E8C", "Spend_OnTrade": "#6BAA7E", "Spend_OffTrade": "#8A7FA6", "Spend_OOH": "#D4AF5F"}}</script>
+<script>
+(function() {
+  const D = JSON.parse(document.getElementById('mmm-data').textContent);
+  const C = D.channel_colors;
+  const PRETTY = D.channels_pretty;
+  const CHANNELS = D.channels;
+
+  const COLORS = {
+    obsidian: '#0A1420', navy: '#0D1B2A', slate: '#1E2D3D',
+    gold: '#B8954A', goldGlow: '#D4AF5F', goldPale: '#E5D4A8',
+    steel: '#7A8FA6', ivory: '#F0EDE6',
+    grid: 'rgba(184,149,74,0.08)',
+    text: '#C8C2B5',
+  };
+
+  // Chart.js global defaults
+  Chart.defaults.font.family = "'Mulish', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = COLORS.steel;
+  Chart.defaults.borderColor = COLORS.grid;
+
+  // Format helpers
+  const fmtNum = (n, dec=0) => Number(n).toLocaleString(undefined, {minimumFractionDigits: dec, maximumFractionDigits: dec});
+  const fmtPct = (n, dec=1) => Number(n).toFixed(dec) + '%';
+  const fmtK = (n) => '£' + Math.round(n) + 'k';
+
+  /* ─── Fill text placeholders ─── */
+  document.querySelectorAll('.kpi-value').forEach(el => {
+    if (el.innerHTML.includes('__R2__'))      el.innerHTML = el.innerHTML.replace('__R2__', (D.fit.r2 * 100).toFixed(1));
+    if (el.innerHTML.includes('__MAPE__'))    el.innerHTML = el.innerHTML.replace('__MAPE__', D.fit.mape_pct.toFixed(1));
+    if (el.innerHTML.includes('__SPEND__'))   el.innerHTML = el.innerHTML.replace('__SPEND__', (D.totals.total_spend_k/1000).toFixed(1));
+    if (el.innerHTML.includes('__BASELINE__'))el.innerHTML = el.innerHTML.replace('__BASELINE__', D.share_of_volume_pct.Baseline.toFixed(0));
+  });
+  document.querySelectorAll('.chart-meta, .kpi-value .unit, .hero-meta-value').forEach(el => {
+    el.innerHTML = el.innerHTML.replace('__R2__', D.fit.r2.toFixed(2)).replace('__SPEND__', (D.totals.total_spend_k/1000).toFixed(1));
+  });
+
+  /* ─── Decimate weekly data to ~monthly for readability ─── */
+  function decimate(arr, step) {
+    const out = []; for (let i = 0; i < arr.length; i += step) out.push(arr[i]); return out;
+  }
+
+  /* ─── Time-range filter state (affects fit + decomp charts) ─── */
+  let currentRange = 'all'; // 'all' | 'post-feb-2020'
+  let fitChartInst = null;
+  let decompChartInst = null;
+
+  function getRangeIndices() {
+    if (currentRange === 'post-feb-2020') {
+      const cutoff = '2020-02-01';
+      const idx = D.decomposition.weeks.findIndex(w => w >= cutoff);
+      return { start: idx >= 0 ? idx : 0, end: D.decomposition.weeks.length };
+    }
+    return { start: 0, end: D.decomposition.weeks.length };
+  }
+
+  function metaLabel() {
+    const { start, end } = getRangeIndices();
+    const n = end - start;
+    return currentRange === 'post-feb-2020'
+      ? `${n} weeks · Feb 2020 – Dec 2022`
+      : `${n} weeks · 2018 – 2022`;
+  }
+
+  /* ─── 1) FIT CHART (actual vs predicted) ─── */
+  function buildFitChart() {
+    const fitCtx = document.getElementById('fitChart');
+    if (!fitCtx) return;
+    if (fitChartInst) fitChartInst.destroy();
+    const { start, end } = getRangeIndices();
+    fitChartInst = new Chart(fitCtx, {
+      type: 'line',
+      data: {
+        labels: D.decomposition.weeks.slice(start, end),
+        datasets: [
+          {
+            label: 'Actual',
+            data: D.decomposition.actual.slice(start, end),
+            borderColor: COLORS.steel,
+            backgroundColor: 'rgba(122,143,166,0.08)',
+            borderWidth: 1,
+            pointRadius: 0,
+            tension: 0.25,
+            fill: false,
+          },
+          {
+            label: 'Predicted',
+            data: D.decomposition.predicted.slice(start, end),
+            borderColor: COLORS.gold,
+            backgroundColor: 'rgba(184,149,74,0.04)',
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.25,
+            fill: false,
+          },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+              color: COLORS.text, font: { size: 10, family: "'Mulish'" },
+              boxWidth: 12, boxHeight: 2, padding: 16,
+              usePointStyle: false,
+            }
+          },
+          tooltip: tooltipStyle(),
+        },
+        scales: {
+          x: { type: 'time', time: { unit: 'month', displayFormats: {month: 'MMM yy'}, tooltipFormat: 'dd MMM yyyy' },
+               ticks: { color: COLORS.steel, font: { size: 9 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 12 },
+               grid: { color: COLORS.grid, drawBorder: false } },
+          y: { ticks: { color: COLORS.steel, font: { size: 9 } },
+               grid: { color: COLORS.grid }, title: { display: true, text: 'Weekly Sales Volume', color: COLORS.steel, font: { size: 10 } } },
+        },
+      }
+    });
+  }
+
+  /* ─── 2) DECOMPOSITION CHART (stacked area) ─── */
+  function buildDecompChart() {
+    const decompCtx = document.getElementById('decompChart');
+    if (!decompCtx) return;
+    if (decompChartInst) decompChartInst.destroy();
+    const { start, end } = getRangeIndices();
+    const slice = (a) => a.slice(start, end);
+
+    const datasets = [
+      {
+        label: 'Baseline (equity, trend, seasonality)',
+        data: slice(D.decomposition.baseline),
+        backgroundColor: 'rgba(30, 45, 61, 0.85)',
+        borderColor: 'rgba(122,143,166,0.4)',
+        borderWidth: 0.5, fill: true, pointRadius: 0, tension: 0.3,
+        order: 10,
+      },
+      {
+        label: 'Price effect',
+        data: slice(D.decomposition.price.map(v => Math.max(v, 0))),
+        backgroundColor: 'rgba(193,110,140,0.4)',
+        borderColor: 'rgba(193,110,140,0.6)',
+        borderWidth: 0.5, fill: true, pointRadius: 0, tension: 0.3,
+        order: 9,
+      },
+    ];
+    let order = 8;
+    CHANNELS.forEach((ch) => {
+      const col = C[ch];
+      datasets.push({
+        label: PRETTY[ch],
+        data: slice(D.decomposition.channels[ch].map(v => Math.max(v, 0))),
+        backgroundColor: hexA(col, 0.55),
+        borderColor: col,
+        borderWidth: 0.4, fill: true, pointRadius: 0, tension: 0.3,
+        order: order--,
+      });
+    });
+
+    decompChartInst = new Chart(decompCtx, {
+      type: 'line',
+      data: { labels: slice(D.decomposition.weeks), datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            display: true, position: 'bottom', align: 'start',
+            labels: { color: COLORS.text, font: { size: 10 }, boxWidth: 10, boxHeight: 10, padding: 12, usePointStyle: false },
+          },
+          tooltip: tooltipStyle(),
+        },
+        scales: {
+          x: { type: 'time', time: { unit: 'month', displayFormats: {month: 'MMM yy'} },
+               stacked: true,
+               ticks: { color: COLORS.steel, font: { size: 9 }, maxTicksLimit: 12 },
+               grid: { color: COLORS.grid } },
+          y: { stacked: true,
+               ticks: { color: COLORS.steel, font: { size: 9 } },
+               grid: { color: COLORS.grid }, title: { display: true, text: 'Weekly Volume Contribution', color: COLORS.steel, font: { size: 10 } } },
+        },
+      }
+    });
+  }
+
+  /* ─── Wire up toggles (both copies stay in sync) ─── */
+  function syncMetaLabels() {
+    document.querySelectorAll('[data-range-meta]').forEach(el => {
+      el.textContent = `${metaLabel()} · R² ${D.fit.r2.toFixed(2)}`;
+    });
+    document.querySelectorAll('[data-range-meta-decomp]').forEach(el => {
+      el.textContent = `Stacked Area · ${metaLabel().split(' · ')[1]}`;
+    });
+    document.querySelectorAll('[data-range-meta-table]').forEach(el => {
+      el.textContent = `Sorted by efficiency · ${metaLabel().split(' · ')[1]}`;
+    });
+    document.querySelectorAll('[data-range-meta-reg]').forEach(el => {
+      el.textContent = metaLabel();
+    });
+  }
+  function setRange(range) {
+    currentRange = range;
+    document.querySelectorAll('[data-range-toggle] button').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.range === range);
+    });
+    buildFitChart();
+    buildDecompChart();
+    buildChannelTable();
+    if (typeof buildRegChart === 'function') buildRegChart();
+    syncMetaLabels();
+  }
+  document.querySelectorAll('[data-range-toggle] button').forEach(btn => {
+    btn.addEventListener('click', () => setRange(btn.dataset.range));
+  });
+
+  buildFitChart();
+  buildDecompChart();
+  syncMetaLabels();
+
+  /* ─── 3) SHARE OF VOLUME / SPEND DONUTS ─── */
+  function makeDonut(ctxId, data, labels, colors, centerLabel, centerValue) {
+    const ctx = document.getElementById(ctxId);
+    if (!ctx) return;
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: colors,
+          borderColor: COLORS.obsidian,
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          legend: {
+            position: 'right', align: 'center',
+            labels: { color: COLORS.text, font: { size: 10 }, boxWidth: 10, boxHeight: 10, padding: 8, usePointStyle: false,
+                      generateLabels: (chart) => {
+                        const data = chart.data;
+                        return data.labels.map((label, i) => ({
+                          text: `${label}  ${data.datasets[0].data[i].toFixed(1)}%`,
+                          fillStyle: data.datasets[0].backgroundColor[i],
+                          strokeStyle: data.datasets[0].backgroundColor[i],
+                          hidden: false, index: i, lineWidth: 0,
+                        }));
+                      }
+            },
+          },
+          tooltip: tooltipStyle(true),
+        }
+      },
+      plugins: [{
+        id: 'centerText',
+        afterDraw(chart) {
+          const {ctx, chartArea: {left, right, top, bottom}} = chart;
+          const cx = (left + right) / 2;
+          const cy = (top + bottom) / 2;
+          ctx.save();
+          ctx.fillStyle = COLORS.gold;
+          ctx.font = "500 9px 'Mulish'";
+          ctx.textAlign = 'center';
+          ctx.fillText(centerLabel.toUpperCase(), cx, cy - 12);
+          ctx.fillStyle = COLORS.ivory;
+          ctx.font = "300 28px 'Cormorant Garamond'";
+          ctx.fillText(centerValue, cx, cy + 16);
+          ctx.restore();
+        }
+      }]
+    });
+  }
+
+  // Volume share — include baseline/price + channels, sorted desc
+  const volEntries = Object.entries(D.share_of_volume_pct).filter(([k,v])=>v>0.01).sort((a,b)=>b[1]-a[1]);
+  const volColors = volEntries.map(([k]) => k === 'Baseline' ? '#1E2D3D' : (k === 'Price' ? '#C16E8C' : C[k]));
+  const volLabels = volEntries.map(([k]) => PRETTY[k] || k);
+  makeDonut('shareVolChart',
+    volEntries.map(e=>e[1]), volLabels, volColors,
+    'Total', fmtNum(D.totals.total_volume/1000, 0) + 'k');
+
+  // Spend share — channels only
+  const spEntries = Object.entries(D.share_of_spend_pct).sort((a,b)=>b[1]-a[1]);
+  const spColors = spEntries.map(([k]) => C[k]);
+  const spLabels = spEntries.map(([k]) => PRETTY[k]);
+  makeDonut('shareSpChart',
+    spEntries.map(e=>e[1]), spLabels, spColors,
+    'Spend', '£' + (D.totals.total_spend_k/1000).toFixed(1) + 'M');
+
+  /* ─── 4) CHANNEL TABLE ─── */
+  function buildChannelTable() {
+    const tbody = document.getElementById('chTableBody');
+    if (!tbody) return;
+    const { start, end } = getRangeIndices();
+
+    // Recompute spend, contribution, shares for the filtered window
+    const totals = {};
+    let totalContrib = 0, totalSpend = 0, totalActual = 0;
+    for (let i = start; i < end; i++) totalActual += D.decomposition.actual[i];
+    CHANNELS.forEach(ch => {
+      let s = 0, c = 0;
+      for (let i = start; i < end; i++) {
+        s += D.decomposition.raw_spend[ch][i];
+        c += Math.max(D.decomposition.channels[ch][i], 0);
+      }
+      totals[ch] = { spend_k: s, contrib: c, eff: s > 0 ? c / s : 0 };
+      totalContrib += c; totalSpend += s;
+    });
+
+    const ranked = CHANNELS.slice().sort((a, b) => totals[b].eff - totals[a].eff);
+    const maxEff = Math.max(...CHANNELS.map(c => totals[c].eff));
+
+    tbody.innerHTML = '';
+    ranked.forEach(ch => {
+      const t = totals[ch];
+      const v_share = totalActual > 0 ? (t.contrib / totalActual) * 100 : 0;
+      const s_share = totalSpend > 0 ? (t.spend_k / totalSpend) * 100 : 0;
+      const barW = maxEff > 0 ? Math.max(4, Math.round(t.eff / maxEff * 80)) : 4;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><div class="ch-name"><span class="ch-dot" style="background:${C[ch]}"></span>${PRETTY[ch]}</div></td>
+        <td class="num">${fmtNum(t.spend_k, 0)}</td>
+        <td class="num">${fmtPct(v_share)}</td>
+        <td class="num">${fmtPct(s_share)}</td>
+        <td class="num">${D.roi[ch].decay.toFixed(2)}</td>
+        <td class="num hi"><span class="ch-bar" style="width:${barW}px;background:${C[ch]};opacity:0.55;"></span>${t.eff.toFixed(2)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  buildChannelTable();
+
+  /* ─── 4b) PARTIAL REGRESSION CHART (per-channel) ─── */
+  let regChartInst = null;
+  let activeRegCh = CHANNELS[0]; // start with TV
+
+  // Pre-compute adstocked and transformed spend over FULL period (adstock has memory)
+  const adstockCache = {};
+  const transformedCache = {};
+  CHANNELS.forEach(ch => {
+    const decay = D.roi[ch].decay;
+    const scale = D.roi[ch].saturation_scale;
+    const raw = D.decomposition.raw_spend[ch];
+    const ads = new Array(raw.length).fill(0);
+    ads[0] = raw[0];
+    for (let i = 1; i < raw.length; i++) ads[i] = raw[i] + decay * ads[i-1];
+    adstockCache[ch] = ads;
+    transformedCache[ch] = ads.map(v => Math.log1p(v / scale));
+  });
+
+  // Build channel picker UI
+  const picker = document.getElementById('chPicker');
+  if (picker) {
+    CHANNELS.forEach((ch, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ch-pick' + (i === 0 ? ' is-active' : '');
+      btn.dataset.ch = ch;
+      btn.style.setProperty('--ch-color', C[ch]);
+      btn.innerHTML = `<span class="ch-pick-dot" style="background:${C[ch]}"></span>${PRETTY[ch]}`;
+      btn.addEventListener('click', () => {
+        activeRegCh = ch;
+        document.querySelectorAll('.ch-pick').forEach(b => b.classList.toggle('is-active', b.dataset.ch === ch));
+        buildRegChart();
+      });
+      picker.appendChild(btn);
+    });
+  }
+
+  function buildRegChart() {
+    const regCtx = document.getElementById('regChart');
+    if (!regCtx) return;
+    if (regChartInst) regChartInst.destroy();
+
+    const ch = activeRegCh;
+    const { start, end } = getRangeIndices();
+    const tx = transformedCache[ch].slice(start, end);
+    const partialY = [];
+    for (let i = start; i < end; i++) {
+      partialY.push(D.decomposition.actual[i] - (D.decomposition.predicted[i] - D.decomposition.channels[ch][i]));
+    }
+
+    // OLS fit: y = β·x + α
+    const n = tx.length;
+    const mx = tx.reduce((s,v)=>s+v,0) / n;
+    const my = partialY.reduce((s,v)=>s+v,0) / n;
+    let num = 0, den = 0;
+    for (let i = 0; i < n; i++) { num += (tx[i]-mx)*(partialY[i]-my); den += (tx[i]-mx)**2; }
+    const beta = den > 0 ? num/den : 0;
+    const alpha = my - beta * mx;
+    const ssTot = partialY.reduce((s,v)=>s+(v-my)**2, 0);
+    const ssRes = partialY.reduce((s,v,i)=>s+(v - (beta*tx[i]+alpha))**2, 0);
+    const r2 = ssTot > 0 ? 1 - ssRes/ssTot : 0;
+
+    // Update stats panel
+    document.getElementById('regBetaFit').textContent = beta.toFixed(2);
+    document.getElementById('regBetaModel').textContent = D.roi[ch].coef.toFixed(2);
+    document.getElementById('regR2').textContent = r2.toFixed(3);
+    document.getElementById('regParams').textContent = `λ ${D.roi[ch].decay.toFixed(2)} · k ${D.roi[ch].saturation_scale.toFixed(1)}`;
+
+    // Build scatter + line
+    const dots = tx.map((xi, i) => ({ x: xi, y: partialY[i] }));
+    const xMin = Math.min(...tx);
+    const xMax = Math.max(...tx);
+    const pad = (xMax - xMin) * 0.05;
+    const line = [
+      { x: Math.max(0, xMin - pad), y: beta * Math.max(0, xMin - pad) + alpha },
+      { x: xMax + pad, y: beta * (xMax + pad) + alpha },
+    ];
+    const col = C[ch];
+    const dotColor = hexA(col, 0.55);
+
+    regChartInst = new Chart(regCtx, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            type: 'line',
+            label: `Regression line · slope = ${beta.toFixed(2)}`,
+            data: line,
+            borderColor: COLORS.gold,
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false,
+            tension: 0,
+            order: 1,
+          },
+          {
+            type: 'scatter',
+            label: 'Weekly observations',
+            data: dots,
+            backgroundColor: dotColor,
+            borderColor: col,
+            borderWidth: 0.5,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            order: 2,
+          },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'nearest', intersect: true },
+        plugins: {
+          legend: {
+            display: true, position: 'top', align: 'end',
+            labels: { color: COLORS.text, font: { size: 10 }, boxWidth: 12, boxHeight: 2, padding: 16, usePointStyle: false },
+          },
+          tooltip: tooltipStyle({
+            callbacks: {
+              label: (item) => `x = ${item.parsed.x.toFixed(3)},  y = ${item.parsed.y.toFixed(0)}`,
+            }
+          }),
+        },
+        scales: {
+          x: {
+            type: 'linear',
+            ticks: { color: COLORS.steel, font: { size: 9 } },
+            grid: { color: COLORS.grid },
+            title: { display: true, text: 'Adstocked + log-saturated spend  ·  log(1 + x/k)', color: COLORS.steel, font: { size: 10 } },
+          },
+          y: {
+            ticks: { color: COLORS.steel, font: { size: 9 } },
+            grid: { color: COLORS.grid },
+            title: { display: true, text: 'Partial sales  ·  actual − (predicted − this channel)', color: COLORS.steel, font: { size: 10 } },
+          },
+        },
+      }
+    });
+  }
+  buildRegChart();
+
+  /* ─── 5) RESPONSE CURVE SMALL MULTIPLES ─── */
+  const rcGrid = document.getElementById('rcGrid');
+  CHANNELS.forEach((ch) => {
+    const rc = D.response_curves[ch];
+    const col = C[ch];
+    const card = document.createElement('div');
+    card.className = 'rc-card';
+    card.style.setProperty('--ch-color', col);
+    card.innerHTML = `
+      <div class="rc-head">
+        <span class="rc-name">${PRETTY[ch]}</span>
+        <span class="rc-eff">${D.roi[ch].units_per_1k_gbp.toFixed(2)} u/£k</span>
+      </div>
+      <div class="rc-canvas"><canvas id="rc_${ch}"></canvas></div>
+      <div class="rc-foot">
+        <span>Avg £${rc.current_avg_spend_k.toFixed(0)}k/wk</span>
+        <span>Decay ${D.roi[ch].decay.toFixed(2)}</span>
+      </div>
+    `;
+    rcGrid.appendChild(card);
+
+    const ctx = card.querySelector('canvas');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: rc.spend_k.map(s => s.toFixed(0)),
+        datasets: [{
+          label: 'Weekly contribution',
+          data: rc.incremental_volume_weekly,
+          borderColor: col,
+          backgroundColor: hexA(col, 0.18),
+          borderWidth: 1.5,
+          fill: true, pointRadius: 0, tension: 0.35,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            ...tooltipStyle(),
+            callbacks: {
+              title: (items) => '£' + items[0].label + 'k weekly spend',
+              label: (item) => '+ ' + item.parsed.y.toFixed(1) + ' units/week',
+            }
+          },
+          annotation: {}
+        },
+        scales: {
+          x: { ticks: { color: COLORS.steel, font: { size: 8 }, maxTicksLimit: 5,
+                        callback: (v, i, t) => '£' + rc.spend_k[i].toFixed(0) + 'k' },
+               grid: { display: false } },
+          y: { ticks: { color: COLORS.steel, font: { size: 8 }, maxTicksLimit: 4 },
+               grid: { color: COLORS.grid } },
+        },
+      },
+      plugins: [{
+        id: 'currentMarker',
+        afterDraw(chart) {
+          const {ctx, chartArea, scales} = chart;
+          const x = scales.x.getPixelForValue(
+            rc.spend_k.findIndex(s => s >= rc.current_avg_spend_k)
+          );
+          if (isNaN(x)) return;
+          ctx.save();
+          ctx.strokeStyle = COLORS.goldPale;
+          ctx.setLineDash([3, 3]);
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(x, chartArea.top);
+          ctx.lineTo(x, chartArea.bottom);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = COLORS.goldPale;
+          ctx.font = "500 8px 'Mulish'";
+          ctx.textAlign = 'center';
+          ctx.fillText('CURRENT', x, chartArea.top + 9);
+          ctx.restore();
+        }
+      }]
+    });
+  });
+
+  /* ─── 6) OPTIMIZATION CARDS ─── */
+  const optGrid = document.getElementById('optGrid');
+  // Decide verdict per channel
+  // Based on efficiency vs blended + headroom
+  const blended = D.totals.blended_units_per_1k_gbp;
+  const cardsData = D.optimization.map(o => {
+    const r = D.roi[o.channel];
+    const eff = r.units_per_1k_gbp;
+    const above = eff / blended;
+    let verdict, verdictClass, detail;
+    if (eff >= blended * 1.4 && o.headroom_k > 5) {
+      verdict = 'Increase'; verdictClass = 'up';
+      detail = `Efficiency runs ${(above*100-100).toFixed(0)}% above blended average, with ${fmtK(o.headroom_k)}/wk of headroom before saturation. Most efficient candidate for incremental spend.`;
+    } else if (eff >= blended * 0.9) {
+      verdict = 'Hold'; verdictClass = 'hold';
+      detail = `Efficiency at ${(above*100).toFixed(0)}% of blended average — performing in line with portfolio. Maintain current spend; revisit after next test wave.`;
+    } else {
+      verdict = 'Reduce'; verdictClass = 'down';
+      detail = `Efficiency only ${(above*100).toFixed(0)}% of blended average. Reallocate ~30% of budget to higher-efficiency channels and redesign creative for the remainder.`;
+    }
+    return { ...o, eff, verdict, verdictClass, detail };
+  }).sort((a,b) => {
+    const order = {up:0, hold:1, down:2};
+    return order[a.verdictClass] - order[b.verdictClass];
+  });
+
+  cardsData.forEach((o, idx) => {
+    const ch = o.channel;
+    const card = document.createElement('div');
+    card.className = 'opt-card';
+    card.innerHTML = `
+      <div class="opt-rank">${String(idx+1).padStart(2,'0')}</div>
+      <div class="opt-body">
+        <div class="opt-ch">
+          <span class="ch-dot" style="background:${C[ch]}"></span>
+          <span class="opt-ch-name">${PRETTY[ch]}</span>
+        </div>
+        <div class="opt-verdict ${o.verdictClass}">${o.verdict} · ${o.eff.toFixed(2)} units per £1k</div>
+        <div class="opt-detail">${o.detail}</div>
+        <div class="opt-stats">
+          <span>Current <strong>£${o.current_avg_k.toFixed(0)}k/wk</strong></span>
+          <span>Saturation <strong>£${o.saturation_spend_k.toFixed(0)}k/wk</strong></span>
+          <span>Headroom <strong>£${o.headroom_k.toFixed(0)}k/wk</strong></span>
+        </div>
+      </div>
+    `;
+    optGrid.appendChild(card);
+  });
+
+  /* ─── helpers ─── */
+  function hexA(hex, a) {
+    const h = hex.replace('#','');
+    const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+  function tooltipStyle(arg) {
+    const base = {
+      backgroundColor: 'rgba(10,20,32,0.95)',
+      borderColor: 'rgba(184,149,74,0.4)',
+      borderWidth: 0.5,
+      titleColor: COLORS.gold,
+      titleFont: { family: "'Mulish'", weight: 500, size: 10 },
+      bodyColor: COLORS.ivory,
+      bodyFont: { family: "'Mulish'", size: 11 },
+      padding: 12,
+      boxPadding: 4,
+      cornerRadius: 2,
+    };
+    if (arg === true) {
+      base.callbacks = { label: (item) => ' ' + item.label + ': ' + item.parsed.toFixed(1) + '%' };
+    } else if (arg && typeof arg === 'object') {
+      Object.assign(base, arg);
+    }
+    return base;
+  }
+})();
+</script>
+
+</body>
+</html>
