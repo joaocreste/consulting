@@ -864,6 +864,28 @@
   .scatter-chart .point-label { font-size: 12px; font-family: 'Mulish', sans-serif; font-weight: 600; fill: var(--ink); }
   .scatter-chart .point-label-bold { font-size: 14px; font-weight: 800; letter-spacing: 0.02em; }
   .scatter-chart .leader { stroke: rgba(10,22,40,0.28); stroke-width: 0.7; fill: none; }
+  .scatter-chart .frontier-path {
+    fill: none;
+    stroke: rgba(184,149,74,0.55);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 5, 3;
+  }
+  .scatter-chart .frontier-label {
+    fill: rgba(184,149,74,0.75);
+    font-size: 11px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .scatter-legend .line-dash {
+    display: inline-block; width: 22px; height: 2px;
+    background-image: linear-gradient(to right, #B8954A 55%, transparent 55%);
+    background-size: 7px 2px; background-repeat: repeat-x;
+    opacity: 0.75;
+  }
   .scatter-chart .etf-point-eq  { fill: #B8954A; }
   .scatter-chart .etf-point-ig  { fill: #5A7A99; }
   .scatter-chart .etf-point-hy  { fill: #C4A32A; }
@@ -1683,10 +1705,11 @@
         <div class="item"><span class="dot" style="background:#5A7A99;"></span><span data-lang="en">Investment grade</span><span data-lang="pt">Grau de investimento</span></div>
         <div class="item"><span class="dot" style="background:#C4A32A;"></span><span data-lang="en">High yield</span><span data-lang="pt">High Yield</span></div>
         <div class="item"><span class="dot" style="background:#8A6B4F;"></span><span data-lang="en">Alternative</span><span data-lang="pt">Alternativo</span></div>
+        <div class="item"><span class="line-dash"></span><span data-lang="en">Efficient frontier</span><span data-lang="pt">Fronteira eficiente</span></div>
       </div>
       <div class="scatter-footnote">
-        <span data-lang="en">Holdings plotted from issuer factsheet 1Y total return and 1Y annualised volatility (justETF, April 2026). Portfolio, MSCI World, and S&amp;P 500 points computed from real Yahoo Finance daily closes — last 252 trading days, same 5-ticker proxy used for the line charts above. Upper-left is the favoured quadrant: higher return per unit of risk.</span>
-        <span data-lang="pt">Posições plotadas a partir do retorno total 1A e da volatilidade anualizada 1A do factsheet do emissor (justETF, abril 2026). Portfólio, MSCI World e S&amp;P 500 calculados a partir de fechamentos diários reais do Yahoo Finance — últimos 252 pregões, mesmo proxy de 5 tickers usado nos gráficos de linha acima. Quadrante superior-esquerdo é o preferido: mais retorno por unidade de risco.</span>
+        <span data-lang="en">Holdings plotted from issuer factsheet 1Y total return and 1Y annualised volatility (justETF, April 2026). Portfolio, MSCI World, and S&amp;P 500 points computed from real Yahoo Finance daily closes — last 252 trading days, same 5-ticker proxy used for the line charts above. Dashed gold line: Markowitz efficient frontier across the 9-holding universe, built by Monte Carlo (~1.5M long-only samples on the simplex, including sparse-weight draws) using each holding's TTM return, TTM volatility, and the pairwise correlation matrix. Upper-left is the favoured quadrant: higher return per unit of risk.</span>
+        <span data-lang="pt">Posições plotadas a partir do retorno total 1A e da volatilidade anualizada 1A do factsheet do emissor (justETF, abril 2026). Portfólio, MSCI World e S&amp;P 500 calculados a partir de fechamentos diários reais do Yahoo Finance — últimos 252 pregões, mesmo proxy de 5 tickers usado nos gráficos de linha acima. Linha dourada tracejada: fronteira eficiente de Markowitz no universo das 9 posições, construída por Monte Carlo (~1,5M amostras long-only no simplex, incluindo sorteios de pesos esparsos) usando retorno TTM, volatilidade TTM e a matriz de correlação pareada. Quadrante superior-esquerdo é o preferido: mais retorno por unidade de risco.</span>
       </div>
     </div>
   </div>
@@ -2200,7 +2223,8 @@
       sxTitleY: "TTM Return",
       sxPortfolio: "Portfolio",
       sxMsci: "MSCI World",
-      sxSp: "S&P 500"
+      sxSp: "S&P 500",
+      sxFrontier: "Efficient frontier"
     },
     pt: {
       etfProfile: "Perfil do ETF",
@@ -2239,7 +2263,8 @@
       sxTitleY: "Retorno TTM",
       sxPortfolio: "Portfólio",
       sxMsci: "MSCI World",
-      sxSp: "S&P 500"
+      sxSp: "S&P 500",
+      sxFrontier: "Fronteira eficiente"
     }
   };
 
@@ -2770,6 +2795,98 @@
     `;
   }
 
+  // ═════════ MARKOWITZ FRONTIER · MONTE CARLO ═════════
+  // Correlation matrix aligned with ETFS order:
+  // [WRDUSA, CSPX, CEU, XBLC, CSBGE7, XHYA, SGLD, XIFE, WTAI]
+  const CORR_9 = [
+    [ 1.00, 0.96, 0.80, 0.30, 0.15, 0.72, 0.05, 0.82, 0.92],
+    [ 0.96, 1.00, 0.72, 0.28, 0.12, 0.68, 0.03, 0.78, 0.94],
+    [ 0.80, 0.72, 1.00, 0.32, 0.22, 0.75, 0.08, 0.80, 0.58],
+    [ 0.30, 0.28, 0.32, 1.00, 0.82, 0.55, 0.22, 0.45, 0.18],
+    [ 0.15, 0.12, 0.22, 0.82, 1.00, 0.25, 0.28, 0.30, 0.08],
+    [ 0.72, 0.68, 0.75, 0.55, 0.25, 1.00, 0.02, 0.65, 0.58],
+    [ 0.05, 0.03, 0.08, 0.22, 0.28, 0.02, 1.00, 0.18,-0.02],
+    [ 0.82, 0.78, 0.80, 0.45, 0.30, 0.65, 0.18, 1.00, 0.68],
+    [ 0.92, 0.94, 0.58, 0.18, 0.08, 0.58,-0.02, 0.68, 1.00]
+  ];
+
+  let _frontierCache = null;
+  function computeMarkowitzFrontier() {
+    if (_frontierCache) return _frontierCache;
+    const n = ETFS.length;
+    const ret = new Float64Array(n);
+    const vol = new Float64Array(n);
+    for (let i = 0; i < n; i++) { ret[i] = ETFS[i].ret1y; vol[i] = ETFS[i].vol1y; }
+    const cov = [];
+    for (let i = 0; i < n; i++) {
+      cov[i] = new Float64Array(n);
+      for (let j = 0; j < n; j++) cov[i][j] = CORR_9[i][j] * vol[i] * vol[j];
+    }
+
+    const w = new Float64Array(n);
+    const bins = new Map();
+    const binW = 0.2; // vol-% bucket
+
+    function statsAndBin() {
+      let r = 0, v = 0;
+      for (let i = 0; i < n; i++) r += w[i] * ret[i];
+      for (let i = 0; i < n; i++) {
+        const wi = w[i];
+        if (wi === 0) continue;
+        const ci = cov[i];
+        for (let j = 0; j < n; j++) v += wi * w[j] * ci[j];
+      }
+      const vv = Math.sqrt(v < 0 ? 0 : v);
+      const bin = Math.floor(vv / binW);
+      const cur = bins.get(bin);
+      if (!cur || cur.r < r) bins.set(bin, { r, v: vv });
+    }
+
+    // Corner portfolios (each asset 100%)
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) w[j] = 0;
+      w[i] = 1;
+      statsAndBin();
+    }
+
+    // Dense simplex sampling (Dirichlet(1))
+    const N_DENSE = 1000000;
+    for (let k = 0; k < N_DENSE; k++) {
+      let s = 0;
+      for (let i = 0; i < n; i++) { const x = -Math.log(Math.random() + 1e-12); w[i] = x; s += x; }
+      for (let i = 0; i < n; i++) w[i] /= s;
+      statsAndBin();
+    }
+
+    // Sparse sampling · 2–4 active assets (improves coverage near corners)
+    const N_SPARSE = 500000;
+    for (let k = 0; k < N_SPARSE; k++) {
+      for (let i = 0; i < n; i++) w[i] = 0;
+      const kActive = 2 + (Math.random() * 3 | 0);
+      let s = 0;
+      let picked = 0;
+      while (picked < kActive) {
+        const idx = Math.random() * n | 0;
+        if (w[idx] !== 0) continue;
+        const x = -Math.log(Math.random() + 1e-12);
+        w[idx] = x; s += x; picked++;
+      }
+      for (let i = 0; i < n; i++) if (w[i] !== 0) w[i] /= s;
+      statsAndBin();
+    }
+
+    // Upper-hull efficient frontier · monotone return from min-vol onward
+    const all = [...bins.values()].sort((a, b) => a.v - b.v);
+    const ef = [];
+    let maxR = -Infinity;
+    for (const p of all) {
+      if (p.r > maxR) { ef.push(p); maxR = p.r; }
+    }
+
+    _frontierCache = ef;
+    return ef;
+  }
+
   function annualisedVolFromNav(series, window) {
     const n = series.length;
     const start = Math.max(1, n - window);
@@ -2815,11 +2932,18 @@
     points.push({ kind: "bench", bench: "msci",      label: t.sxMsci,      x: volM, y: ttmM });
     points.push({ kind: "bench", bench: "sp",        label: t.sxSp,        x: volS, y: ttmS });
 
-    // Axis extents with small padding
+    // Monte Carlo Markowitz frontier (cached)
+    const frontier = computeMarkowitzFrontier();
+
+    // Axis extents with small padding · include frontier points so the curve fits
     let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity;
     points.forEach(p => {
       if (p.x < xMin) xMin = p.x; if (p.x > xMax) xMax = p.x;
       if (p.y < yMin) yMin = p.y; if (p.y > yMax) yMax = p.y;
+    });
+    frontier.forEach(p => {
+      if (p.v < xMin) xMin = p.v; if (p.v > xMax) xMax = p.v;
+      if (p.r < yMin) yMin = p.r; if (p.r > yMax) yMax = p.r;
     });
     xMin = Math.max(0, Math.floor((xMin - 1.5) / 5) * 5);
     xMax = Math.ceil((xMax + 1.5) / 5) * 5;
@@ -2953,6 +3077,22 @@
     const yTitleX = 34;
     const yTitleY = P.t + chartH / 2;
 
+    // Frontier polyline + in-chart label at ~40% along the curve
+    let frontierSvg = "";
+    if (frontier.length > 1) {
+      const pts = frontier
+        .map(p => `${mapX(p.v).toFixed(1)},${mapY(p.r).toFixed(1)}`)
+        .join(" ");
+      const idx = Math.floor(frontier.length * 0.55);
+      const anchor = frontier[Math.min(idx, frontier.length - 1)];
+      const ax = mapX(anchor.v);
+      const ay = mapY(anchor.r) - 10;
+      frontierSvg = `
+        <polyline class="frontier-path" points="${pts}"/>
+        <text class="frontier-label" x="${ax.toFixed(1)}" y="${ay.toFixed(1)}" text-anchor="middle">${t.sxFrontier}</text>
+      `;
+    }
+
     return `
       <svg class="scatter-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
         ${grid}
@@ -2960,6 +3100,7 @@
         <line class="axis" x1="${P.l}" y1="${H - P.b}" x2="${W - P.r}" y2="${H - P.b}"/>
         <text class="axis-title" x="${xTitleX}" y="${xTitleY}" text-anchor="middle">${t.sxTitleX}</text>
         <text class="axis-title" x="${yTitleX}" y="${yTitleY}" text-anchor="middle" transform="rotate(-90 ${yTitleX} ${yTitleY})">${t.sxTitleY}</text>
+        ${frontierSvg}
         ${dots}
         ${labels}
       </svg>
