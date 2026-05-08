@@ -1,70 +1,21 @@
-# JC Consulting & Advisory · Education
+# JC Consulting & Advisory
 
-Self-contained static bundle. Drop the whole folder into any web host (Vercel,
-Netlify, GitHub Pages, S3 + CloudFront, plain Apache/Nginx) and serve the root.
+Self-contained static bundle for the JC Consulting & Advisory site. Drop the
+whole folder into any web host (Vercel, Netlify, GitHub Pages, S3 + CloudFront,
+plain Apache/Nginx) and serve the root.
 
-## Architecture
+## Files
 
 ```
-index.html                    Public marketing landing (the front door)
-                Education branch landing (course catalogue)
-  │
-  ├──►         — course homepage
-  │     │
-  │     ├──► 
-  │     ├──► 
-  │     ├──► 
-  │     ├──► 
-  │     ├──► 
-  │     └──► 
-  │
-  ├──►           — single-page course
-  │     │
-  │     ├──► course/         (Absolut UK MMM deep-dive)
-  │     └──► course/    (D-STAR store clustering report)
-  │
-  └──►       — three-pillar course
-        │                                  (Internal · External Corporate · External Brand)
-        │
-        ├──► course/        ( deep-dive — foundational, all 3 pillars)
-        └──► course/          ( deep-dive — Pillar II case study)
-
-                    Style system used by  + all modules
-                     Reveal animations, quizzes, fmt helpers
+index.html     Public marketing landing (the front door)
+wealth.html    JC Wealth page
+CNAME          Custom domain mapping (Cloudflare Pages)
 ```
 
-`index.html` and `` are fully self-contained — they inline their own
-styles and SVG marks and do not depend on `` / ``. The
- course system (`` and its six
-modules) shares the common styles and scripts. The Marketing &amp; Business
-Analytics and  courses are single self-contained pages
-(each with one or more companion deep-dive artefacts under ``).
-
-## Navigation map
-
-| From                                    | Where the user goes                                              |
-| --------------------------------------- | ---------------------------------------------------------------- |
-| `index.html` · *Access*                 | ``                                      |
-| `` · topic     | `…html` (the corresponding module)               |
-| any module · *All modules* / brand mark | ``                                      |
-| any module · *Up next*                  | next module in sequence (06 returns to ``) |
-
-## Adding new courses later
-
-When the next course (Corporate Finance, Strategy, …) ships:
-
-1. Author it in the same pattern — either a multi-module structure
-   (`` + `` lessons, sharing
-   `` / ``), or a single self-contained page like
-   `` if the course doesn't need separate lessons.
-2. Place it under a sibling slug under ``.
-3. Replace one of the "Coming soon" placeholders in `` with a
-   real course card pointing to the new homepage, mirroring either the
-   `` or `` card.
+`index.html` and `wealth.html` are fully self-contained — they inline their own
+styles and assets and have no external dependencies in this repo.
 
 ## Local preview
-
-Any of these will work from the bundle directory:
 
 ```bash
 python3 -m http.server 8000
@@ -74,5 +25,3 @@ python3 -m http.server 8000
 ```bash
 npx serve .
 ```
-
-— JC Consulting & Advisory · Education
