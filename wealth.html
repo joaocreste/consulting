@@ -1940,7 +1940,7 @@
           <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00B3VTML14" target="_blank" rel="noopener">iShares € Govt Bond 3–7Y (CSBGE7)</a></li>
           <li><a href="https://www.justetf.com/en/etf-profile.html?isin=LU1109943388" target="_blank" rel="noopener">Xtrackers EUR HY 1C (XHYA)</a></li>
           <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00B579F325" target="_blank" rel="noopener">Invesco Physical Gold (SGLD)</a></li>
-          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00BYZNF849" target="_blank" rel="noopener">Xtrackers Global Infra  (XIFE)</a></li>
+          <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00BYZNF849" target="_blank" rel="noopener">Xtrackers Global Infra ESG (XIFE)</a></li>
           <li><a href="https://www.justetf.com/en/etf-profile.html?isin=IE00BDVPNG13" target="_blank" rel="noopener">WisdomTree AI (WTAI)</a></li>
         </ul>
       </div>
@@ -2482,7 +2482,7 @@
     },
     {
       ticker: "XIFE", isin: "IE00BYZNF849",
-      name: "Xtrackers Global Infrastructure  UCITS ETF 1C",
+      name: "Xtrackers Global Infrastructure ESG UCITS ETF 1C",
       issuer: "Xtrackers (DWS)", domicile: "Ireland", domicilePt: "Irlanda",
       cat: "alt",
       weight: 3, amount: 30000, ter: 0.35, aum: 12,
@@ -2493,8 +2493,8 @@
       vol1y: 10.61, vol3y: null, vol5y: null,
       sharpe3y: null,
       thesis: {
-        en: "<strong>Fiscal-beneficiary defensive.</strong> Global listed infrastructure — utilities, transport, communications, water — with an  overlay on the FTSE Global Core Infrastructure index. Captures <em>cashflows with inflation linkage and defensive regulated characteristics</em>, and benefits structurally from rate-cut cycles and government capex.",
-        pt: "<strong>Defensiva beneficiária de estímulo fiscal.</strong> Infraestrutura listada global — utilities, transporte, comunicações, água — com overlay  sobre o índice FTSE Global Core Infrastructure. Captura <em>fluxos de caixa com vínculo à inflação e características defensivas reguladas</em>, e se beneficia estruturalmente de ciclos de corte de juros e capex público."
+        en: "<strong>Fiscal-beneficiary defensive.</strong> Global listed infrastructure — utilities, transport, communications, water — with an ESG overlay on the FTSE Global Core Infrastructure index. Captures <em>cashflows with inflation linkage and defensive regulated characteristics</em>, and benefits structurally from rate-cut cycles and government capex.",
+        pt: "<strong>Defensiva beneficiária de estímulo fiscal.</strong> Infraestrutura listada global — utilities, transporte, comunicações, água — com overlay ESG sobre o índice FTSE Global Core Infrastructure. Captura <em>fluxos de caixa com vínculo à inflação e características defensivas reguladas</em>, e se beneficia estruturalmente de ciclos de corte de juros e capex público."
       },
       structure: {
         en: "Role: diversifier outside traditional risk buckets. <strong>Watchpoint:</strong> inception September 2024 leaves only ~19 months of track record, and AUM is small at ~€12M. Tracking has been clean in the available window (+11.61% 1Y), but this is the portfolio's lightest-tenured holding. On watch for a potential swap to iShares Global Infrastructure (INFR) if the longer track record becomes preferable to the 30bps cost saving.",
@@ -2521,6 +2521,28 @@
         en: "Role: targeted thematic exposure outside what WRDUSA and CSPX already hold at the index level. 1Y TR of +76.4% reflects the 2025–26 AI rally; 3Y annualised ~23.4% sits between the pure US broad index and the narrower AI-infrastructure sleeve. <strong>High volatility</strong> (~26% 3Y) — size kept to 3% to manage drawdown risk.",
         pt: "Papel: exposição temática direcionada, fora do que WRDUSA e CSPX já carregam em nível de índice. Retorno 1A de +76,4% reflete o rally de IA de 2025–26; ~23,4% anualizados em 3A ficam entre o índice amplo puro dos EUA e o sleeve mais restrito de infraestrutura de IA. <strong>Alta volatilidade</strong> (~26% em 3A) — tamanho mantido em 3% para gerenciar risco de drawdown."
       }
+    },
+    {
+      ticker: "VWCE", isin: "IE00BK5BQT80",
+      name: "Vanguard FTSE All-World UCITS ETF (Acc)",
+      issuer: "Vanguard", domicile: "Ireland", domicilePt: "Irlanda",
+      cat: "equity",
+      weight: 0, amount: 0, ter: 0.19, aum: 36584,
+      inception: "2019-07-23",
+      replication: "Physical (optimised sampling)", replicationPt: "Física (amostragem otimizada)",
+      distribution: "Accumulating", distributionPt: "Acumulativa",
+      ret1y: 27.26, ret3yCum: 65.76, ret5y: 72.50,
+      vol1y: 10.08, vol3y: 12.24, vol5y: 13.62,
+      sharpe3y: 1.50,
+      displayOnly: true,
+      thesis: {
+        en: "<strong>Watchlist · single-ticker global equity.</strong> Tracks the FTSE All-World index — ~3,750 large- and mid-cap names across <em>developed and emerging markets</em>. Held at 0% as a reference point against the active WRDUSA + CSPX + CEU sleeve, to test whether the deliberate split (developed-only core + US overweight + EMU regional) continues to add value over a single all-in-one tracker.",
+        pt: "<strong>Watchlist · ações globais em uma única linha.</strong> Acompanha o índice FTSE All-World — ~3.750 nomes de large e mid cap em <em>mercados desenvolvidos e emergentes</em>. Mantido em 0% como ponto de referência contra o sleeve ativo WRDUSA + CSPX + CEU, para testar se a divisão deliberada (núcleo só desenvolvidos + overweight EUA + regional zona do euro) continua a agregar valor sobre um único tracker all-in-one."
+      },
+      structure: {
+        en: "Role: <strong>watchlist only · 0% target weight</strong>. Plotted on the risk/return scatter to show where a single-ticker global solution sits relative to the active 9-holding mix. TER 0.19% sits 13bps above WRDUSA's 0.06% — the implicit cost of EM inclusion and Vanguard's pricing. Excluded from the efficient-frontier optimisation and from portfolio totals.",
+        pt: "Papel: <strong>apenas watchlist · peso-alvo 0%</strong>. Plotado no scatter risco/retorno para mostrar onde uma solução global de ticker único fica em relação à mistura ativa de 9 holdings. TER de 0,19% está 13bps acima dos 0,06% do WRDUSA — custo implícito da inclusão de mercados emergentes e do pricing da Vanguard. Excluído da otimização da fronteira eficiente e dos totais do portfólio."
+      }
     }
   ];
 
@@ -2536,14 +2558,18 @@
       const ann3y = e.ret3yCum !== null ? (Math.pow(1 + e.ret3yCum / 100, 1/3) - 1) * 100 : null;
       const row = document.createElement("tr");
       row.dataset.idx = i;
+      if (e.displayOnly) row.style.opacity = "0.78";
       const repl = currentLang === "pt" ? e.replicationPt : e.replication;
       const dist = currentLang === "pt" ? e.distributionPt : e.distribution;
-      const rowAmount = formatMandate(mandate * e.weight / 100, currency);
+      const rowAmount = e.displayOnly ? "—" : formatMandate(mandate * e.weight / 100, currency);
+      const watchlistPill = e.displayOnly
+        ? ` <span class="cat-pill" style="background:rgba(122,143,166,0.18); color:var(--steel); margin-left:4px;">WATCHLIST</span>`
+        : "";
       row.innerHTML = `
         <td><span class="ticker">${e.ticker}</span></td>
-        <td class="name">${e.name}<br><span class="cat-pill cat-${e.cat}">${catLabels[e.cat]}</span><br><small>${e.isin} · ${repl} · ${dist}</small></td>
+        <td class="name">${e.name}<br><span class="cat-pill cat-${e.cat}">${catLabels[e.cat]}</span>${watchlistPill}<br><small>${e.isin} · ${repl} · ${dist}</small></td>
         <td class="num">${e.weight}%</td>
-        <td class="num">${rowAmount}</td>
+        <td class="num" style="${e.displayOnly ? 'color:var(--steel);' : ''}">${rowAmount}</td>
         <td class="num">${e.ter.toFixed(2)}%</td>
         <td class="num">${e.aum.toLocaleString("en-US")}</td>
         <td class="num gain">+${e.ret1y.toFixed(2)}%</td>
@@ -2874,10 +2900,11 @@
   let _frontierCache = null;
   function computeMarkowitzFrontier() {
     if (_frontierCache) return _frontierCache;
-    const n = ETFS.length;
+    const portfolioETFS = ETFS.filter(e => !e.displayOnly);
+    const n = portfolioETFS.length;
     const ret = new Float64Array(n);
     const vol = new Float64Array(n);
-    for (let i = 0; i < n; i++) { ret[i] = ETFS[i].ret1y; vol[i] = ETFS[i].vol1y; }
+    for (let i = 0; i < n; i++) { ret[i] = portfolioETFS[i].ret1y; vol[i] = portfolioETFS[i].vol1y; }
     const cov = [];
     for (let i = 0; i < n; i++) {
       cov[i] = new Float64Array(n);
