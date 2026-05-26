@@ -1,1 +1,1237 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fairphone (A) — Case Brief · JC Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════
+     CASE BRIEF — Fairphone (A)
+     Built on JC Group Brand System v1.0
+     ═══════════════════════════════════════════════ */
+  :root {
+    --obsidian:    #0A1420;
+    --navy:        #0D1B2A;
+    --slate:       #1E2D3D;
+    --gold:        #B8954A;
+    --gold-glow:   #D4AF5F;
+    --gold-pale:   #E5D4A8;
+    --steel:       #7A8FA6;
+    --parchment:   #F9F7F4;
+    --ivory:       #F0EDE6;
+    --white:       #FFFFFF;
+    --consulting:  #B8954A;
+    --investing:   #4A8FB8;
+    --ops:         #6BAA7E;
+    --signal:      #C26F4A;  /* terracotta — used sparingly for tension */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background-color: var(--obsidian);
+    color: var(--ivory);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes drawLine {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes hexRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 0.75; }
+  }
+
+  /* ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ */
+  .hero {
+    min-height: 92vh;
+    background: var(--obsidian);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 28px;
+    text-align: center;
+  }
+  .hero-hex-grid {
+    position: absolute; inset: 0;
+    opacity: 0.035;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Cpolygon points='60,2 114,28 114,76 60,102 6,76 6,28' fill='none' stroke='%23B8954A' stroke-width='0.5'/%3E%3C/svg%3E");
+    background-size: 120px 104px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(184,149,74,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-orbit {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 440px; height: 440px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: hexRotate 140s linear infinite;
+  }
+  .hero-orbit svg { width: 100%; height: 100%; }
+
+  .hero-eyebrow {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-meta {
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 32px;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s ease 0.05s both;
+  }
+  .hero-meta .sep { margin: 0 10px; color: rgba(184,149,74,0.5); }
+
+  .hero-mark {
+    width: 88px; height: 88px;
+    margin: 0 auto 40px;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s ease 0.12s both;
+  }
+  .hero-mark svg { width: 100%; height: 100%; }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 11vw, 72px);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    color: var(--ivory);
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s ease 0.24s both;
+    max-width: 880px;
+  }
+  .hero-name .gold { color: var(--gold); font-style: italic; }
+
+  .hero-divider {
+    width: 72px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 32px auto;
+    transform-origin: center;
+    position: relative; z-index: 2;
+    animation: drawLine 0.9s ease 0.4s both;
+  }
+
+  .hero-tagline {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(14px, 3.2vw, 17px);
+    font-weight: 200;
+    letter-spacing: 0.18em;
+    color: var(--gold-pale);
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s ease 0.5s both;
+    max-width: 620px;
+    line-height: 1.6;
+  }
+  .hero-tagline em { font-style: italic; color: var(--gold); }
+
+  .hero-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(15px, 3.8vw, 19px);
+    color: var(--steel);
+    margin-top: 36px;
+    max-width: 540px;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s ease 0.62s both;
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SECTION BASES
+     ═══════════════════════════════════════════════ */
+  .s-obsidian { background: var(--obsidian); padding: 72px 28px; position: relative; }
+  .s-navy     { background: var(--navy);     padding: 72px 28px; position: relative; }
+  .s-slate    { background: var(--slate);    padding: 72px 28px; position: relative; }
+  .s-light    { background: var(--parchment); padding: 72px 28px; color: var(--navy); }
+
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .gold-rule {
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, rgba(184,149,74,0.25), transparent);
+  }
+
+  .s-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .s-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 7vw, 38px);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .s-title.on-dark  { color: var(--ivory); }
+  .s-title.on-light { color: var(--navy); }
+  .s-title .italic { font-style: italic; color: var(--gold); }
+
+  .s-body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.85;
+    max-width: 580px;
+  }
+  .s-body.on-dark  { color: var(--steel); }
+  .s-body.on-light { color: #5A6A7A; }
+  .s-body strong    { font-weight: 500; }
+  .s-body.on-dark strong  { color: var(--gold-pale); }
+  .s-body.on-light strong { color: var(--navy); }
+  .s-body + .s-body { margin-top: 16px; }
+
+  .gold-accent-line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    margin: 28px 0;
+  }
+
+  /* ═══════════════════════════════════════════════
+     EXECUTIVE SUMMARY
+     ═══════════════════════════════════════════════ */
+  .exec-quote {
+    background: var(--slate);
+    border-left: 3px solid var(--gold);
+    padding: 30px 28px;
+    margin-top: 32px;
+    border-radius: 0 8px 8px 0;
+  }
+  .exec-quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 4.5vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ivory);
+    letter-spacing: 0.015em;
+  }
+  .exec-quote-text strong {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--gold-pale);
+  }
+  .exec-quote-attr {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 18px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     KEY FACTS GRID
+     ═══════════════════════════════════════════════ */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .fact-card {
+    background: rgba(255,255,255,0.025);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 22px 18px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .fact-card:hover {
+    border-color: rgba(184,149,74,0.25);
+    transform: translateY(-2px);
+  }
+  .fact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1.5px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+  .fact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--gold-pale);
+    line-height: 1.1;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  .fact-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 4px;
+  }
+  .fact-detail {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--ivory);
+    line-height: 1.55;
+    margin-top: 8px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     TIMELINE
+     ═══════════════════════════════════════════════ */
+  .timeline {
+    margin-top: 32px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 14px;
+    bottom: 14px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+    opacity: 0.4;
+  }
+  .tl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 14px 0;
+    position: relative;
+  }
+  .tl-year {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--obsidian);
+    border: 0.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    position: relative;
+    z-index: 2;
+  }
+  .tl-content { padding-top: 8px; }
+  .tl-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+    margin-bottom: 4px;
+  }
+  .tl-desc {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--steel);
+    line-height: 1.7;
+  }
+
+  /* ═══════════════════════════════════════════════
+     CHALLENGE CARDS (the "two cases")
+     ═══════════════════════════════════════════════ */
+  .chal-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .chal-card {
+    background: linear-gradient(145deg, var(--slate), var(--navy));
+    border: 0.5px solid rgba(184,149,74,0.18);
+    border-radius: 14px;
+    padding: 30px 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .chal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+  }
+  .chal-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .chal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--ivory);
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .chal-tag {
+    display: inline-block;
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(184,149,74,0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .chal-body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--steel);
+  }
+  .chal-body strong { color: var(--gold-pale); font-weight: 500; }
+  .chal-body + .chal-body { margin-top: 12px; }
+
+  .chal-decisions {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 0.5px solid rgba(184,149,74,0.15);
+  }
+  .chal-dec-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .chal-dec-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .chal-dec-item:last-child { margin-bottom: 0; }
+  .chal-dec-bullet {
+    flex-shrink: 0;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 8px;
+  }
+  .chal-dec-text {
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--ivory);
+  }
+  .chal-dec-text em {
+    font-style: italic;
+    color: var(--steel);
+  }
+
+  /* ═══════════════════════════════════════════════
+     SUPPLY CHAIN MAP
+     ═══════════════════════════════════════════════ */
+  .sc-stack {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .sc-mineral {
+    background: rgba(255,255,255,0.025);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 22px 20px;
+  }
+  .sc-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .sc-symbol {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(184,149,74,0.1);
+    border: 0.5px solid rgba(184,149,74,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+  .sc-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+  }
+  .sc-tag {
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-top: 2px;
+  }
+  .sc-flow {
+    font-family: 'Mulish', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--ivory);
+    line-height: 1.8;
+    padding-left: 48px;
+    border-left: 0.5px dashed rgba(184,149,74,0.2);
+    margin-left: 18px;
+  }
+  .sc-flow strong { color: var(--gold-pale); font-weight: 500; }
+  .sc-arrow { color: var(--gold); margin: 0 6px; }
+
+  /* ═══════════════════════════════════════════════
+     TENSIONS / PARADOXES
+     ═══════════════════════════════════════════════ */
+  .tension-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 32px;
+  }
+  .tension {
+    display: flex;
+    align-items: stretch;
+    background: rgba(255,255,255,0.025);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .tension-side {
+    flex: 1;
+    padding: 20px 18px;
+  }
+  .tension-side.left {
+    border-right: 0.5px dashed rgba(184,149,74,0.2);
+  }
+  .tension-label {
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .tension-text {
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--ivory);
+  }
+  .tension-vs {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     TAKEAWAYS (light section)
+     ═══════════════════════════════════════════════ */
+  .takeaway-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 32px;
+  }
+  .tk-card {
+    background: var(--white);
+    border: 0.5px solid rgba(10,20,32,0.08);
+    border-radius: 12px;
+    padding: 24px 22px;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(10,20,32,0.04);
+  }
+  .tk-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .tk-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .tk-body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: #5A6A7A;
+    line-height: 1.75;
+  }
+  .tk-body strong { color: var(--navy); font-weight: 500; }
+
+  /* ═══════════════════════════════════════════════
+     JC GROUP TIE-IN (signature touch)
+     ═══════════════════════════════════════════════ */
+  .jc-tie {
+    background: linear-gradient(145deg, var(--obsidian), var(--navy));
+    border: 0.5px solid rgba(184,149,74,0.2);
+    border-radius: 14px;
+    padding: 32px 26px;
+    margin-top: 32px;
+    text-align: center;
+  }
+  .jc-tie svg { width: 44px; height: 44px; margin-bottom: 18px; }
+  .jc-tie-eyebrow {
+    font-family: 'Mulish', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .jc-tie-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--ivory);
+    letter-spacing: 0.02em;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .jc-tie-quote strong {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--gold-pale);
+  }
+
+  /* ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ */
+  .footer {
+    background: var(--obsidian);
+    padding: 56px 28px 64px;
+    text-align: center;
+    border-top: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .footer svg {
+    width: 32px; height: 32px;
+    margin-bottom: 18px;
+    opacity: 0.4;
+  }
+  .footer-text {
+    font-family: 'Mulish', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--steel);
+    letter-spacing: 0.06em;
+    line-height: 2.2;
+  }
+  .footer-text .gold-text { color: var(--gold); }
+
+  /* Responsive */
+  @media (min-width: 720px) {
+    .container { max-width: 720px; }
+    .facts-grid { grid-template-columns: repeat(2, 1fr); }
+    .takeaway-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ SVG DEFINITIONS ═══════════════ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<defs>
+  <symbol id="hex-gold" viewBox="0 0 80 80">
+    <polygon points="40,6 70,22 70,58 40,74 10,58 10,22" fill="none" stroke="#B8954A" stroke-width="0.75" stroke-linejoin="round"/>
+    <line x1="40" y1="6" x2="40" y2="40" stroke="#B8954A" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="10" y1="58" x2="40" y2="40" stroke="#B8954A" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="70" y1="58" x2="40" y2="40" stroke="#B8954A" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="40" cy="40" r="3" fill="#B8954A"/>
+    <circle cx="40" cy="6" r="1.8" fill="#B8954A"/>
+    <circle cx="10" cy="58" r="1.8" fill="#B8954A"/>
+    <circle cx="70" cy="58" r="1.8" fill="#B8954A"/>
+  </symbol>
+  <symbol id="hex-ivory" viewBox="0 0 80 80">
+    <polygon points="40,6 70,22 70,58 40,74 10,58 10,22" fill="none" stroke="#F0EDE6" stroke-width="0.75" stroke-linejoin="round"/>
+    <line x1="40" y1="6" x2="40" y2="40" stroke="#F0EDE6" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="10" y1="58" x2="40" y2="40" stroke="#F0EDE6" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="70" y1="58" x2="40" y2="40" stroke="#F0EDE6" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="40" cy="40" r="3" fill="#F0EDE6"/>
+    <circle cx="40" cy="6" r="1.8" fill="#F0EDE6"/>
+    <circle cx="10" cy="58" r="1.8" fill="#F0EDE6"/>
+    <circle cx="70" cy="58" r="1.8" fill="#F0EDE6"/>
+  </symbol>
+</defs>
+</svg>
+
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-hex-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-orbit">
+    <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="220,20 400,130 400,310 220,420 40,310 40,130" stroke="rgba(184,149,74,0.06)" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">Case Brief</div>
+  <div class="hero-meta">
+    UV8939 <span class="sep">·</span> Darden <span class="sep">·</span> Growth &amp; Ecosystems
+  </div>
+
+  <div class="hero-mark">
+    <svg><use href="#hex-gold"/></svg>
+  </div>
+
+  <h1 class="hero-name">Fairphone <span class="gold">(A)</span></h1>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-tagline"><em>Can a start-up change an industry?</em></p>
+
+  <p class="hero-question">
+    A social enterprise builds the world's first responsibly sourced smartphone — and then runs into the limits of scale.
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     01 · EXECUTIVE SUMMARY
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate">
+  <div class="container">
+    <div class="s-label">01 · Executive Summary</div>
+    <h2 class="s-title on-dark">A start-up <span class="italic">against</span> an industry.</h2>
+    <p class="s-body on-dark">
+      In early 2017, Amsterdam-based <strong>Fairphone</strong> entered its fourth year with the credentials of a movement: a UN award, a European Business Award for the Environment, B Corp certification, and a forecast for record sales. CEO and founder <strong>Bas van Abel</strong> had proven that a smartphone could be built around responsible sourcing — starting with the four "conflict minerals" (tin, tungsten, tantalum, gold) that fund violence in the Democratic Republic of Congo.
+    </p>
+    <p class="s-body on-dark">
+      And yet, twenty-four hours before his first board meeting of the year, Van Abel was walking the Amstel to clear his head. The same year-over-year demand growth that made Fairphone a poster child for ESG had collided with the brute economics of consumer electronics: <strong>minimum order quantities, supplier consolidation, and the disappearance of a "piggyback" partner</strong> that had let Fairphone access components at sub-industry volumes.
+    </p>
+
+    <div class="exec-quote">
+      <p class="exec-quote-text">
+        The realities of running an industry-changing business meant we faced continuous challenges that stood in the way of reaching our sales ambitions. Our biggest issue in 2017 can be summed up in one word: <strong>production</strong>.
+      </p>
+      <div class="exec-quote-attr">Fairphone Impact Report · 2017</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     02 · KEY FACTS
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-label">02 · Key Facts</div>
+    <h2 class="s-title on-dark">The shape of the company.</h2>
+    <p class="s-body on-dark">
+      Fairphone is positioned not as a competitor to Apple or Samsung, but as a <strong>social enterprise using commercial strategy</strong> to maximise impact across the value chain — from mine to recycling.
+    </p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-label">Founded</div>
+        <div class="fact-value">2013</div>
+        <div class="fact-detail">After three years (2010–2013) as an awareness campaign run by Waag Society, Action Aid, and Schrijf-Schrijf.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-label">Seed Capital</div>
+        <div class="fact-value">€400k</div>
+        <div class="fact-detail">Raised from impact-investing firms. Team of five at launch.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-label">FP1 Launch</div>
+        <div class="fact-value">25,000</div>
+        <div class="fact-detail">Units sold in 2013 — 25% above target — via a presales campaign on the company's own website.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-label">By mid-2017</div>
+        <div class="fact-value">135,000</div>
+        <div class="fact-detail">Total Fairphone 1 + Fairphone 2 units sold across direct and partner channels.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-label">Unit Price</div>
+        <div class="fact-value">€325</div>
+        <div class="fact-detail">FP1 launch price — deliberately positioned to prove a responsibly sourced phone could be commercially viable.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-label">Industry MOQ</div>
+        <div class="fact-value">150–200k</div>
+        <div class="fact-detail">Estimated average minimum order quantity per component — well above Fairphone's annual volumes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     03 · TIMELINE
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-label">03 · Timeline</div>
+    <h2 class="s-title on-dark">From campaign to category.</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2010</div>
+        <div class="tl-content">
+          <div class="tl-label">Awareness Campaign</div>
+          <div class="tl-desc">Fairphone launches as a tripartite campaign on conflict minerals in the DRC.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2013</div>
+        <div class="tl-content">
+          <div class="tl-label">Company Incorporated · FP1 Ships</div>
+          <div class="tl-desc">Becomes the first phone company to join the Conflict-Free Tin Initiative. Pre-sells 25,000 units of FP1.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2014</div>
+        <div class="tl-content">
+          <div class="tl-label">CFTI Pilot Concludes</div>
+          <div class="tl-desc">Conflict-free tin supply chain transitions to permanent operation.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2015</div>
+        <div class="tl-content">
+          <div class="tl-label">FP2 Launches</div>
+          <div class="tl-desc">First modular smartphone — designed in-house to extend product life and reduce e-waste.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-content">
+          <div class="tl-label">All Four 3TG Minerals Mapped</div>
+          <div class="tl-desc">Fairtrade-certified gold (Peru → Switzerland → China) and conflict-free tungsten (Rwanda → Austria → China) integrated. First Fairtrade-licensed consumer electronics company.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2017</div>
+        <div class="tl-content">
+          <div class="tl-label">Growth Year — and Production Crisis</div>
+          <div class="tl-desc">LCD supplier closes original factory; piggyback customer exits the category; MOQ math no longer works. Board meeting tomorrow.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     04 · THE TWO CHALLENGES
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-label">04 · The Two Cases</div>
+    <h2 class="s-title on-dark">Two strategic decisions,<br>one underlying problem: <span class="italic">scale</span>.</h2>
+    <p class="s-body on-dark">
+      Van Abel arrives at the board meeting carrying two distinct dilemmas. They look unrelated — one is upstream (mining), the other downstream (production) — but both reduce to the same fundamental question: <strong>how does a small mission-driven company exert leverage over a supply chain it does not own?</strong>
+    </p>
+
+    <div class="chal-stack">
+
+      <!-- CHALLENGE 1 -->
+      <div class="chal-card">
+        <div class="chal-num">— Case I</div>
+        <div class="chal-title">Responsible Sourcing at the Limits of Influence</div>
+        <span class="chal-tag">Upstream · Mining &amp; Smelters</span>
+
+        <p class="chal-body">
+          Fairphone has solved the four 3TG minerals one at a time through partnership — joining the <strong>Conflict-Free Tin Initiative</strong> in 2013, <strong>Solutions for Hope</strong> for tantalum, <strong>Fairtrade-certified gold</strong> from Peru via Zhaojin Kanfort, and a <strong>conflict-free tungsten</strong> route through a Rwandan-Austrian partnership.
+        </p>
+        <p class="chal-body">
+          But each win has required Fairphone to "piggyback" on its <strong>suppliers' larger customers</strong> to reach the demand threshold that makes a dedicated supply line viable. The gold supply chain alone took two years of work with AT&amp;S and its partners. Mass balance — not closed-pipe traceability — was the compromise required to ship.
+        </p>
+
+        <div class="chal-decisions">
+          <div class="chal-dec-label">The Decision</div>
+          <div class="chal-dec-item">
+            <div class="chal-dec-bullet"></div>
+            <div class="chal-dec-text">
+              <strong>Where to lead next?</strong> <em>— Build a responsible gold supply chain in Africa (highest ESG impact, hardest execution), or pivot to a new precious metal like cobalt (where lithium-ion demand is exploding)?</em>
+            </div>
+          </div>
+          <div class="chal-dec-item">
+            <div class="chal-dec-bullet"></div>
+            <div class="chal-dec-text">
+              <strong>Is partnership a sustainable model?</strong> <em>— Or does Fairphone need to grow large enough to set its own supply-chain rules?</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHALLENGE 2 -->
+      <div class="chal-card">
+        <div class="chal-num">— Case II</div>
+        <div class="chal-title">LCD Modules, MOQs, and the Disappearing Piggyback</div>
+        <span class="chal-tag">Downstream · Production &amp; Inventory</span>
+
+        <p class="chal-body">
+          Months earlier, Fairphone's LCD module supplier closed the factory producing FP2's screens. Van Abel's team redesigned the module — at significant cost — and resumed production by piggybacking on a <strong>lead customer ordering similar LCD cells</strong>, allowing Fairphone to slot its small volume into a much larger batch.
+        </p>
+        <p class="chal-body">
+          In mid-2017, that lead customer stopped producing its device. Fairphone's orders go with it. The supplier's MOQ — somewhere between <strong>150,000 and 200,000 units</strong> — is far above what Fairphone can absorb. The cash required to buy out remaining inventory would compete directly with operating capital, and unsold modules risk obsolescence.
+        </p>
+
+        <div class="chal-decisions">
+          <div class="chal-dec-label">The Options</div>
+          <div class="chal-dec-item">
+            <div class="chal-dec-bullet"></div>
+            <div class="chal-dec-text">
+              <strong>Buy out remaining inventory.</strong> <em>— Solves supply short-term, exposes balance sheet, obsolescence risk if FP3 specs change.</em>
+            </div>
+          </div>
+          <div class="chal-dec-item">
+            <div class="chal-dec-bullet"></div>
+            <div class="chal-dec-text">
+              <strong>Negotiate MOQ down for a final batch.</strong> <em>— Cheap if it works; relationship-dependent and almost certainly partial.</em>
+            </div>
+          </div>
+          <div class="chal-dec-item">
+            <div class="chal-dec-bullet"></div>
+            <div class="chal-dec-text">
+              <strong>Find a new piggyback partner.</strong> <em>— Repeats the model that just failed; takes time the waiting list does not have.</em>
+            </div>
+          </div>
+          <div class="chal-dec-item">
+            <div class="chal-dec-bullet"></div>
+            <div class="chal-dec-text">
+              <strong>Retain waiting-list customers through the gap.</strong> <em>— A communications problem on top of an operational one.</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     05 · SUPPLY CHAIN ARCHITECTURE
+     ═══════════════════════════════════════════════ -->
+<section class="s-navy">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-label">05 · Supply Chain</div>
+    <h2 class="s-title on-dark">Four minerals, four partnerships.</h2>
+    <p class="s-body on-dark">
+      The 3TG quartet — tin, tantalum, tungsten, gold — each required a different scaffolding of NGOs, smelters, and supplier coalitions. Fairphone never controls the full chain; it stitches together a route through other people's chains.
+    </p>
+
+    <div class="sc-stack">
+
+      <div class="sc-mineral">
+        <div class="sc-header">
+          <div class="sc-symbol">Sn</div>
+          <div>
+            <div class="sc-name">Tin</div>
+            <div class="sc-tag">Joined CFTI · 2013</div>
+          </div>
+        </div>
+        <div class="sc-flow">
+          <strong>DRC mines</strong> <span class="sc-arrow">→</span> Conflict-Free Tin Initiative pilot <span class="sc-arrow">→</span> permanent supply line from 2014
+        </div>
+      </div>
+
+      <div class="sc-mineral">
+        <div class="sc-header">
+          <div class="sc-symbol">Ta</div>
+          <div>
+            <div class="sc-name">Tantalum</div>
+            <div class="sc-tag">Solutions for Hope</div>
+          </div>
+        </div>
+        <div class="sc-flow">
+          <strong>DRC mines</strong> <span class="sc-arrow">→</span> Motorola Solutions / AVX-led smelter coalition <span class="sc-arrow">→</span> due-diligence-verified processors
+        </div>
+      </div>
+
+      <div class="sc-mineral">
+        <div class="sc-header">
+          <div class="sc-symbol">W</div>
+          <div>
+            <div class="sc-name">Tungsten</div>
+            <div class="sc-tag">First reopened East Africa flow</div>
+          </div>
+        </div>
+        <div class="sc-flow">
+          <strong>Rwandan artisanal mines</strong> <span class="sc-arrow">→</span> Austrian refiner (ESG-upgraded) <span class="sc-arrow">→</span> Chongqing vibration motor <span class="sc-arrow">→</span> Zhejiang counterweight <span class="sc-arrow">→</span> FP2 assembly in Suzhou
+        </div>
+      </div>
+
+      <div class="sc-mineral">
+        <div class="sc-header">
+          <div class="sc-symbol">Au</div>
+          <div>
+            <div class="sc-name">Gold</div>
+            <div class="sc-tag">First Fairtrade-licensed in consumer electronics · Jan 2016</div>
+          </div>
+        </div>
+        <div class="sc-flow">
+          <strong>Minera Sotrami, Lucanas, Peru</strong> <span class="sc-arrow">→</span> Refining in Balerna, Switzerland <span class="sc-arrow">→</span> Import via Zhaojin Kanfort, Hong Kong <span class="sc-arrow">→</span> Gold salt manufacturing in Yantai (closed pipe) <span class="sc-arrow">→</span> Plating in Shanghai (mass balance) <span class="sc-arrow">→</span> FP2 assembly in Suzhou
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     06 · TENSIONS
+     ═══════════════════════════════════════════════ -->
+<section class="s-obsidian">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-label">06 · Tensions</div>
+    <h2 class="s-title on-dark">The contradictions Fairphone has to hold.</h2>
+    <p class="s-body on-dark">
+      Mission-driven companies often present their value as monolithic. Fairphone's real architecture is a set of <strong>structural trade-offs</strong> — none of which has a clean answer.
+    </p>
+
+    <div class="tension-grid">
+      <div class="tension">
+        <div class="tension-side left">
+          <div class="tension-label">Mission</div>
+          <div class="tension-text">Solve the gold supply chain in Africa, where the ESG impact is highest.</div>
+        </div>
+        <div class="tension-side">
+          <div class="tension-label">Capital</div>
+          <div class="tension-text">Move to cobalt, where booming EV/battery demand creates leverage Fairphone can ride.</div>
+        </div>
+      </div>
+
+      <div class="tension">
+        <div class="tension-side left">
+          <div class="tension-label">Scale</div>
+          <div class="tension-text">Stay small to remain ethically uncompromised and movement-credible.</div>
+        </div>
+        <div class="tension-side">
+          <div class="tension-label">Survival</div>
+          <div class="tension-text">Grow large enough to dictate MOQs, traceability, and supplier behaviour.</div>
+        </div>
+      </div>
+
+      <div class="tension">
+        <div class="tension-side left">
+          <div class="tension-label">Partnership</div>
+          <div class="tension-text">Borrow other firms' demand to access ethical supply — fast and capital-light.</div>
+        </div>
+        <div class="tension-side">
+          <div class="tension-label">Sovereignty</div>
+          <div class="tension-text">Build dedicated supply — slow, expensive, but resilient when piggybacks disappear.</div>
+        </div>
+      </div>
+
+      <div class="tension">
+        <div class="tension-side left">
+          <div class="tension-label">Closed Pipe</div>
+          <div class="tension-text">Full traceability from mine to module — provable ESG, narrow material flow.</div>
+        </div>
+        <div class="tension-side">
+          <div class="tension-label">Mass Balance</div>
+          <div class="tension-text">Equivalent volumes tracked, not physical units — pragmatic, scalable, harder to market.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     07 · TAKEAWAYS
+     ═══════════════════════════════════════════════ -->
+<section class="s-light">
+  <div class="container">
+    <div class="s-label" style="color:var(--gold);">07 · Strategic Takeaways</div>
+    <h2 class="s-title on-light">What this case teaches.</h2>
+    <p class="s-body on-light">
+      Beyond the immediate board decisions, the Fairphone case sits inside a wider question about <strong>how mission-driven ventures grow inside industries optimised for scale</strong>.
+    </p>
+
+    <div class="gold-accent-line"></div>
+
+    <div class="takeaway-grid">
+
+      <div class="tk-card">
+        <div class="tk-num">i</div>
+        <div class="tk-title">Coalition is leverage.</div>
+        <div class="tk-body">
+          Every Fairphone supply-chain win came from <strong>joining or building a multi-party initiative</strong> — CFTI, Solutions for Hope, AT&amp;S + partners, Fairtrade. A small firm cannot move a smelter; a coalition of small firms collectively can.
+        </div>
+      </div>
+
+      <div class="tk-card">
+        <div class="tk-num">ii</div>
+        <div class="tk-title">Demand aggregation is the unit of work.</div>
+        <div class="tk-body">
+          The piggyback model is the dominant tactic — and the dominant single point of failure. <strong>When the lead customer leaves, the model collapses.</strong> Diversifying piggyback partners is a strategic priority disguised as a procurement chore.
+        </div>
+      </div>
+
+      <div class="tk-card">
+        <div class="tk-num">iii</div>
+        <div class="tk-title">Modularity is a defensive moat.</div>
+        <div class="tk-body">
+          FP2's modular architecture lengthens product life and lowers e-waste — but it also <strong>reduces dependence on any single component supplier</strong>. Design is a supply-chain strategy in disguise.
+        </div>
+      </div>
+
+      <div class="tk-card">
+        <div class="tk-num">iv</div>
+        <div class="tk-title">Mission credibility is the demand engine.</div>
+        <div class="tk-body">
+          FP1 sold out without a retail channel because the story was the product. <strong>Operational stumbles threaten the story before they threaten the P&amp;L</strong> — and the waiting list is more fragile than it looks.
+        </div>
+      </div>
+
+      <div class="tk-card">
+        <div class="tk-num">v</div>
+        <div class="tk-title">Regulation reshapes geographies overnight.</div>
+        <div class="tk-body">
+          Dodd-Frank's conflict-mineral provisions collapsed legitimate East African tungsten exports — punishing miners the law intended to protect. <strong>Compliance ≠ impact</strong>; smart firms can rebuild what the rule broke, and capture both reputation and supply.
+        </div>
+      </div>
+
+      <div class="tk-card">
+        <div class="tk-num">vi</div>
+        <div class="tk-title">Cash is the binding constraint, not demand.</div>
+        <div class="tk-body">
+          Fairphone's central problem is not "do customers want this?" but "<strong>does the balance sheet survive the MOQ?</strong>" — a paradox common to capital-light, mission-led growth companies the world over.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     08 · JC GROUP TIE-IN
+     ═══════════════════════════════════════════════ -->
+<section class="s-slate">
+  <div class="gold-rule"></div>
+  <div class="container">
+    <div class="s-label">08 · Read-Across</div>
+    <h2 class="s-title on-dark">Why this case matters <span class="italic">here</span>.</h2>
+    <p class="s-body on-dark">
+      The Fairphone case is, structurally, a case about <strong>advisory, capital, and operations operating in tension</strong> — the same three pillars JC Group is organised around. Van Abel's choices in early 2017 are the choices a holding-company chairman faces: where to allocate scarce capital, which strategic partnerships compound, which operational dependencies break the thesis.
+    </p>
+
+    <div class="jc-tie">
+      <svg><use href="#hex-gold"/></svg>
+      <div class="jc-tie-eyebrow">JC Group · Reading Frame</div>
+      <p class="jc-tie-quote">
+        Advisory without execution is theory. Investment without operations is speculation. <strong>Fairphone in 2017 is what happens when all three pillars are asked the same question at once</strong> — and the answer determines whether the mission survives the scale.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer class="footer">
+  <svg><use href="#hex-gold"/></svg>
+  <div class="footer-text">
+    Case Brief · <span class="gold-text">Fairphone (A)</span><br>
+    UV8939 · Darden Business Publishing<br>
+    Growth &amp; Ecosystems · ESCP · 2026<br>
+    Prepared in the JC Group brand system
+  </div>
+</footer>
+
+</body>
+</html>
